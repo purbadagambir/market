@@ -16,6 +16,10 @@
 
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
+<<<<<<< HEAD
+=======
+      <li class="header">Menu</li>
+>>>>>>> 243798ea8a77b1c0d3dd598776cc87fd0bc8d4d2
         @foreach($menus as $menu)
         @if(count($menu->children) > 0)
         <li class="treeview">
