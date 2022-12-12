@@ -18,7 +18,3 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/get-member', 'ApiCustomerController@get_member');
-Route::post('/get-sales-info', 'ApiSalesController@getSalesInfo');
-Route::post('/sales/insert', 'ApiSalesController@PostSalesData');
-Route::get('/tes', 'ApiSalesController@tes');

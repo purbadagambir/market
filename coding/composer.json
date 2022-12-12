@@ -16,7 +16,8 @@
         "laravel/framework": "^7.29",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.10",
-        "paragonie/sodium_compat": "^1.19"
+        "paragonie/sodium_compat": "^1.19",
+        "yoeunes/toastr": "^2.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

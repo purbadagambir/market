@@ -15,11 +15,10 @@ use App\Http\Livewire\Livewire;
 */
 
 
-Route::get('/', '\App\Http\Livewire\Dashboard\index');
-//Route::get('/', 'TesController@index');
-
-//Product
-Route::get('/product', '\App\Http\Livewire\Product\index');
-
 //Menu
-Route::get('/sistem-menu', '\App\Http\Livewire\Menu\index');
+Route::get('/sistem-menu', 'MenuController@index')->name('menu');
+Route::post('/insert-menu', 'MenuController@store')->name('insert-menu');
+
+
+//API Local
+Route::post('/get-menu', 'API\ApiMenuController@index');

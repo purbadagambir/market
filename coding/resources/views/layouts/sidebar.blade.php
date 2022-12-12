@@ -30,26 +30,26 @@
             @foreach($menu->children as $submenu)
             @if(count($submenu->subchildren) > 0)
             <li class="treeview">
-              <a href="#"><i class="fa fa-circle-o"></i> {{$submenu->label}}
+              <a href="#"><i class="{{$submenu->icon}}"></i> {{$submenu->label}}
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
               </a>
               <ul class="treeview-menu">
                 @foreach($submenu->subchildren as $subsubmenu)
-                <li><a href="{{$subsubmenu->route}}"><i class="fa fa-circle-o"></i> {{$subsubmenu->label}}</a></li>
+                <li><a href="{{$subsubmenu->route}}"><i class="{{$submenu->icon}}"></i> {{$subsubmenu->label}}</a></li>
                 @endforeach
               </ul>
             </li>
             @else
-            <li><a href="{{$submenu->route}}"><i class="fa fa-circle-o"></i> {{$submenu->label}}</a></li>
+            <li><a href="{{$submenu->route}}"><i class="{{$submenu->icon}}"></i> {{$submenu->label}}</a></li>
             @endif
             @endforeach
           </ul>
         </li>
         @else
         <li>
-          <a href="pages/widgets.html">
+          <a href="{{$menu->route}}">
             <i class="{{$menu->icon}}"></i> <span>{{$menu->label}}</span>
           </a>
         </li>
