@@ -18,3 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+Route::post('/get-menu', 'API\ApiMenuController@index');
+Route::post('/create-menu', 'API\ApiMenuController@store');
+
+
+

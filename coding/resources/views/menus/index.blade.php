@@ -2,8 +2,15 @@
 
 @section('content')
 
-<section class="content">
-    <div class="box box-success collapsed-box">
+
+@push('custom-style')
+<link rel="stylesheet" href="{{asset('assets/toastr/toastr.min.css')}}">
+<link href="https://unpkg.com/vue3-easy-data-table/dist/style.css" rel="stylesheet">
+@endpush
+
+<section class="content" id="app">
+  
+    <div class="box box-success collapsed-box"> <!-- collapsed-box -->
       <div class="box-header with-border">
         <h3 class="box-title">From Tambah Menu</h3>
 
@@ -15,48 +22,51 @@
       </div>
       <!-- /.box-header -->
       <div class="box-body">
-        <form role="form" action="{{route('insert-menu')}}" method="post">
-        @csrf
+        <form @submit="checkForm" method="post">
           <div class="box-body">
-            <div class="form-group">
-              <label>Type Menu</label>
-              <select class="form-control select2" style="width: 100%;" name="type">
-                  <option selected="selected" value="MAIN_MENU">MAIN MENU</option>
+            <div class="form-group" v-bind:class="{ 'has-error': hasError.type }">
+              <label>Type</label>
+              <select class="form-control select2" style="width: 100%;" name="type" v-model="form.type">
+                  <option value="MAIN_MENU">MAIN MENU</option>
                   <option value="SUB_MENU">SUB MENU</option>
                   <option value="ACTIONS">ACTIONS</option>
               </select>
+              <span v-if="error.type" class="help-block">@{{ error.type }}</span>
             </div>
             <div class="form-group">
               <label>Parent Menu</label>
-              <select class="form-control select2" style="width: 100%;" name="parent_id">
+              <select class="form-control select2" style="width: 100%;" name="parent_id" v-model="form.parent_id" :disabled="form.type == 'MAIN_MENU' ">
                   <option selected="selected" value="0">None</option>
                   @foreach($data['menu'] as $menu)
                   <option value="{{$menu->id}}">{{$menu->label}}</option>
                   @endforeach
               </select>
             </div>
-            <div class="form-group">
-                <label for="label">Label Menu</label>
-                <input type="text" name="label" class="form-control" id="label">
+            <div class="form-group" v-bind:class="{ 'has-error': hasError.label }">
+                <label for="label">Label</label>
+                <input v-model="form.label" type="text" name="label" class="form-control" id="label">
+                <span v-if="error.label" class="help-block">@{{ error.label }}</span>
             </div>
-            <div class="form-group">
-                <label for="link">Link Menu</label>
-                <input type="text" name="link" class="form-control" id="link">
+            <div class="form-group" v-bind:class="{ 'has-error': hasError.link }">
+                <label for="link">URL</label>
+                <input v-model="form.link" type="text" name="link" class="form-control" id="link">
+                <span v-if="error.link" class="help-block">@{{ error.link }}</span>
             </div>
             <div class="form-group">
                 <label for="icon">Icon Menu</label>
-                <input type="text" name="icon" class="form-control" id="icon">
+                <input v-model="form.icon" type="text" name="icon" class="form-control" id="icon">
             </div>
             <div class="form-group">
                 <label for="short_order">No. Urut</label>
-                <input type="text" name="short_order" class="form-control" id="short_order">
+                <input v-model.number="short_order" type="number" name="short_order" class="form-control" id="short_order" min="1">
             </div>
-            <div class="form-group">
+            <div class="form-group" v-bind:class="{ 'has-error': hasError.status }">
               <label>Status</label>
-              <select class="form-control select2" style="width: 100%;" name="status">
+              <select class="form-control select2" style="width: 100%;" name="status" v-model="form.status">
                   <option selected="selected" value="1">Active</option>
                   <option value="1">Unactive</option>
               </select>
+              <span v-if="error.status" class="help-block">@{{ error.status }}</span>
             </div>
           </div>
 
@@ -68,7 +78,7 @@
       <!-- /.box-footer -->
     </div>
 
-    <div class="box box-info" id="app">
+    <div class="box box-info">
       <div class="box-header with-border">
         <h3 class="box-title">Data Menu</h3>
         <div class="box-tools pull-right">
@@ -80,70 +90,48 @@
       
       <!-- /.box-header -->
       <div class="box-body">
-          <form action="" style="margin-bottom : 30px;">
-            Show 
-            <select name="" id="" > 
-              <option value="10">10</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-              <option value="All">All</option>
-            </select>  
-            entries
-          </form>
-        <div class="table-responsive">
-          <table id="example1" class="table table-bordered table-striped">
-            <thead>
-            <tr>
-              <th>ID</th>
-              <th>Label</th>
-              <th>Status</th>
-              <th>Link</th>
-              <th>Icon</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="menu in menus">
-              <td>@{{menu.id}}</td>
-              <td>@{{menu.label}}</td>
-              <td v-if="menu.status === 1"><span class="label label-success">active</span></td>
-              <td v-else="menu.status === 0"><span class="label label-danger">un-active</span></td>
-              <td>@{{menu.route}}</td>
-              <td>@{{menu.icon}}</td>
-            </tr>
-            </tbody>
-          </table>
+        <div style="margin-bottom : 20px">
+          <span>Search: </span>
+          <input type="text" v-model="searchValue">
         </div>
-        <!-- /.table-responsive -->
+
+        <div>
+        <easy-data-table
+          buttons-pagination
+          alternating
+          table-class-name="table table-bordered table-striped"
+          :headers="headers"
+          :items="items"
+          border-cell
+          :search-value="searchValue"
+          @click-row="showRow"
+        />
+          <template #item-operation="item">
+            <div class="operation-wrapper">
+              <div class="btn-group">
+                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   . . .
+                </button>
+                <div class="dropdown-menu pull-right">
+                  <li><a href="#">Edit</a></li>
+                  <li><a href="#">Delete</a></li>
+                </div>
+              </div>
+            </div>
+          </template>
+        </EasyDataTable>
+      </div>
       </div>
     </div>
 </section>
 
-
-
-
-<script src="{{asset('assets/vue/vue.js')}}"></script>
-<script src="{{asset('assets/vue/axios.js')}}"></script>
-<script src="{{asset('assets/vue/grid.js')}}"></script>
-<script>
-  const { createApp } = Vue
-
-  createApp({
-    data() {
-      return {
-        menus: null
-      }
-    },
-    mounted () {
-      axios
-        .post('{{URL::to('get-menu')}}')
-        .then(response => (this.menus = response.data.data))
-    }
-  }).mount('#app')
-</script>
-
-
 @endsection
 
-
-
+@push('custom-scripts')
+<script src="{{asset('assets/vue/vue.js')}}"></script>
+<script src="{{asset('assets/vue/table.js')}}"></script>
+<script src="{{asset('assets/vue/axios.js')}}"></script>
+<script src="{{asset('assets/toastr/toastr.min.js')}}"></script>
+<script src="{{asset('assets/js/page/menu.js')}}"></script>
+<script src="{{asset('assets/js/app.js')}}"></script>
+@endpush

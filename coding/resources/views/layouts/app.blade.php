@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PONDOPOS | Dashboard</title>
+
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -29,6 +30,7 @@
   <link rel="stylesheet" href="{{asset('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
   <link rel="stylesheet" href="{{asset('assets/bower_components/select2/dist/css/select2.min.css')}}">
   <link rel="stylesheet" href="{{asset('assets/vue/grid.css')}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,6 +41,8 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  @stack('custom-style')
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -89,8 +93,8 @@
 <!-- Bootstrap 3.3.7 -->
 <script src="{{asset('assets/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- Morris.js')}} charts -->
-<script src="{{asset('assets/bower_components/raphael/raphael.min.js')}}"></script>
-<script src="{{asset('assets/bower_components/morris.js')}}/morris.min.js')}}"></script>
+<!-- <script src="{{asset('assets/bower_components/raphael/raphael.min.js')}}"></script>
+<script src="{{asset('assets/bower_components/morris.min.js')}}"></script> -->
 <!-- Sparkline -->
 <script src="{{asset('assets/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js')}}"></script>
 <!-- jvectormap -->
@@ -117,7 +121,9 @@
 <script src="{{asset('assets/dist/js/demo.js')}}"></script>
 
 <script src="{{asset('assets/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
-
-<script src="{{asset('assets/vue/grid.css')}}"></script>
+<script src="{{asset('assets/vue/vue.js')}}"></script>
+<script src="{{asset('assets/vue/axios.js')}}"></script>
+<script src="{{asset('assets/vue/grid.js')}}"></script>
+@stack('custom-scripts')
 </body>
 </html>

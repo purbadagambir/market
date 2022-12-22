@@ -12,7 +12,7 @@ class MenuController extends Controller
         $data = [
             'menu'  => MenuModel::all(),
         ];
-        return view('menus.tes', compact('data'));
+        return view('menus.index', compact('data'));
     }
 
     public function store(Request $request)
