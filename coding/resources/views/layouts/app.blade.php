@@ -125,5 +125,18 @@
 <script src="{{asset('assets/vue/axios.js')}}"></script>
 <script src="{{asset('assets/vue/grid.js')}}"></script>
 @stack('custom-scripts')
+<script>
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true
+    })
+  })
+</script>
 </body>
 </html>

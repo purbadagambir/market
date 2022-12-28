@@ -12,27 +12,20 @@ class ApiMenuController extends Controller
     public function tes()
     {
 
-        $query = MenuModel::all();
-        $menus = MenuResource::collection($query);
+        $query = MenuModel::where('id', '=', 2)->first();
 
-        // foreach($query as $menu){
-        //     $menus[] = [$menu->id, $menu->label, $menu->route, $menu->icon, $menu->status==true ? 'active' : 'unactive'];
-        // }
-
-        return $menus;
+        return $query;
 
     }
     public function index(Request $request)
     {
         try {
-                $query = MenuModel::select('id', 'parent_id', 'label', 'type', 'route', 'icon', 'status')
-                                    ->get();
+                $query = MenuModel::where($request->column, 'LIKE', '%' . $request->keyword . '%')
+                                    ->paginate(
+                                        $perPage = $request->perPage, $columns = ['*'], 'page', $request->pageSelect
+                                    );
                 $menus = MenuResource::collection($query);
-        
-                // foreach($query as $menu){
-                //     $menus[] = [$menu->id, $menu->label, $menu->route, $menu->icon, $menu->status==true ? 'active' : 'unactive'];
-                // }
-        
+
                 return $menus;
         }catch(Exception $e){
             return response()->json($this->generate_response(
@@ -77,26 +70,116 @@ class ApiMenuController extends Controller
 
             $insert = MenuModel::create($new_menu);
 
-            $query = MenuModel::all();
-            $menus = MenuResource::collection($query);
-
             if($insert)
             {
-                return response([
-                    "message" => 'Menu baru telah ditambah',
-                    "data"  => $menus,
-                    "status_code" => 200
-                ]);
+                $query = MenuModel::where('label', 'LIKE', '%' . $request->keyword . '%')
+                                    ->paginate(
+                                        $perPage = 10, $columns = ['*'], 'page', 1
+                                    );
+                $menus = MenuResource::collection($query);
+
+                return $menus;
             } 
             else 
             {
                 return response([
-                    "message" => 'Menu gagal ditambah',
-                    "data"  => null,
-                    "status_code" => 201
-                ]);
+                    "message" => "failed insert data",
+                    "status_code" => 500
+                 ], 500);
             }
         }catch(Exception $e){
+            return response()->json($this->generate_response(
+                array(
+                    "message" => $e->getMessage(),
+                    "status_code" => $e->getCode()
+                )
+            ));
+        }
+    }
+
+    public function show(Request $request)
+    {
+        $query = MenuModel::where('id', '=', $request->id)->first();
+
+        return $query;
+    }
+
+    public function update(Request $request)
+    {
+        if($request->type == 'MAIN_MENU')
+        {
+            $code_key = 'MM';
+        }
+        elseif($request->type == 'SUB_MENU')
+        {
+            $code_key = 'SM';
+        }
+        else {
+            $code_key = 'A';
+        }
+
+        $str = $request->label;
+        $capital = strtoupper($str);
+        $menu_key = str_replace(" ", "_", $capital);
+
+        $data_update = [
+            "parent_id" => $request->parent_id,
+            "type" => $request->type,
+            "menu_key" => $menu_key,
+            "label" => $request->label,
+            "route" => $request->link,
+            "icon" => $request->icon,
+            "short_order" => $request->short_order,
+            "status" => $request->status,
+            "updated_at" => now()
+        ];
+
+        $query = MenuModel::where('id', $request->id)->update($data_update);
+
+        if($query)
+        {
+            $query = MenuModel::where('label', 'LIKE', '%' . $request->keyword . '%')
+                                ->paginate(
+                                    $perPage = 10, $columns = ['*'], 'page', 1
+                                );
+            $menus = MenuResource::collection($query);
+
+            return $menus;
+        } 
+        else 
+        {
+            return response([
+                "message" => "failed update data",
+                "status_code" => 500
+             ], 500);
+        }
+    }
+
+    public function delete(Request $request)
+    {
+        try 
+        {
+            $result=MenuModel::destroy($request->id);
+            if($request)
+            {
+                $query = MenuModel::where($request->column, 'LIKE', '%' . $request->keyword . '%')
+                                    ->paginate(
+                                        $perPage = $request->perPage, $columns = ['*'], 'page', $request->pageSelect
+                                    );
+                $menus = MenuResource::collection($query);
+
+                return $menus;
+            }
+            else
+            {
+                return response([
+                    "message" => "failed insert data",
+                    "status_code" => 500
+                 ], 500);
+            }
+        }
+        catch(Exception $e)
+        {
             return response()->json($this->generate_response(
                 array(
                     "message" => $e->getMessage(),
