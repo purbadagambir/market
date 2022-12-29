@@ -64,21 +64,21 @@
           <div class="form-group" v-bind:class="{ 'has-error': hasError.label }">
             <label for="categoryname" class="col-sm-3 control-label">Label*</label>
             <div class="col-sm-7">
-              <input v-model="form.label" type="text" name="label" class="form-control" id="label">
+              <input v-model="form.label" type="text" name="label" class="form-control" id="form_label">
               <span v-if="error.label" class="help-block">@{{ error.label }}</span>
             </div>
           </div>
           <div class="form-group" v-bind:class="{ 'has-error': hasError.link }">
             <label for="categoryname" class="col-sm-3 control-label">Route</label>
             <div class="col-sm-7">
-              <input v-model="form.link" type="text" name="link" class="form-control" id="link">
+              <input v-model="form.link" type="text" name="link" class="form-control" id="form_link">
               <span v-if="error.link" class="help-block">@{{ error.link }}</span>
             </div>
           </div>
           <div class="form-group">
             <label for="categoryname" class="col-sm-3 control-label">Icon</label>
             <div class="col-sm-7">
-              <input v-model="form.icon" type="text" name="icon" class="form-control" id="icon">
+              <input v-model="form.icon" type="text" name="icon" class="form-control" id="form_icon">
             </div>
           </div>
           <div class="form-group">
@@ -114,7 +114,7 @@
 
   <div class="box box-info">
     <div class="box-header">
-      <h3 class="box-title">Data @{{table.name}}</h3>
+      <h3 class="box-title">@{{table.name}} List</h3>
     </div>
     <div class="box-body table-responsive">
       <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">

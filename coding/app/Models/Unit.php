@@ -1,10 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Unit extends Model
 {
-    //
+    protected $guarded = ['unit_id'];
+
+    public $timestamps = false;
+
 }

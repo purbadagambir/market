@@ -11,12 +11,31 @@ class ApiMenuController extends Controller
 {
     public function tes()
     {
+        $point = [
+            "customer_mobile_number"     => '081375613794',
+            "total_point"               => 500
+        ];
 
-        $query = MenuModel::where('id', '=', 2)->first();
+        $apiURL = 'https://pondo.co.id/restfull/api/sales/insertes';
+       // POST Data
+       $postInput = json_decode($point, true);
+ 
+       // Headers
+       $headers = [
+       ];
+ 
+       $response = Http::withHeaders($headers)->post($apiURL, $postInput);  
+       $statusCode = $response->status();
+       $responseBody = json_decode($response->getBody(), true);
+     
+       $dataBody = $responseBody['data'];  // status code
 
-        return $query;
+       $dataEncode = json_encode($dataBody, true);
+       $dataDecode = json_decode($dataEncode, true);
 
+       return $dataDecode;
     }
+
     public function index(Request $request)
     {
         try {

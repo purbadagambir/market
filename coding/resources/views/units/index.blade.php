@@ -26,7 +26,7 @@
     <div v-else="!show" class="box-header with-border" @click="this.closeForm">
       <div class="box-tools pull-left">
         <button type="button" class="btn btn-box-tool">
-          <i class="fa fa-minus"></i> <h1 class="box-title"> Add New Category</h1>
+          <i class="fa fa-minus"></i> <h1 class="box-title"> Add New Unit</h1>
         </button>
       </div>
       <div class="box-tools pull-right">
@@ -39,52 +39,24 @@
     <div class="box-body">
       <form class="form-horizontal">
         <div class="box-body">
-          <div class="form-group" v-bind:class="{ 'has-error': hasError.type }">
-            <label for="categoryname" class="col-sm-3 control-label">Type*</label>
+          <div class="form-group" v-bind:class="{ 'has-error': hasError.unit_name }">
+            <label for="categoryname" class="col-sm-3 control-label">Unit Name*</label>
             <div class="col-sm-7">
-              <select class="form-control select2" style="width: 100%;" name="type" v-model="form.type">
-                <option value="MAIN_MENU">MAIN MENU</option>
-                <option value="SUB_MENU">SUB MENU</option>
-                <option value="ACTIONS">ACTIONS</option>
-              </select>
-              <span v-if="error.type" class="help-block text-danger">@{{ error.type }}</span>
+              <input v-model="form.unit_name" type="text" name="label" class="form-control" id="form_label">
+              <span v-if="error.unit_name" class="help-block">@{{ error.unit_name }}</span>
+            </div>
+          </div>
+          <div class="form-group" v-bind:class="{ 'has-error': hasError.code_name }">
+            <label for="categoryname" class="col-sm-3 control-label">Code Name*</label>
+            <div class="col-sm-7">
+              <input v-model="form.code_name" type="text" name="link" class="form-control" id="form_link">
+              <span v-if="error.code_name" class="help-block">@{{ error.code_name }}</span>
             </div>
           </div>
           <div class="form-group">
-            <label for="categoryname" class="col-sm-3 control-label">Parent Menu</label>
+            <label for="categoryname" class="col-sm-3 control-label">Unit Detail</label>
             <div class="col-sm-7">
-              <select class="form-control select2" style="width: 100%;" name="parent_id" v-model="form.parent_id" :disabled="form.type == 'MAIN_MENU' ">
-                <option selected="selected" value="0">None</option>
-                @foreach($data['menu'] as $menu)
-                <option value="{{$menu->id}}">{{$menu->label}}</option>
-                @endforeach
-              </select>
-            </div>
-          </div>
-          <div class="form-group" v-bind:class="{ 'has-error': hasError.label }">
-            <label for="categoryname" class="col-sm-3 control-label">Label*</label>
-            <div class="col-sm-7">
-              <input v-model="form.label" type="text" name="label" class="form-control" id="label">
-              <span v-if="error.label" class="help-block">@{{ error.label }}</span>
-            </div>
-          </div>
-          <div class="form-group" v-bind:class="{ 'has-error': hasError.link }">
-            <label for="categoryname" class="col-sm-3 control-label">Route</label>
-            <div class="col-sm-7">
-              <input v-model="form.link" type="text" name="link" class="form-control" id="link">
-              <span v-if="error.link" class="help-block">@{{ error.link }}</span>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="categoryname" class="col-sm-3 control-label">Icon</label>
-            <div class="col-sm-7">
-              <input v-model="form.icon" type="text" name="icon" class="form-control" id="icon">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="categoryname" class="col-sm-3 control-label">No. Urut</label>
-            <div class="col-sm-7">
-              <input v-model.number="form.short_order" type="number" name="short_order" class="form-control" id="short_order" min="1">
+              <textarea class="form-control" v-model="form.unit_details" cols="10" rows="10"></textarea>
             </div>
           </div>
           <div class="form-group" v-bind:class="{ 'has-error': hasError.status }">
@@ -95,6 +67,12 @@
                 <option value="0">Inactive</option>
             </select>
             <span v-if="error.status" class="help-block">@{{ error.status }}</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="categoryname" class="col-sm-3 control-label">Short Order</label>
+            <div class="col-sm-7">
+              <input v-model.number="form.short_order" type="number" name="short_order" class="form-control" id="short_order" min="1">
             </div>
           </div>
           <div class="form-group">
@@ -114,7 +92,7 @@
 
   <div class="box box-info">
     <div class="box-header">
-      <h3 class="box-title">Data @{{table.name}}</h3>
+      <h3 class="box-title">@{{table.name}} List</h3>
     </div>
     <div class="box-body table-responsive">
       <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
@@ -141,30 +119,27 @@
               <thead>
                 <tr role="row">
                   <th class="text-center">Id</th>
-                  <th class="text-center">Parent ID</th>
-                  <th>Label</th>
-                  <th>Route</th>
-                  <th>Icon</th>
+                  <th>Unit Name</th>
+                  <th class="text-center">Unit Code</th>
+                  <th>Unit Detail</th>
                   <th>Status</th>
                   <th class="text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td class="text-center"><input type="text" id="id" v-on:keyup="this.search('id')"></td>
-                  <td class="text-center"><input type="text" id="parent_id" v-on:keyup="this.search('parent_id')"></td>
-                  <td><input type="text" id="label" v-on:keyup="this.search('label')"></td>
-                  <td><input type="text" id="route" v-on:keyup="this.search('route')"></td>
-                  <td><input type="text" id="icon" v-on:keyup="this.search('icon')"></td>
+                  <td class="text-center"><input type="text" id="unit_id" v-on:keyup="this.search('unit_id')"></td>
+                  <td class="text-center"><input type="text" id="unit_name" v-on:keyup="this.search('unit_name')"></td>
+                  <td><input type="text" id="code_name" v-on:keyup="this.search('code_name')"></td>
+                  <td><input type="text" id="unit_details" v-on:keyup="this.search('unit_details')"></td>
                   <td></td>
                   <td></td>
                 </tr>
                 <tr v-for="item in items">
-                  <td class="text-center">@{{item.id}}</td>
-                  <td class="text-center">@{{item.parent_id}}</td>
-                  <td>@{{item.label}}</td>
-                  <td>@{{item.route}}</td>
-                  <td>@{{item.icon}}</td>
+                  <td class="text-center">@{{item.unit_id}}</td>
+                  <td class="text-center">@{{item.unit_name}}</td>
+                  <td>@{{item.code_name}}</td>
+                  <td>@{{item.unit_details}}</td>
                   <td>
                     <span class="badge btn-success" v-if="item.status == 1">Active</span>
                     <span class="badge btn-warning" v-else>Inactive</span>
@@ -175,8 +150,8 @@
                         . . .
                       </button>
                       <div class="dropdown-menu pull-right">
-                        <li @click="this.editData(item.id)"><a>Edit</a></li>
-                        <li @click="this.deleteData(item.id)"><a>Delete</a></li>
+                        <li @click="this.editData(item.unit_id)"><a>Edit</a></li>
+                        <li @click="this.deleteData(item.unit_id)"><a>Delete</a></li>
                       </div>
                     </div>
                   </td>
@@ -185,10 +160,9 @@
               <tfoot>
                 <tr role="row">
                   <th class="text-center">Id</th>
-                  <th class="text-center">Parent ID</th>
-                  <th>Label</th>
-                  <th>Route</th>
-                  <th>Icon</th>
+                  <th>Unit Name</th>
+                  <th class="text-center">Unit Code</th>
+                  <th>Unit Detail</th>
                   <th>Status</th>
                   <th class="text-center">Action</th>
                 </tr>
@@ -230,10 +204,6 @@
 <script src="{{asset('assets/toastr/toastr.min.js')}}"></script>
 <script src="{{asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
-<script src="{{asset('assets/js/page/menu.js')}}"></script>
+<script src="{{asset('assets/js/page/unit.js')}}"></script>
 <script src="{{asset('assets/js/app.js')}}"></script>
 @endpush
-
-
-
-

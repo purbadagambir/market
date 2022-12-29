@@ -17,7 +17,7 @@ use App\Http\Livewire\Livewire;
 
 //Menu
 Route::get('/sistem-menu', 'MenuController@index')->name('menu');
-Route::post('/insert-menu', 'MenuController@store')->name('insert-menu');
+Route::get('/sistem-unit', 'UnitController@index')->name('unit');
 
 Route::get('/tes', 'API\ApiMenuController@tes');
 //API Local

@@ -21,7 +21,7 @@ toastr.options = {
     toastr.success(message);
   }
   
-  function notifFailed(message)
+  function notifError(message)
   {
     toastr.error(message);
   }
