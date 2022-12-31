@@ -9,7 +9,7 @@
 @endpush
 
 <section class="content" id="app">
-
+  <i class="fa fa-spin fa-refresh" v-if="loading"></i>&nbsp
   <div class="box box-info" v-bind:class="{ 'collapsed-box': !show }">
     <div v-if="!show" class="box-header with-border" @click="this.openForm">
       <div class="box-tools pull-left">
@@ -100,9 +100,10 @@
           <div class="form-group">
             <div class="col-sm-offset-3 col-sm-7">
               <div class="button">
-                <button v-if="submit" type="button" class="btn btn-primary" style="margin-right : 10px" @click="createData"><i class="fa fa-save"></i> Save</button>
-                <button v-else="submit" type="button" class="btn btn-primary" @click="updateData(this.table.id)"><i class="fa fa-save"></i> Update</button>
+                <button v-if="submit" type="button" class="btn btn-primary" style="margin-right : 10px" @click="createData"><i class="fa fa-save"></i> Save <i class="fa fa-spin fa-refresh" v-if="loading"></i>&nbsp</button>
+                <button v-else="submit" type="button" class="btn btn-primary" style="margin-right : 10px" @click="updateData(this.table.id)"><i class="fa fa-arrow-up"></i> Update <i class="fa fa-spin fa-refresh" v-if="loading"></i>&nbsp</button>
                 <button type="button" class="btn btn-danger" @click="this.resetForm()"><i class="fa fa-recycle"></i> Reset</button>
+                <button v-if="!submit" type="button" class="btn btn-success pull-right" @click="this.cancelForm()"><i class="fa fa-arrow-left"></i> Cancel</button>
               </div>
             </div>
           </div>
@@ -114,7 +115,7 @@
 
   <div class="box box-info">
     <div class="box-header">
-      <h3 class="box-title">@{{table.name}} List</h3>
+      <h3 class="box-title">@{{tableName}} List</h3>
     </div>
     <div class="box-body table-responsive">
       <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
@@ -230,6 +231,8 @@
 <script src="{{asset('assets/toastr/toastr.min.js')}}"></script>
 <script src="{{asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{asset('assets/bower_components/PACE/pace.min.js')}}"></script>
 <script src="{{asset('assets/js/page/menu.js')}}"></script>
-<script src="{{asset('assets/js/app.js')}}"></script>
+<script src="{{asset('assets/js/page/app.js')}}"></script>
+<script src="{{asset('assets/js/notif.js')}}"></script>
 @endpush

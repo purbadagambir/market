@@ -9,7 +9,6 @@
 @endpush
 
 <section class="content" id="app">
-
   <div class="box box-info" v-bind:class="{ 'collapsed-box': !show }">
     <div v-if="!show" class="box-header with-border" @click="this.openForm">
       <div class="box-tools pull-left">
@@ -78,9 +77,10 @@
           <div class="form-group">
             <div class="col-sm-offset-3 col-sm-7">
               <div class="button">
-                <button v-if="submit" type="button" class="btn btn-primary" style="margin-right : 10px" @click="createData"><i class="fa fa-save"></i> Save</button>
-                <button v-else="submit" type="button" class="btn btn-primary" @click="updateData(this.table.id)"><i class="fa fa-save"></i> Update</button>
+                <button v-if="submit" type="button" class="btn btn-primary" style="margin-right : 10px" @click="createData"><i class="fa fa-save"></i> Save <i class="fa fa-spin fa-refresh" v-if="loading"></i>&nbsp</button>
+                <button v-else="submit" type="button" class="btn btn-primary" style="margin-right : 10px" @click="updateData(this.table.id)"><i class="fa fa-arrow-up"></i> Update <i class="fa fa-spin fa-refresh" v-if="loading"></i>&nbsp</button>
                 <button type="button" class="btn btn-danger" @click="this.resetForm()"><i class="fa fa-recycle"></i> Reset</button>
+                <button v-if="!submit" type="button" class="btn btn-success pull-right" @click="this.cancelForm()"><i class="fa fa-arrow-left"></i> Cancel</button>
               </div>
             </div>
           </div>
@@ -118,28 +118,67 @@
             <table id="datatable" class="table table-bordered table-striped">
               <thead>
                 <tr role="row">
-                  <th class="text-center">Id</th>
-                  <th>Unit Name</th>
-                  <th class="text-center">Unit Code</th>
-                  <th>Unit Detail</th>
+                  <th>Image</th>
+                  <th>Pcode</th>
+                  <th>Name</th>
+                  <th>Pemasok</th>
+                  <th class="text-center">Stock</th>
+                  <th>Purcahse Price</th>
+                  <th>Rak</th>
+                  <th>Stock Konversi</th>
+                  <th>UOM Large</th>
+                  <th>Vol. Satuan Besar</th>
+                  <th>Harga Satuan Besar</th>
+                  <th>UOM Medium</th>
+                  <th>Vol. Satuan Medium</th>
+                  <th>Harga Satuan Medium</th>
+                  <th>UOM Small</th>
+                  <th>Selling Price</th>
+                  <th>Margin Profit</th>
                   <th>Status</th>
                   <th class="text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td class="text-center"><input type="text" id="unit_id" v-on:keyup="this.search('unit_id')"></td>
+                  <td></td>
+                  <td><input type="text" id="code_name" v-on:keyup="this.search('code_name')"></td>
+                  <td><input type="text" id="code_name" v-on:keyup="this.search('code_name')"></td>
+                  <td><input type="text" id="code_name" v-on:keyup="this.search('code_name')"></td>
                   <td class="text-center"><input type="text" id="unit_name" v-on:keyup="this.search('unit_name')"></td>
                   <td><input type="text" id="code_name" v-on:keyup="this.search('code_name')"></td>
+                  <td><input type="text" id="unit_details" v-on:keyup="this.search('unit_details')"></td>
+                  <td><input type="text" id="unit_details" v-on:keyup="this.search('unit_details')"></td>
+                  <td><input type="text" id="unit_details" v-on:keyup="this.search('unit_details')"></td>
+                  <td><input type="text" id="unit_details" v-on:keyup="this.search('unit_details')"></td>
+                  <td><input type="text" id="unit_details" v-on:keyup="this.search('unit_details')"></td>
+                  <td><input type="text" id="unit_details" v-on:keyup="this.search('unit_details')"></td>
+                  <td><input type="text" id="unit_details" v-on:keyup="this.search('unit_details')"></td>
+                  <td><input type="text" id="unit_details" v-on:keyup="this.search('unit_details')"></td>
+                  <td><input type="text" id="unit_details" v-on:keyup="this.search('unit_details')"></td>
+                  <td><input type="text" id="unit_details" v-on:keyup="this.search('unit_details')"></td>
                   <td><input type="text" id="unit_details" v-on:keyup="this.search('unit_details')"></td>
                   <td></td>
                   <td></td>
                 </tr>
                 <tr v-for="item in items">
-                  <td class="text-center">@{{item.unit_id}}</td>
-                  <td class="text-center">@{{item.unit_name}}</td>
-                  <td>@{{item.code_name}}</td>
-                  <td>@{{item.unit_details}}</td>
+                  <td>@{{item.p_image}}</td>
+                  <td>@{{item.p_code}}</td>
+                  <td>@{{item.p_name}}</td>
+                  <td>@{{item.p_name}}</td>
+                  <td class="text-center"></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   <td>
                     <span class="badge btn-success" v-if="item.status == 1">Active</span>
                     <span class="badge btn-warning" v-else>Inactive</span>
@@ -159,10 +198,23 @@
               </tbody>
               <tfoot>
                 <tr role="row">
-                  <th class="text-center">Id</th>
-                  <th>Unit Name</th>
-                  <th class="text-center">Unit Code</th>
-                  <th>Unit Detail</th>
+                  <th>Image</th>
+                  <th>Pcode</th>
+                  <th>Name</th>
+                  <th>Pemasok</th>
+                  <th class="text-center">Stock</th>
+                  <th>Purcahse Price</th>
+                  <th>Rak</th>
+                  <th>Stock Konversi</th>
+                  <th>UOM Large</th>
+                  <th>Vol. Satuan Besar</th>
+                  <th>Harga Satuan Besar</th>
+                  <th>UOM Medium</th>
+                  <th>Vol. Satuan Medium</th>
+                  <th>Harga Satuan Medium</th>
+                  <th>UOM Small</th>
+                  <th>Selling Price</th>
+                  <th>Margin Profit</th>
                   <th>Status</th>
                   <th class="text-center">Action</th>
                 </tr>
@@ -180,7 +232,8 @@
                   <a aria-controls="datatable" data-dt-idx="0" tabindex="0">Previous</a>
                 </li>
                 <li class="paginate_button" v-for="pages in buttonPage" :class="{active : this.meta.current_page == pages.page}">
-                  <a aria-controls="datatable" data-dt-idx="1" tabindex="0" @click="this.page(pages.page)">@{{pages.page}}</a>
+                  <a aria-controls="datatable" data-dt-idx="1" tabindex="0" @click="this.page(pages.page)" v-if="pages.page != '...'">@{{pages.page}}</a>
+                  <a aria-controls="datatable" data-dt-idx="1" tabindex="0" v-if="pages.page == '...'" disabled>@{{pages.page}}</a>
                 </li>
                 <li class="paginate_button next" id="datatable_next" :class="{disabled : this.table.pageSelect >= this.meta.last_page}" @click="this.nextPage">
                   <a aria-controls="datatable" data-dt-idx="4" tabindex="0">Next</a>
@@ -204,6 +257,7 @@
 <script src="{{asset('assets/toastr/toastr.min.js')}}"></script>
 <script src="{{asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
-<script src="{{asset('assets/js/page/unit.js')}}"></script>
-<script src="{{asset('assets/js/app.js')}}"></script>
+<script src="{{asset('assets/js/page/product.js')}}"></script>
+<script src="{{asset('assets/js/page/app.js')}}"></script>
+<script src="{{asset('assets/js/notif.js')}}"></script>
 @endpush

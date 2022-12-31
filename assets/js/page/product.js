@@ -7,39 +7,36 @@ const App = {
       items : [],
       entriesOption : [{'value' : 10},{'value' : 25},{'value' : 50}, {'value' : 100}],
       table : {
-        column : 'label',
+        column : 'p_name',
         keyword : '',
         perPage : 10,
         pageSelect : 1,
-        name : 'Menu',
+        name : 'Product',
         id : null
       },
       meta : [],
       buttonPage : [],
       form:{
         id : null,
-        type : null,
-        parent_id : 0,
-        label : '',
-        link : null,
-        icon : null,
-        short_order : null,
-        status: null,
+        unit_name : null,
+        code_name : null,
+        unit_details : null,
+        status : null,
+        short_order : null
       },
       hasError : {
-        label : false,
-        link : false,
-        status: false,
-        type: false,
+        unit_name : false,
+        code_name : false,
+        unit_details : false,
+        status : false,
+        short_order : false
       },
       error: {
-        type : null,
-        parent_id : null,
-        label : '',
-        link : null,
-        icon : null,
-        short_order : null,
-        status: null,
+        unit_name : false,
+        code_name : false,
+        unit_details : false,
+        status : false,
+        short_order : false
       },
     }
   },
@@ -121,14 +118,14 @@ const App = {
       }
     },
     //TABLE FUNCTION END
-
+    
     //FORM FUNCTION
     resetForm: function () { 
-      this.form.unit_name = null,
-      this.form.code_name = null,
-      this.form.unit_details = null,
-      this.form.status = null,
-      this.form.short_order = null
+        this.form.unit_name = null,
+        this.form.code_name = null,
+        this.form.unit_details = null,
+        this.form.status = null,
+        this.form.short_order = null
     },
 
     cancelForm: function(){
@@ -148,16 +145,12 @@ const App = {
 
     //CRUD FUNCTION
     getData: function(data){
-      axios.post('api/get-menu', data)
+      axios.post('api/get-product', data)
          .then(response => {
             if(response.status == 200){
               this.items = response.data.data
               this.meta = response.data.meta
-              let page = {};
-              for (let i = 0; i < this.meta.last_page; i++) {
-                page[i]= {'page' : i+1};
-              }
-              this.buttonPage = page
+              this.buttonPage = this.pageButton(this.meta.last_page)
             }else{
               notifError('Error')
             }
@@ -166,55 +159,42 @@ const App = {
             notifError('Error')
          })
     },
-    
+
     createData:function(e) {
-      this.loading = true
-      this.error = []
-      this.hasError = []
-      e.preventDefault()
-      if(!this.form.type) {
-        this.loading = false
-        this.error.type = "type is required";
-        this.hasError.type = true;
+      this.error = [];
+      this.hasError = [];
+      e.preventDefault();
+      if(!this.form.unit_name) {
+        this.error.unit_name = "type is required";
+        this.hasError.unit_name = true;
         
       }
-      else if(!this.form.label) {
-        this.loading = false
-        this.error.label = "Label is required";
-        this.hasError.label = true;
+      else if(!this.form.code_name) {
+        this.error.code_name = "Label is required";
+        this.hasError.code_name = true;
       }
-      else if(!this.form.link) {
-        this.loading = false
-        this.error.link= "Link is required";
-        this.hasError.link = true;
+      else if(!this.form.short_order) {
+        this.error.short_order= "Link is required";
+        this.hasError.short_order = true;
       }
       else if(!this.form.status) {
-        this.loading = false
         this.error.status= "Status is required";
         this.hasError.status = true;
       } else {
-        this.loading = true
         axios
-        .post('api/create-menu', this.form)
+        .post('api/create-product', this.form)
         .then(response => {
           if(response.status == 200){
-            this.loading = false
             this.items = response.data.data
             this.meta = response.data.meta
-            let page = {};
-            for (let i = 0; i < this.meta.last_page; i++) {
-              page[i]= {'page' : i+1};
-            }
-            this.buttonPage = page
+            this.buttonPage = this.pageButton(this.meta.last_page)
             this.resetForm()
             notifSuccess('Data berhasil disimpan')
           }else{
-            this.loading = false
             notifError('Data not found')
           }
         })
         .catch(error => {
-          this.loading = false
           console.log(error)
           this.errored = true
           notifError('Somethingelse')
@@ -226,15 +206,13 @@ const App = {
       this.show = true
       this.table.id = data
       this.submit = false
-      axios.post('api/show-menu', this.table).then(response => {
+      axios.post('api/show-product', this.table).then(response => {
         if(response.status == 200){
-          this.loading = false
-          this.form.id = response.data.id
-          this.form.type = response.data.type
-          this.form.parent_id = response.data.parent_id
-          this.form.label = response.data.label
-          this.form.link = response.data.route
-          this.form.icon = response.data.icon
+          
+          this.form.id = response.data.unit_id
+          this.form.unit_name = response.data.unit_name
+          this.form.code_name = response.data.code_name
+          this.form.unit_details = response.data.unit_details
           this.form.short_order = response.data.short_order
           this.form.status = response.data.status
 
@@ -248,27 +226,20 @@ const App = {
     },
 
     updateData: function(data){
-      this.loading = true
-      axios.post('api/update-menu', this.form).then(response => {
+      axios.post('api/update-product', this.form).then(response => {
         if(response.status == 200){
-          this.loading = false
           this.items = response.data.data
           this.meta = response.data.meta
           let page = {};
-          for (let i = 0; i < this.meta.last_page; i++) {
-            page[i]= {'page' : i+1};
-          }
-          this.buttonPage = page
+          this.buttonPage = this.pageButton(this.meta.last_page)
           this.resetForm()
           this.show = false
           notifSuccess('Data berhasil diupdate')
         }else{
-          this.loading = false
           notifError('Data gagal diupdate')
         }
       })
       .catch(error => {
-          this.loading = false
           notifError('Somethink else')
       })
     },
@@ -285,14 +256,10 @@ const App = {
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.isConfirmed) {
-          axios.post('api/delete-menu', this.table).then(response => {
+          axios.post('api/delete-product', this.table).then(response => {
               if(response.status == 200){
                 this.items = response.data.data
-                let page = {};
-                for (let i = 0; i < this.meta.last_page; i++) {
-                  page[i]= {'page' : i+1};
-                }
-                this.buttonPage = page
+                this.buttonPage = this.pageButton(this.meta.last_page)
                 notifSuccess('Data berhasil dihapus')
               }else{
                 notifError('Data gagal dihapus')
@@ -304,6 +271,7 @@ const App = {
         }
       })
     },
+    //END CRUD FUNCTION
   },
 
   mounted() {

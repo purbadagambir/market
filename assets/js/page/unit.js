@@ -1,6 +1,7 @@
 const App = {
   data() {
     return {
+      loading : false,
       show: false,
       submit : true,
       items : [],
@@ -10,7 +11,7 @@ const App = {
         keyword : '',
         perPage : 10,
         pageSelect : 1,
-        name : 'Menu',
+        name : 'Unit',
         id : null
       },
       meta : [],
@@ -40,6 +41,109 @@ const App = {
     }
   },
   methods:{
+    //TABLE FUNCTION
+    pageButton: function(data){
+      const page = {}
+      if(data > 5 && (data - 5) >  1){
+        if(this.table.pageSelect > 5 && this.table.pageSelect > 5 && this.table.pageSelect < (data - 3)){
+          page[0] = {'page' : 1}
+          page[1] = {'page' : '...'}
+          page[2] = {'page' : this.table.pageSelect}
+          page[3] = {'page' : '...'}
+          page[4] = {'page' : data}
+
+          return page;
+        }else if(this.table.pageSelect == data){
+          page[0] = {'page' : 1}
+          page[1] = {'page' : '...'}
+          for (let i = 2; i < 6; i++) {
+            page[i]= {'page' : i+(data - 5)};
+          }
+          return page;
+        }else if(this.table.pageSelect >= (data - 3) && this.table.pageSelect < data){
+          page[0] = {'page' : 1}
+          page[1] = {'page' : '...'}
+          for (let i = 2; i < 6; i++) {
+            page[i]= {'page' : i+(data - 5)};
+          }
+          return page;
+        }else{
+          for (let i = 0; i < 5; i++) {
+            page[i]= {'page' : i+1};
+          }
+          page[5] = {'page' : '...'}
+          page[6] = {'page' : data}
+          return page;
+        }
+      }else{
+        for (let i = 0; i < this.meta.last_page; i++) {
+          page[i]= {'page' : i+1};
+        }
+        return page;
+      }
+    },
+
+    entries: function(){
+      this.table.pageSelect = 1
+      this.getData(this.table)
+    },
+
+    search: function(column){
+      this.table.pageSelect = null
+      this.table.column = column
+      var value = document.getElementById(column).value
+      this.table.keyword = value
+
+      this.getData(this.table)
+    },
+
+    page: function(data){
+      this.table.pageSelect = data
+      this.getData(this.table)
+    },
+    
+    nextPage: function(){
+      if(this.table.pageSelect < this.meta.last_page)
+      {
+        this.table.pageSelect++
+        this.getData(this.table)
+      }
+    },
+
+    backPage: function(){
+      if(this.table.pageSelect > 1)
+      {
+        this.table.pageSelect--
+        this.getData(this.table)
+      }
+    },
+    //TABLE FUNCTION END
+
+    //FORM FUNCTION
+    resetForm: function () { 
+      this.form.unit_name = null,
+      this.form.code_name = null,
+      this.form.unit_details = null,
+      this.form.status = null,
+      this.form.short_order = null
+    },
+
+    cancelForm: function(){
+      this.show = false
+      this.submit = true
+      this.resetForm()
+    },
+    
+    openForm: function(){
+      this.show = true
+    },
+
+    closeForm: function(){
+      this.show = false
+    },
+    //END FORM FUNCTION
+
+    //CRUD FUNCTION
     getData: function(data){
       axios.post('api/get-unit', data)
          .then(response => {
@@ -58,14 +162,6 @@ const App = {
          .catch(error => {
             notifError('Error')
          })
-    },
-
-    resetForm: function () { 
-        this.form.unit_name = null,
-        this.form.code_name = null,
-        this.form.unit_details = null,
-        this.form.status = null,
-        this.form.short_order = null
     },
 
     createData:function(e) {
@@ -158,42 +254,7 @@ const App = {
           notifError('Somethink else')
       })
     },
-
-    entries: function(){
-      this.table.pageSelect = 1
-      this.getData(this.table)
-    },
-
-    search: function(column){
-      this.table.pageSelect = null
-      this.table.column = column
-      var value = document.getElementById(column).value
-      this.table.keyword = value
-
-      this.getData(this.table)
-    },
-
-    page: function(data){
-      this.table.pageSelect = data
-      this.getData(this.table)
-    },
     
-    nextPage: function(){
-      if(this.table.pageSelect < this.meta.last_page)
-      {
-        this.table.pageSelect++
-        this.getData(this.table)
-      }
-    },
-
-    backPage: function(){
-      if(this.table.pageSelect > 1)
-      {
-        this.table.pageSelect--
-        this.getData(this.table)
-      }
-    },
-
     deleteData: function(data){
       this.table.id = data
       Swal.fire({
@@ -225,13 +286,7 @@ const App = {
         }
       })
     },
-
-    openForm: function(){
-      this.show = true
-    },
-    closeForm: function(){
-      this.show = false
-    }
+    //END CRUD FUNCTION
   },
 
   mounted() {

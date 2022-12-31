@@ -53,6 +53,7 @@
     {
         $menu = MenuModel::where('parent_id', 0)
                             ->with('children')
+                            ->orderBy('short_order', 'ASC')
                             ->get();
         
         return $menu;

@@ -18,6 +18,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//PRODUCT-LIST
+Route::post('/get-product', 'API\ApiProductController@index');
+Route::post('/create-product', 'API\ApiProductController@store');
+Route::post('/show-product', 'API\ApiProductController@show');
+Route::post('/update-product', 'API\ApiProductController@update');
+Route::post('/delete-product', 'API\ApiProductController@delete');
+
+//PRODUCT-CATEGORY
+Route::post('/get-category', 'API\ApiCategoryController@index');
+Route::post('/create-category', 'API\ApiCategoryController@store');
+Route::post('/show-category', 'API\ApiCategoryController@show');
+Route::post('/update-category', 'API\ApiCategoryController@update');
+Route::post('/delete-category', 'API\ApiCategoryController@delete');
+
 //MENU
 Route::post('/get-menu', 'API\ApiMenuController@index');
 Route::post('/create-menu', 'API\ApiMenuController@store');
