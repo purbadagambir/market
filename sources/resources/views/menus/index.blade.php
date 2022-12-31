@@ -4,8 +4,8 @@
 
 
 @push('custom-style')
-<link rel="stylesheet" href="{{asset('assets/toastr/toastr.min.css')}}">
-<script src="{{asset('assets/sweetalert/xsweetalert.css')}}"></script>
+<link rel="stylesheet" href="assets/toastr/toastr.min.css">
+<script src="assets/sweetalert/xsweetalert.css"></script>
 @endpush
 
 <section class="content" id="app">
@@ -14,7 +14,7 @@
     <div v-if="!show" class="box-header with-border" @click="this.openForm">
       <div class="box-tools pull-left">
         <button type="button" class="btn btn-box-tool">
-          <i class="fa fa-plus"></i> <h1 class="box-title"> Add New Category</h1>
+          <i class="fa fa-plus"></i> <h1 class="box-title"> Add New @{{table.name}}</h1>
         </button>
       </div>
       <div class="box-tools pull-right">
@@ -26,7 +26,7 @@
     <div v-else="!show" class="box-header with-border" @click="this.closeForm">
       <div class="box-tools pull-left">
         <button type="button" class="btn btn-box-tool">
-          <i class="fa fa-minus"></i> <h1 class="box-title"> Add New Category</h1>
+          <i class="fa fa-minus"></i> <h1 class="box-title"> Add New @{{table.name}}</h1>
         </button>
       </div>
       <div class="box-tools pull-right">
@@ -224,15 +224,15 @@
 @endsection
 
 @push('custom-scripts')
-<script src="{{asset('assets/vue/vue.js')}}"></script>
-<script src="{{asset('assets/vue/table.js')}}"></script>
-<script src="{{asset('assets/vue/axios.js')}}"></script>
-<script src="{{asset('assets/sweetalert/xsweetalert.js')}}"></script>
-<script src="{{asset('assets/toastr/toastr.min.js')}}"></script>
-<script src="{{asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
-<script src="{{asset('assets/bower_components/PACE/pace.min.js')}}"></script>
-<script src="{{asset('assets/js/page/menu.js')}}"></script>
-<script src="{{asset('assets/js/page/app.js')}}"></script>
-<script src="{{asset('assets/js/notif.js')}}"></script>
+<script src="assets/vue/vue.js"></script>
+<script src="assets/vue/table.js"></script>
+<script src="assets/vue/axios.js"></script>
+<script src="assets/sweetalert/xsweetalert.js"></script>
+<script src="assets/toastr/toastr.min.js"></script>
+<script src="assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="assets/bower_components/PACE/pace.min.js"></script>
+<script src="assets/js/page/menu.js"></script>
+<script src="assets/js/page/app.js"></script>
+<script src="assets/js/notif.js"></script>
 @endpush

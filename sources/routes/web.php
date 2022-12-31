@@ -14,6 +14,7 @@ use App\Http\Livewire\Livewire;
 |
 */
 
+Route::get('/', 'MenuController@index')->name('dashboard');
 
 //PRODUK
 Route::get('/produk-list', 'productController@index')->name('product');
