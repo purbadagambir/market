@@ -19,6 +19,8 @@ Route::get('/', 'MenuController@index')->name('dashboard');
 //PRODUK
 Route::get('/produk-list', 'productController@index')->name('product');
 Route::get('/produk-unit', 'UnitController@index')->name('unit');
+Route::get('/produk-box', 'BoxController@index')->name('box');
+Route::get('/produk-category', 'CategoryController@index')->name('category');
 
 Route::get('/sistem-menu', 'MenuController@index')->name('menu');
 

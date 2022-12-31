@@ -32,6 +32,13 @@ Route::post('/show-category', 'API\ApiCategoryController@show');
 Route::post('/update-category', 'API\ApiCategoryController@update');
 Route::post('/delete-category', 'API\ApiCategoryController@delete');
 
+//PRODUCT-CATEGORY
+Route::post('/get-box', 'API\ApiBoxController@index');
+Route::post('/create-box', 'API\ApiBoxController@store');
+Route::post('/show-box', 'API\ApiBoxController@show');
+Route::post('/update-box', 'API\ApiBoxController@update');
+Route::post('/delete-box', 'API\ApiBoxController@delete');
+
 //MENU
 Route::post('/get-menu', 'API\ApiMenuController@index');
 Route::post('/create-menu', 'API\ApiMenuController@store');
