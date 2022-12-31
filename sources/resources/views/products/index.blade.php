@@ -13,7 +13,7 @@
     <div v-if="!show" class="box-header with-border" @click="this.openForm">
       <div class="box-tools pull-left">
         <button type="button" class="btn btn-box-tool">
-          <i class="fa fa-plus"></i> <h1 class="box-title"> Add New Category</h1>
+          <i class="fa fa-plus"></i> <h1 class="box-title"> Add New @{{table.name}}</h1>
         </button>
       </div>
       <div class="box-tools pull-right">
@@ -25,7 +25,7 @@
     <div v-else="!show" class="box-header with-border" @click="this.closeForm">
       <div class="box-tools pull-left">
         <button type="button" class="btn btn-box-tool">
-          <i class="fa fa-minus"></i> <h1 class="box-title"> Add New Unit</h1>
+          <i class="fa fa-minus"></i> <h1 class="box-title"> Add New @{{table.name}}</h1>
         </button>
       </div>
       <div class="box-tools pull-right">

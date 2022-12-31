@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class BoxController extends Controller
 {
     public function index()
     {
         $data = [
-            'page'  => 'Product',
+            'page'  => 'Box',
             'toko'  => 'Market 001'
         ];
-        return view('products.index', compact('data'));
+        return view('boxes.index', compact('data'));
     }
 }
