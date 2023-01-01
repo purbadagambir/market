@@ -35,10 +35,11 @@ class ApiCategoryController extends Controller
             
             $new_menu = [
                 'category_name'     => $request->category_name,
-                'category_slug'          => $request->category_slug,
-                'category_details'      => $request->category_details,
-                'status'        => $request->status,
-                'short_order'        => $request->short_order
+                'category_slug'     => $request->category_slug,
+                'category_details'  => $request->category_details,
+                'status'            => $request->status,
+                'short_order'       => $request->short_order,
+                'created_at'        => now(),
             ];
 
             $insert = CategoryModel::create($new_menu);
@@ -84,7 +85,8 @@ class ApiCategoryController extends Controller
             'category_slug'     => $request->category_slug,
             'category_details'  => $request->category_details,
             'status'            => $request->status,
-            'short_order'       => $request->short_order
+            'short_order'       => $request->short_order,
+            'updated_at'        => now(),
         ];
 
         $query = CategoryModel::where('category_id', $request->id)->update($data_update);
