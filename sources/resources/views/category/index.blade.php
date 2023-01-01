@@ -188,19 +188,14 @@
             <div class="col-sm-5">
               <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">Showing @{{this.meta.from}} to @{{this.meta.to}} of @{{this.meta.total}} entries</div>
             </div><div class="col-sm-7">
-              <div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate">
-                <ul class="pagination">
-                  <li class="paginate_button previous" id="datatable_previous" :class="{disabled : this.meta.current_page <= 1}" @click="this.backPage">
-                    <a aria-controls="datatable" data-dt-idx="0" tabindex="0">Previous</a>
-                  </li>
-                  <li class="paginate_button" v-for="pages in buttonPage" :class="{active : this.meta.current_page == pages.page}">
-                    <a aria-controls="datatable" data-dt-idx="1" tabindex="0" @click="this.page(pages.page)">@{{pages.page}}</a>
-                  </li>
-                  <li class="paginate_button next" id="datatable_next" :class="{disabled : this.table.pageSelect >= this.meta.last_page}" @click="this.nextPage">
-                    <a aria-controls="datatable" data-dt-idx="4" tabindex="0">Next</a>
-                  </li>
-                </ul>
-              </div>
+              <ul class="pagination pagination-sm no-margin pull-right">
+                <li :class="{disabled : this.meta.current_page <= 1}" @click="this.backPage"><a>&laquo;</a></li>
+                <li v-for="pages in buttonPage" :class="{active : this.meta.current_page == pages.page}">
+                  <a @click="this.page(pages.page)" v-if="pages.page != '...'">@{{pages.page}}</a>
+                  <a v-if="pages.page == '...'" disabled>@{{pages.page}}</a>
+                </li>
+                <li :class="{disabled : this.table.pageSelect >= this.meta.last_page}" @click="this.nextPage"><a>&raquo;</a></li>
+              </ul>
             </div>
           </div>
         </div>

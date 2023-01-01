@@ -4,21 +4,21 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use \App\Http\Resources\ProductResource;
-use App\Models\Product as ProductModel;
+use \App\Http\Resources\BrandResource;
+use App\Models\Brand as BrandModel;
 
-class ApiProductController extends Controller
+class ApiBrandController extends Controller
 {
     public function index(Request $request)
     {
         try {
-                $query = ProductModel::where($request->column, 'LIKE', '%' . $request->keyword . '%')
+                $query = BrandModel::where($request->column, 'LIKE', '%' . $request->keyword . '%')
                                     ->paginate(
                                         $perPage = $request->perPage, $columns = ['*'], 'page', $request->pageSelect
                                     );
-                $product = ProductResource::collection($query);
+                $brand = BrandResource::collection($query);
 
-                return $product;
+                return $brand;
         }catch(Exception $e){
             return response()->json($this->generate_response(
                 array(
@@ -34,23 +34,25 @@ class ApiProductController extends Controller
         try {
             
             $data_insert = [
-                'product_name'     => $request->product_name,
-                'code_name'          => $request->code_name,
-                'product_details'      => $request->product_details,
-                'status'        => $request->status
+                'brand_name'        => $request->brand_name,
+                'code_name'         => $request->code_name,
+                'brand_details'     => $request->brand_details,
+                'status'            => $request->status,
+                'short_order'       => $request->short_order,
+                'created_at'        => now(),
             ];
 
-            $insert = ProductModel::create($data_insert);
+            $insert = BrandModel::create($data_insert);
 
             if($insert)
             {
-                $query = ProductModel::where('Product_name', 'LIKE', '%' . $request->keyword . '%')
+                $query = BrandModel::where('brand_name', 'LIKE', '%' . $request->keyword . '%')
                                     ->paginate(
                                         $perPage = 10, $columns = ['*'], 'page', 1
                                     );
-                $Product = ProductResource::collection($query);
+                $brand = BrandResource::collection($query);
 
-                return $Product;
+                return $brand;
             } 
             else 
             {
@@ -71,7 +73,7 @@ class ApiProductController extends Controller
 
     public function show(Request $request)
     {
-        $query = ProductModel::where('Product_id', '=', $request->id)->first();
+        $query = BrandModel::where('brand_id', '=', $request->id)->first();
 
         return $query;
     }
@@ -80,23 +82,25 @@ class ApiProductController extends Controller
     {
 
         $data_update = [
-            "Product_name" => $request->Product_name,
-            "code_name" => $request->code_name,
-            "Product_details" => $request->Product_details,
-            "status" => $request->status
+            "brand_name"        => $request->brand_name,
+            "code_name"         => $request->code_name,
+            "brand_details"     => $request->brand_details,
+            "status"            => $request->status,
+            "short_order"       => $request->short_order,
+            "updated_at"        => now(),
         ];
 
-        $query = ProductModel::where('Product_id', $request->id)->update($data_update);
+        $query = BrandModel::where('brand_id', $request->id)->update($data_update);
 
         if($query)
         {
-            $query = ProductModel::where('Product_name', 'LIKE', '%' . $request->keyword . '%')
+            $query = BrandModel::where('brand_name', 'LIKE', '%' . $request->keyword . '%')
                                 ->paginate(
                                     $perPage = 10, $columns = ['*'], 'page', 1
                                 );
-            $Product = ProductResource::collection($query);
+            $brand = BrandResource::collection($query);
 
-            return $Product;
+            return $brand;
         } 
         else 
         {
@@ -111,16 +115,16 @@ class ApiProductController extends Controller
     {
         try 
         {
-            $result=ProductModel::where('Product_id',$request->id)->delete();
+            $result=BrandModel::where('brand_id',$request->id)->delete();
             if($request)
             {
-                $query = ProductModel::where($request->column, 'LIKE', '%' . $request->keyword . '%')
+                $query = BrandModel::where($request->column, 'LIKE', '%' . $request->keyword . '%')
                                     ->paginate(
                                         $perPage = $request->perPage, $columns = ['*'], 'page', $request->pageSelect
                                     );
-                $Product = ProductResource::collection($query);
+                $brand = BrandResource::collection($query);
 
-                return $Product;
+                return $brand;
             }
             else
             {
@@ -141,4 +145,3 @@ class ApiProductController extends Controller
         }
     }
 }
-

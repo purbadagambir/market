@@ -153,11 +153,7 @@ const App = {
               if(response.status == 200){
                 this.items = response.data.data
                 this.meta = response.data.meta
-                let page = {};
-                for (let i = 0; i < this.meta.last_page; i++) {
-                  page[i]= {'page' : i+1};
-                }
-                this.buttonPage = page
+                this.buttonPage = this.pageButton(this.meta.last_page)
               }else{
                 notifError('Error')
               }
@@ -194,11 +190,7 @@ const App = {
             if(response.status == 200){
               this.items = response.data.data
               this.meta = response.data.meta
-              let page = {};
-              for (let i = 0; i < this.meta.last_page; i++) {
-                page[i]= {'page' : i+1};
-              }
-              this.buttonPage = page
+              this.buttonPage = this.pageButton(this.meta.last_page)
               this.resetForm()
               notifSuccess('Data berhasil disimpan')
             }else{
@@ -241,11 +233,7 @@ const App = {
           if(response.status == 200){
             this.items = response.data.data
             this.meta = response.data.meta
-            let page = {};
-            for (let i = 0; i < this.meta.last_page; i++) {
-              page[i]= {'page' : i+1};
-            }
-            this.buttonPage = page
+            this.buttonPage = this.pageButton(this.meta.last_page)
             this.resetForm()
             this.show = false
             notifSuccess('Data berhasil diupdate')
@@ -273,11 +261,9 @@ const App = {
             axios.post('api/delete-category', this.table).then(response => {
                 if(response.status == 200){
                   this.items = response.data.data
-                  let page = {};
-                  for (let i = 0; i < this.meta.last_page; i++) {
-                    page[i]= {'page' : i+1};
-                  }
-                  this.buttonPage = page
+                  this.buttonPage = this.pageButton(this.meta.last_page)
+                  this.resetForm()
+                  this.show = false
                   notifSuccess('Data berhasil dihapus')
                 }else{
                   notifError('Data gagal dihapus')

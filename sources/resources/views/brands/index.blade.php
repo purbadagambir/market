@@ -40,28 +40,28 @@
       <div class="box-body">
         <form class="form-horizontal">
           <div class="box-body">
-            <div class="form-group" v-bind:class="{ 'has-error': hasError.box_name }">
-              <label for="categoryname" class="col-sm-3 control-label">Box Name*</label>
+            <div class="form-group" v-bind:class="{ 'has-error': hasError.brand_name }">
+              <label class="col-sm-3 control-label">Brand Name*</label>
               <div class="col-sm-7">
-                <input v-model="form.box_name" type="text" name="label" class="form-control" id="form_label">
-                <span v-if="error.box_name" class="help-block">@{{ error.box_name }}</span>
+                <input v-model="form.brand_name" type="text" name="label" class="form-control" id="form_label">
+                <span v-if="error.brand_name" class="help-block">@{{ error.brand_name }}</span>
               </div>
             </div>
             <div class="form-group" v-bind:class="{ 'has-error': hasError.code_name }">
-              <label for="categoryname" class="col-sm-3 control-label">Code Name*</label>
+              <label class="col-sm-3 control-label">Code Name*</label>
               <div class="col-sm-7">
                 <input v-model="form.code_name" type="text" name="link" class="form-control" id="form_link">
                 <span v-if="error.code_name" class="help-block">@{{ error.code_name }}</span>
               </div>
             </div>
             <div class="form-group">
-              <label for="categoryname" class="col-sm-3 control-label">Box Detail</label>
+              <label class="col-sm-3 control-label">Brand Detail</label>
               <div class="col-sm-7">
-                <textarea class="form-control" v-model="form.box_details" cols="10" rows="10"></textarea>
+                <textarea class="form-control" v-model="form.brand_details" cols="10" rows="10"></textarea>
               </div>
             </div>
             <div class="form-group" v-bind:class="{ 'has-error': hasError.status }">
-              <label for="categoryname" class="col-sm-3 control-label">Status</label>
+              <label class="col-sm-3 control-label">Status</label>
               <div class="col-sm-7">
               <select class="form-control select2" style="width: 100%;" name="status" v-model="form.status">
                   <option selected="selected" value="1">Active</option>
@@ -71,7 +71,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="categoryname" class="col-sm-3 control-label">Short Order</label>
+              <label class="col-sm-3 control-label">Short Order</label>
               <div class="col-sm-7">
                 <input v-model.number="form.short_order" type="number" name="short_order" class="form-control" id="short_order" min="1">
               </div>
@@ -121,27 +121,24 @@
                 <thead>
                   <tr role="row">
                     <th class="text-center">Id</th>
-                    <th>Unit Name</th>
-                    <th class="text-center">Unit Code</th>
-                    <th>Unit Detail</th>
+                    <th>Brand Name</th>
+                    <th class="text-center">Total Produk</th>
                     <th>Status</th>
                     <th class="text-center">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="text-center"><input type="text" id="box_id" v-on:keyup="this.search('box_id')"></td>
-                    <td class="text-center"><input type="text" id="box_name" v-on:keyup="this.search('box_name')"></td>
-                    <td><input type="text" id="code_name" v-on:keyup="this.search('code_name')"></td>
-                    <td><input type="text" id="box_details" v-on:keyup="this.search('box_details')"></td>
+                    <td class="text-center"><input type="text" id="brand_id" v-on:keyup="this.search('brand_id')"></td>
+                    <td><input type="text" id="brand_name" v-on:keyup="this.search('brand_name')"></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                   </tr>
                   <tr v-for="item in items">
-                    <td class="text-center">@{{item.box_id}}</td>
-                    <td class="text-center">@{{item.box_name}}</td>
-                    <td>@{{item.code_name}}</td>
-                    <td>@{{item.box_details}}</td>
+                    <td class="text-center">@{{item.brand_id}}</td>
+                    <td>@{{item.brand_name}}</td>
+                    <td></td>
                     <td>
                       <span class="badge btn-success" v-if="item.status == 1">Active</span>
                       <span class="badge btn-warning" v-else>Inactive</span>
@@ -152,8 +149,8 @@
                           . . .
                         </button>
                         <div class="dropdown-menu pull-right">
-                          <li @click="this.editData(item.box_id)"><a>Edit</a></li>
-                          <li @click="this.deleteData(item.box_id)"><a>Delete</a></li>
+                          <li @click="this.editData(item.brand_id)"><a>Edit</a></li>
+                          <li @click="this.deleteData(item.brand_id)"><a>Delete</a></li>
                         </div>
                       </div>
                     </td>
@@ -162,9 +159,8 @@
                 <tfoot>
                   <tr role="row">
                     <th class="text-center">Id</th>
-                    <th>Unit Name</th>
-                    <th class="text-center">Unit Code</th>
-                    <th>Unit Detail</th>
+                    <th>Brand Name</th>
+                    <th class="text-center">Total Produk</th>
                     <th>Status</th>
                     <th class="text-center">Action</th>
                   </tr>
@@ -173,10 +169,9 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-5 ">
+            <div class="col-sm-5">
               <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">Showing @{{this.meta.from}} to @{{this.meta.to}} of @{{this.meta.total}} entries</div>
-            </div>
-            <div class="col-sm-7">
+            </div><div class="col-sm-7">
               <ul class="pagination pagination-sm no-margin pull-right">
                 <li :class="{disabled : this.meta.current_page <= 1}" @click="this.backPage"><a>&laquo;</a></li>
                 <li v-for="pages in buttonPage" :class="{active : this.meta.current_page == pages.page}">
@@ -203,7 +198,7 @@
 <script src="assets/toastr/toastr.min.js"></script>
 <script src="assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="assets/js/page/box.js"></script>
+<script src="assets/js/page/brand.js"></script>
 <script src="assets/js/page/app.js"></script>
 <script src="assets/js/notif.js"></script>
 @endpush

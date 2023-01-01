@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class BrandController extends Controller
+class CurencyController extends Controller
 {
     public function index()
     {
         $data = [
-            'page'  => 'Brand',
+            'page'  => 'Curency',
             'toko'  => 'Market 001'
         ];
-        return view('brands.index', compact('data'));
+        return view('curency.index', compact('data'));
     }
 }

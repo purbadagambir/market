@@ -33,7 +33,7 @@ class ApiBoxController extends Controller
     {
         try {
             
-            $new_menu = [
+            $data_insert = [
                 'box_name'     => $request->box_name,
                 'code_name'          => $request->code_name,
                 'box_details'      => $request->box_details,
@@ -41,7 +41,7 @@ class ApiBoxController extends Controller
                 'short_order'        => $request->short_order
             ];
 
-            $insert = BoxModel::create($new_menu);
+            $insert = BoxModel::create($data_insert);
 
             if($insert)
             {
