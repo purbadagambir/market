@@ -33,7 +33,7 @@ class ApiCategoryController extends Controller
     {
         try {
             
-            $new_menu = [
+            $data_insert = [
                 'category_name'     => $request->category_name,
                 'category_slug'          => $request->category_slug,
                 'category_details'      => $request->category_details,
@@ -41,7 +41,7 @@ class ApiCategoryController extends Controller
                 'short_order'        => $request->short_order
             ];
 
-            $insert = CategoryModel::create($new_menu);
+            $insert = CategoryModel::create($data_insert);
 
             if($insert)
             {

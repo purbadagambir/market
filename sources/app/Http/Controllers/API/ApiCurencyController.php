@@ -4,21 +4,21 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use \App\Http\Resources\ProductResource;
-use App\Models\Product as ProductModel;
+use \App\Http\Resources\CurencyResource;
+use App\Models\Currency as CurencyModel;
 
-class ApiProductController extends Controller
+class ApiCurencyController extends Controller
 {
     public function index(Request $request)
     {
         try {
-                $query = ProductModel::where($request->column, 'LIKE', '%' . $request->keyword . '%')
+                $query = CurencyModel::where($request->column, 'LIKE', '%' . $request->keyword . '%')
                                     ->paginate(
                                         $perPage = $request->perPage, $columns = ['*'], 'page', $request->pageSelect
                                     );
-                $product = ProductResource::collection($query);
+                $curency = CurencyResource::collection($query);
 
-                return $product;
+                return $curency;
         }catch(Exception $e){
             return response()->json($this->generate_response(
                 array(
@@ -34,23 +34,27 @@ class ApiProductController extends Controller
         try {
             
             $data_insert = [
-                'product_name'     => $request->product_name,
-                'code_name'          => $request->code_name,
-                'product_details'      => $request->product_details,
-                'status'        => $request->status
+                'title'        => $request->title,
+                'code'         => $request->code,
+                'symbol_left'     => $request->symbol_left,
+                'symbol_right'     => $request->symbol_right,
+                'decimal_place'     => $request->decimal_place,
+                'status'            => $request->status,
+                'short_order'       => $request->short_order,
+                'created_at'        => now(),
             ];
 
-            $insert = ProductModel::create($data_insert);
+            $insert = CurencyModel::create($data_insert);
 
             if($insert)
             {
-                $query = ProductModel::where('Product_name', 'LIKE', '%' . $request->keyword . '%')
+                $query = CurencyModel::where('title', 'LIKE', '%' . $request->keyword . '%')
                                     ->paginate(
                                         $perPage = 10, $columns = ['*'], 'page', 1
                                     );
-                $Product = ProductResource::collection($query);
+                $curency = CurencyResource::collection($query);
 
-                return $Product;
+                return $curency;
             } 
             else 
             {
@@ -71,7 +75,7 @@ class ApiProductController extends Controller
 
     public function show(Request $request)
     {
-        $query = ProductModel::where('Product_id', '=', $request->id)->first();
+        $query = CurencyModel::where('currency_id', '=', $request->id)->first();
 
         return $query;
     }
@@ -80,23 +84,26 @@ class ApiProductController extends Controller
     {
 
         $data_update = [
-            "Product_name" => $request->Product_name,
-            "code_name" => $request->code_name,
-            "Product_details" => $request->Product_details,
-            "status" => $request->status
+            'title'             => $request->title,
+            'code'              => $request->code,
+            'symbol_left'       => $request->symbol_left,
+            'symbol_right'      => $request->symbol_right,
+            'decimal_place'     => $request->decimal_place,
+            'status'            => $request->status,
+            'short_order'       => $request->short_order
         ];
 
-        $query = ProductModel::where('Product_id', $request->id)->update($data_update);
+        $query = CurencyModel::where('currency_id', $request->id)->update($data_update);
 
         if($query)
         {
-            $query = ProductModel::where('Product_name', 'LIKE', '%' . $request->keyword . '%')
+            $query = CurencyModel::where('title', 'LIKE', '%' . $request->keyword . '%')
                                 ->paginate(
                                     $perPage = 10, $columns = ['*'], 'page', 1
                                 );
-            $Product = ProductResource::collection($query);
+            $curency = CurencyResource::collection($query);
 
-            return $Product;
+            return $curency;
         } 
         else 
         {
@@ -111,16 +118,16 @@ class ApiProductController extends Controller
     {
         try 
         {
-            $result=ProductModel::where('Product_id',$request->id)->delete();
+            $result=CurencyModel::where('currency_id',$request->id)->delete();
             if($request)
             {
-                $query = ProductModel::where($request->column, 'LIKE', '%' . $request->keyword . '%')
+                $query = CurencyModel::where($request->column, 'LIKE', '%' . $request->keyword . '%')
                                     ->paginate(
                                         $perPage = $request->perPage, $columns = ['*'], 'page', $request->pageSelect
                                     );
-                $Product = ProductResource::collection($query);
+                $curency = CurencyResource::collection($query);
 
-                return $Product;
+                return $curency;
             }
             else
             {
@@ -141,4 +148,3 @@ class ApiProductController extends Controller
         }
     }
 }
-

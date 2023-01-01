@@ -4,8 +4,8 @@
 
 
 @push('custom-style')
-<link rel="stylesheet" href="{{asset('assets/toastr/toastr.min.css')}}">
-<script src="{{asset('assets/sweetalert/xsweetalert.css')}}"></script>
+<link rel="stylesheet" href="assets/toastr/toastr.min.css">
+<script src="assets/sweetalert/xsweetalert.css"></script>
 @endpush
 
 <section class="content" id="app">
@@ -40,28 +40,41 @@
       <div class="box-body">
         <form class="form-horizontal">
           <div class="box-body">
-            <div class="form-group" v-bind:class="{ 'has-error': hasError.unit_name }">
-              <label for="categoryname" class="col-sm-3 control-label">Unit Name*</label>
+            <div class="form-group" v-bind:class="{ 'has-error': hasError.title }">
+              <label class="col-sm-3 control-label">Title<span class="text-danger">*</span></label>
               <div class="col-sm-7">
-                <input v-model="form.unit_name" type="text" name="label" class="form-control" id="form_label">
-                <span v-if="error.unit_name" class="help-block">@{{ error.unit_name }}</span>
+                <input v-model="form.title" type="text" name="label" class="form-control" id="form_label">
+                <span v-if="error.title" class="help-block">@{{ error.title }}</span>
               </div>
             </div>
-            <div class="form-group" v-bind:class="{ 'has-error': hasError.code_name }">
-              <label for="categoryname" class="col-sm-3 control-label">Code Name*</label>
+            <div class="form-group" v-bind:class="{ 'has-error': hasError.code }">
+              <label class="col-sm-3 control-label">Code<span class="text-danger">*</span></label>
               <div class="col-sm-7">
-                <input v-model="form.code_name" type="text" name="link" class="form-control" id="form_link">
-                <span v-if="error.code_name" class="help-block">@{{ error.code_name }}</span>
+                <input v-model="form.code" type="text" name="link" class="form-control" id="form_link">
+                <span v-if="error.code" class="help-block">@{{ error.code }}</span>
               </div>
             </div>
             <div class="form-group">
-              <label for="categoryname" class="col-sm-3 control-label">Unit Detail</label>
+              <label class="col-sm-3 control-label">Symbol Left</label>
               <div class="col-sm-7">
-                <textarea class="form-control" v-model="form.unit_details" cols="10" rows="10"></textarea>
+                <input v-model="form.symbol_left" type="text" name="link" class="form-control" id="form_link">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Symbol Right</label>
+              <div class="col-sm-7">
+                <input v-model="form.symbol_right" type="text" name="link" class="form-control" id="form_link">
+              </div>
+            </div>
+            <div class="form-group" v-bind:class="{ 'has-error': hasError.decimal_place }">
+              <label class="col-sm-3 control-label">Decimal Place<span class="text-danger">*</span></label>
+              <div class="col-sm-7">
+                <input v-model="form.decimal_place" type="number" name="label" class="form-control" id="form_label">
+                <span v-if="error.decimal_place" class="help-block">@{{ error.decimal_place }}</span>
               </div>
             </div>
             <div class="form-group" v-bind:class="{ 'has-error': hasError.status }">
-              <label for="categoryname" class="col-sm-3 control-label">Status</label>
+              <label class="col-sm-3 control-label">Status <span class="text-danger">*</span></label>
               <div class="col-sm-7">
               <select class="form-control select2" style="width: 100%;" name="status" v-model="form.status">
                   <option selected="selected" value="1">Active</option>
@@ -71,7 +84,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="categoryname" class="col-sm-3 control-label">Short Order</label>
+              <label class="col-sm-3 control-label">Short Order</label>
               <div class="col-sm-7">
                 <input v-model.number="form.short_order" type="number" name="short_order" class="form-control" id="short_order" min="1">
               </div>
@@ -121,30 +134,36 @@
                 <thead>
                   <tr role="row">
                     <th class="text-center">Id</th>
-                    <th>Unit Name</th>
-                    <th class="text-center">Unit Code</th>
-                    <th>Unit Detail</th>
+                    <th>Title</th>
+                    <th class="text-center">Code</th>
+                    <th class="text-center">Symbol Left</th>
+                    <th class="text-center">Symbol Right</th>
+                    <th class="text-center">Decimal Place</th>
                     <th>Status</th>
                     <th class="text-center">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="text-center"><input type="text" id="unit_id" v-on:keyup="this.search('unit_id')"></td>
-                    <td class="text-center"><input type="text" id="unit_name" v-on:keyup="this.search('unit_name')"></td>
-                    <td><input type="text" id="code_name" v-on:keyup="this.search('code_name')"></td>
-                    <td><input type="text" id="unit_details" v-on:keyup="this.search('unit_details')"></td>
+                    <td class="text-center"><input type="text" id="currency_id" v-on:keyup="this.search('currency_id')"></td>
+                    <td><input type="text" id="title" v-on:keyup="this.search('title')"></td>
+                    <td><input type="text" id="code" v-on:keyup="this.search('code')"></td>
+                    <td><input type="text" id="symbol_left" v-on:keyup="this.search('symbol_left')"></td>
+                    <td><input type="text" id="symbol_right" v-on:keyup="this.search('symbol_right')"></td>
+                    <td><input type="text" id="decimal" v-on:keyup="this.search('decimal')"></td>
                     <td></td>
                     <td></td>
                   </tr>
                   <tr v-for="item in items">
-                    <td class="text-center">@{{item.unit_id}}</td>
-                    <td class="text-center">@{{item.unit_name}}</td>
-                    <td>@{{item.code_name}}</td>
-                    <td>@{{item.unit_details}}</td>
+                    <td class="text-center">@{{item.currency_id}}</td>
+                    <td>@{{item.title}}</td>
+                    <td>@{{item.code}}</td>
+                    <td>@{{item.symbol_left}}</td>
+                    <td>@{{item.symbol_right}}</td>
+                    <td>@{{item.decimal}}</td>
                     <td>
-                      <span class="badge btn-success" v-if="item.status == 1">Active</span>
-                      <span class="badge btn-warning" v-else>Inactive</span>
+                      <span class="badge btn-info" v-if="item.status == 1">Enabled</span>
+                      <span class="badge btn-warning" v-else>Disabled</span>
                     </td>
                     <td class="text-center">
                       <div class="btn-group">
@@ -152,8 +171,8 @@
                           . . .
                         </button>
                         <div class="dropdown-menu pull-right">
-                          <li @click="this.editData(item.unit_id)"><a>Edit</a></li>
-                          <li @click="this.deleteData(item.unit_id)"><a>Delete</a></li>
+                          <li @click="this.editData(item.currency_id)"><a>Edit</a></li>
+                          <li @click="this.deleteData(item.currency_id)"><a>Delete</a></li>
                         </div>
                       </div>
                     </td>
@@ -162,9 +181,11 @@
                 <tfoot>
                   <tr role="row">
                     <th class="text-center">Id</th>
-                    <th>Unit Name</th>
-                    <th class="text-center">Unit Code</th>
-                    <th>Unit Detail</th>
+                    <th>Title</th>
+                    <th class="text-center">Code</th>
+                    <th class="text-center">Symbol Left</th>
+                    <th class="text-center">Symbol Right</th>
+                    <th class="text-center">Decimal Place</th>
                     <th>Status</th>
                     <th class="text-center">Action</th>
                   </tr>
@@ -195,14 +216,14 @@
 @endsection
 
 @push('custom-scripts')
-<script src="{{asset('assets/vue/vue.js')}}"></script>
-<script src="{{asset('assets/vue/table.js')}}"></script>
-<script src="{{asset('assets/vue/axios.js')}}"></script>
-<script src="{{asset('assets/sweetalert/xsweetalert.js')}}"></script>
-<script src="{{asset('assets/toastr/toastr.min.js')}}"></script>
-<script src="{{asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
-<script src="{{asset('assets/js/page/unit.js')}}"></script>
-<script src="{{asset('assets/js/page/app.js')}}"></script>
-<script src="{{asset('assets/js/notif.js')}}"></script>
+<script src="assets/vue/vue.js"></script>
+<script src="assets/vue/table.js"></script>
+<script src="assets/vue/axios.js"></script>
+<script src="assets/sweetalert/xsweetalert.js"></script>
+<script src="assets/toastr/toastr.min.js"></script>
+<script src="assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="assets/js/page/curency.js"></script>
+<script src="assets/js/page/app.js"></script>
+<script src="assets/js/notif.js"></script>
 @endpush

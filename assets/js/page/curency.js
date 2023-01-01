@@ -7,36 +7,36 @@ const App = {
       items : [],
       entriesOption : [{'value' : 10},{'value' : 25},{'value' : 50}, {'value' : 100}],
       table : {
-        column : 'p_name',
+        column : 'title',
         keyword : '',
         perPage : 10,
         pageSelect : 1,
-        name : 'Product',
+        name : 'Curency',
         id : null
       },
       meta : [],
       buttonPage : [],
       form:{
         id : null,
-        unit_name : null,
-        code_name : null,
-        unit_details : null,
+        title : null,
+        code : null,
+        symbol_left : '-',
+        symbol_right : '-',
+        decimal_place : null,
         status : null,
         short_order : null
       },
       hasError : {
-        unit_name : false,
-        code_name : false,
-        unit_details : false,
-        status : false,
-        short_order : false
+        title : false,
+        code : false,
+        decimal_place : false,
+        status : false
       },
       error: {
-        unit_name : false,
-        code_name : false,
-        unit_details : false,
-        status : false,
-        short_order : false
+        title : false,
+        code : false,
+        decimal_place : false,
+        status : false
       },
     }
   },
@@ -118,14 +118,16 @@ const App = {
       }
     },
     //TABLE FUNCTION END
-    
+
     //FORM FUNCTION
     resetForm: function () { 
-        this.form.unit_name = null,
-        this.form.code_name = null,
-        this.form.unit_details = null,
-        this.form.status = null,
-        this.form.short_order = null
+      this.form.title = null,
+      this.form.code = null,
+      this.form.symbol_left = null,
+      this.form.symbol_right = null,
+      this.form.decimal_place = null,
+      this.form.status = null,
+      this.form.short_order = null
     },
 
     cancelForm: function(){
@@ -145,7 +147,7 @@ const App = {
 
     //CRUD FUNCTION
     getData: function(data){
-      axios.post('api/get-product', data)
+      axios.post('api/get-curency', data)
          .then(response => {
             if(response.status == 200){
               this.items = response.data.data
@@ -164,25 +166,26 @@ const App = {
       this.error = [];
       this.hasError = [];
       e.preventDefault();
-      if(!this.form.unit_name) {
-        this.error.unit_name = "type is required";
-        this.hasError.unit_name = true;
+      if(!this.form.title) {
+        this.error.title = "type is required";
+        this.hasError.title = true;
         
       }
-      else if(!this.form.code_name) {
-        this.error.code_name = "Label is required";
-        this.hasError.code_name = true;
+      else if(!this.form.code) {
+        this.error.code = "Label is required";
+        this.hasError.code = true;
       }
-      else if(!this.form.short_order) {
-        this.error.short_order= "Link is required";
-        this.hasError.short_order = true;
+      else if(!this.form.decimal_place) {
+        this.error.decimal_place = "Label is required";
+        this.hasError.decimal_place = true;
       }
       else if(!this.form.status) {
         this.error.status= "Status is required";
         this.hasError.status = true;
-      } else {
+      }
+      else {
         axios
-        .post('api/create-product', this.form)
+        .post('api/create-curency', this.form)
         .then(response => {
           if(response.status == 200){
             this.items = response.data.data
@@ -206,13 +209,15 @@ const App = {
       this.show = true
       this.table.id = data
       this.submit = false
-      axios.post('api/show-product', this.table).then(response => {
+      axios.post('api/show-curency', this.table).then(response => {
         if(response.status == 200){
           
-          this.form.id = response.data.unit_id
-          this.form.unit_name = response.data.unit_name
-          this.form.code_name = response.data.code_name
-          this.form.unit_details = response.data.unit_details
+          this.form.id = response.data.currency_id
+          this.form.title = response.data.title
+          this.form.code = response.data.code
+          this.form.symbol_left = response.data.symbol_left
+          this.form.symbol_right = response.data.symbol_right
+          this.form.decimal_place = response.data.decimal_place
           this.form.short_order = response.data.short_order
           this.form.status = response.data.status
 
@@ -226,11 +231,10 @@ const App = {
     },
 
     updateData: function(data){
-      axios.post('api/update-product', this.form).then(response => {
+      axios.post('api/update-curency', this.form).then(response => {
         if(response.status == 200){
           this.items = response.data.data
           this.meta = response.data.meta
-          let page = {};
           this.buttonPage = this.pageButton(this.meta.last_page)
           this.resetForm()
           this.show = false
@@ -243,7 +247,7 @@ const App = {
           notifError('Somethink else')
       })
     },
-
+    
     deleteData: function(data){
       this.table.id = data
       Swal.fire({
@@ -256,7 +260,7 @@ const App = {
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.isConfirmed) {
-          axios.post('api/delete-product', this.table).then(response => {
+          axios.post('api/delete-curency', this.table).then(response => {
               if(response.status == 200){
                 this.items = response.data.data
                 this.buttonPage = this.pageButton(this.meta.last_page)

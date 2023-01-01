@@ -7,34 +7,34 @@ const App = {
       items : [],
       entriesOption : [{'value' : 10},{'value' : 25},{'value' : 50}, {'value' : 100}],
       table : {
-        column : 'p_name',
+        column : 'brand_name',
         keyword : '',
         perPage : 10,
         pageSelect : 1,
-        name : 'Product',
+        name : 'Merk',
         id : null
       },
       meta : [],
       buttonPage : [],
       form:{
         id : null,
-        unit_name : null,
+        brand_name : null,
         code_name : null,
-        unit_details : null,
+        brand_details : null,
         status : null,
         short_order : null
       },
       hasError : {
-        unit_name : false,
+        brand_name : false,
         code_name : false,
-        unit_details : false,
+        brand_details : false,
         status : false,
         short_order : false
       },
       error: {
-        unit_name : false,
+        brand_name : false,
         code_name : false,
-        unit_details : false,
+        brand_details : false,
         status : false,
         short_order : false
       },
@@ -118,14 +118,14 @@ const App = {
       }
     },
     //TABLE FUNCTION END
-    
+
     //FORM FUNCTION
     resetForm: function () { 
-        this.form.unit_name = null,
-        this.form.code_name = null,
-        this.form.unit_details = null,
-        this.form.status = null,
-        this.form.short_order = null
+      this.form.brand_name = null,
+      this.form.code_name = null,
+      this.form.brand_details = null,
+      this.form.status = null,
+      this.form.short_order = null
     },
 
     cancelForm: function(){
@@ -145,7 +145,7 @@ const App = {
 
     //CRUD FUNCTION
     getData: function(data){
-      axios.post('api/get-product', data)
+      axios.post('api/get-brand', data)
          .then(response => {
             if(response.status == 200){
               this.items = response.data.data
@@ -164,9 +164,9 @@ const App = {
       this.error = [];
       this.hasError = [];
       e.preventDefault();
-      if(!this.form.unit_name) {
-        this.error.unit_name = "type is required";
-        this.hasError.unit_name = true;
+      if(!this.form.brand_name) {
+        this.error.brand_name = "type is required";
+        this.hasError.brand_name = true;
         
       }
       else if(!this.form.code_name) {
@@ -182,7 +182,7 @@ const App = {
         this.hasError.status = true;
       } else {
         axios
-        .post('api/create-product', this.form)
+        .post('api/create-brand', this.form)
         .then(response => {
           if(response.status == 200){
             this.items = response.data.data
@@ -206,13 +206,13 @@ const App = {
       this.show = true
       this.table.id = data
       this.submit = false
-      axios.post('api/show-product', this.table).then(response => {
+      axios.post('api/show-brand', this.table).then(response => {
         if(response.status == 200){
           
-          this.form.id = response.data.unit_id
-          this.form.unit_name = response.data.unit_name
+          this.form.id = response.data.brand_id
+          this.form.brand_name = response.data.brand_name
           this.form.code_name = response.data.code_name
-          this.form.unit_details = response.data.unit_details
+          this.form.brand_details = response.data.brand_details
           this.form.short_order = response.data.short_order
           this.form.status = response.data.status
 
@@ -226,11 +226,10 @@ const App = {
     },
 
     updateData: function(data){
-      axios.post('api/update-product', this.form).then(response => {
+      axios.post('api/update-brand', this.form).then(response => {
         if(response.status == 200){
           this.items = response.data.data
           this.meta = response.data.meta
-          let page = {};
           this.buttonPage = this.pageButton(this.meta.last_page)
           this.resetForm()
           this.show = false
@@ -243,7 +242,7 @@ const App = {
           notifError('Somethink else')
       })
     },
-
+    
     deleteData: function(data){
       this.table.id = data
       Swal.fire({
@@ -256,7 +255,7 @@ const App = {
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.isConfirmed) {
-          axios.post('api/delete-product', this.table).then(response => {
+          axios.post('api/delete-brand', this.table).then(response => {
               if(response.status == 200){
                 this.items = response.data.data
                 this.buttonPage = this.pageButton(this.meta.last_page)

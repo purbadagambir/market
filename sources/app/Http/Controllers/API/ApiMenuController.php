@@ -9,33 +9,6 @@ use App\Models\Menu as MenuModel;
 
 class ApiMenuController extends Controller
 {
-    public function tes()
-    {
-        $point = [
-            "customer_mobile_number"     => '081375613794',
-            "total_point"               => 500
-        ];
-
-        $apiURL = 'https://pondo.co.id/restfull/api/sales/insertes';
-       // POST Data
-       $postInput = json_decode($point, true);
- 
-       // Headers
-       $headers = [
-       ];
- 
-       $response = Http::withHeaders($headers)->post($apiURL, $postInput);  
-       $statusCode = $response->status();
-       $responseBody = json_decode($response->getBody(), true);
-     
-       $dataBody = $responseBody['data'];  // status code
-
-       $dataEncode = json_encode($dataBody, true);
-       $dataDecode = json_decode($dataEncode, true);
-
-       return $dataDecode;
-    }
-
     public function index(Request $request)
     {
         try {
@@ -75,7 +48,7 @@ class ApiMenuController extends Controller
             $capital = strtoupper($str);
             $menu_key = str_replace(" ", "_", $capital);
 
-            $new_menu = [
+            $data_insert = [
                 'parent_id'     => $request->parent_id,
                 'type'          => $request->type,
                 'menu_key'      => $menu_key,
@@ -87,7 +60,7 @@ class ApiMenuController extends Controller
                 'created_at'    => now(),
             ];
 
-            $insert = MenuModel::create($new_menu);
+            $insert = MenuModel::create($data_insert);
 
             if($insert)
             {

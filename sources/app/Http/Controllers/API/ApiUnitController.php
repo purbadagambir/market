@@ -33,14 +33,14 @@ class ApiUnitController extends Controller
     {
         try {
             
-            $new_menu = [
+            $data_insert = [
                 'unit_name'     => $request->unit_name,
                 'code_name'          => $request->code_name,
                 'unit_details'      => $request->unit_details,
                 'status'        => $request->status
             ];
 
-            $insert = UnitModel::create($new_menu);
+            $insert = UnitModel::create($data_insert);
 
             if($insert)
             {
