@@ -4,8 +4,8 @@
 
 
 @push('custom-style')
-<link rel="stylesheet" href="{{asset('assets/toastr/toastr.min.css')}}">
-<script src="{{asset('assets/sweetalert/xsweetalert.css')}}"></script>
+<link rel="stylesheet" href="assets/toastr/toastr.min.css">
+<script src="assets/sweetalert/xsweetalert.css"></script>
 @endpush
 
 <section class="content" id="app">
@@ -219,15 +219,15 @@
 @endsection
 
 @push('custom-scripts')
-<script src="{{asset('assets/vue/vue.js')}}"></script>
-<script src="{{asset('assets/vue/table.js')}}"></script>
-<script src="{{asset('assets/vue/axios.js')}}"></script>
-<script src="{{asset('assets/sweetalert/xsweetalert.js')}}"></script>
-<script src="{{asset('assets/toastr/toastr.min.js')}}"></script>
-<script src="{{asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
-<script src="{{asset('assets/bower_components/PACE/pace.min.js')}}"></script>
-<script src="{{asset('assets/js/page/menu.js')}}"></script>
-<script src="{{asset('assets/js/page/app.js')}}"></script>
-<script src="{{asset('assets/js/notif.js')}}"></script>
+<script src="assets/vue/vue.js"></script>
+<script src="assets/vue/table.js"></script>
+<script src="assets/vue/axios.js"></script>
+<script src="assets/sweetalert/xsweetalert.js"></script>
+<script src="assets/toastr/toastr.min.js"></script>
+<script src="assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="assets/bower_components/PACE/pace.min.js"></script>
+<script src="assets/js/page/menu.js"></script>
+<script src="assets/js/page/app.js"></script>
+<script src="assets/js/notif.js"></script>
 @endpush

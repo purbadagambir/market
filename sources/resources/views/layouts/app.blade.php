@@ -92,7 +92,11 @@
 </script>
 <!-- Bootstrap 3.3.7 -->
 <script src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<<<<<<< HEAD
 <!-- Morris.js')}} charts -->
+=======
+<!-- Morris.js charts -->
+>>>>>>> 8fe3c96b63622bfeee332f54a2bb1a825faeb61d
 <!-- <script src="assets/bower_components/raphael/raphael.min.js"></script>
 <script src="assets/bower_components/morris.min.js"></script> -->
 <!-- Sparkline -->
@@ -121,6 +125,12 @@
 <script src="assets/dist/js/demo.js"></script>
 
 <script src="assets/bower_components/select2/dist/js/select2.full.min.js"></script>
+<<<<<<< HEAD
+=======
+<script src="assets/vue/vue.js"></script>
+<script src="assets/vue/axios.js"></script>
+<script src="assets/vue/grid.js"></script>
+>>>>>>> 8fe3c96b63622bfeee332f54a2bb1a825faeb61d
 @stack('custom-scripts')
 </body>
 </html>
