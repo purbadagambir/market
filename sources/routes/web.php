@@ -14,12 +14,10 @@ use App\Http\Livewire\Livewire;
 |
 */
 
-<<<<<<< HEAD
+
 //DASHBOARD
-Route::get('/', 'MenuController@index')->name('menu');
-=======
 Route::get('/', 'MenuController@index')->name('dashboard');
->>>>>>> 8fe3c96b63622bfeee332f54a2bb1a825faeb61d
+
 
 //PRODUK
 Route::get('/produk-list', 'productController@index')->name('product');

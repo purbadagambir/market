@@ -11,7 +11,7 @@
 <section class="content" id="app">
   <div v-if="loading" class="text-primary" style="padding-left:45%; font-size: 20px;"><i class="fa fa-spin fa-refresh"></i>&nbsp loading...</div>
   <div v-if="!loading">
-    <div class="box box-info" v-bind:class="{ 'collapsed-box': !show }">
+    <div class="box box-success" v-bind:class="{ 'collapsed-box': !show }">
       <div v-if="!show" class="box-header with-border" @click="this.openForm">
         <div class="box-tools pull-left">
           <button type="button" class="btn btn-box-tool">
@@ -119,7 +119,7 @@
             <div class="col-sm-12">
               <table id="datatable" class="table table-bordered table-striped">
                 <thead>
-                  <tr role="row">
+                  <tr role="row" class="bg-gray">
                     <th class="text-center">Id</th>
                     <th>Unit Name</th>
                     <th class="text-center">Unit Code</th>
@@ -127,16 +127,16 @@
                     <th>Status</th>
                     <th class="text-center">Action</th>
                   </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="text-center"><input type="text" id="box_id" v-on:keyup="this.search('box_id')"></td>
-                    <td class="text-center"><input type="text" id="box_name" v-on:keyup="this.search('box_name')"></td>
-                    <td><input type="text" id="code_name" v-on:keyup="this.search('code_name')"></td>
-                    <td><input type="text" id="box_details" v-on:keyup="this.search('box_details')"></td>
+                  <tr class="bg-info">
+                    <td class="text-center"><input class="form-control input-sm" type="text" id="box_id" v-on:keyup="this.search('box_id')"></td>
+                    <td class="text-center"><input class="form-control input-sm" type="text" id="box_name" v-on:keyup="this.search('box_name')"></td>
+                    <td><input class="form-control input-sm" type="text" id="code_name" v-on:keyup="this.search('code_name')"></td>
+                    <td><input class="form-control input-sm" type="text" id="box_details" v-on:keyup="this.search('box_details')"></td>
                     <td></td>
                     <td></td>
                   </tr>
+                </thead>
+                <tbody>
                   <tr v-for="item in items">
                     <td class="text-center">@{{item.box_id}}</td>
                     <td class="text-center">@{{item.box_name}}</td>
@@ -160,7 +160,7 @@
                   </tr>
                 </tbody>
                 <tfoot>
-                  <tr role="row">
+                  <tr role="row" class="bg-gray">
                     <th class="text-center">Id</th>
                     <th>Unit Name</th>
                     <th class="text-center">Unit Code</th>
