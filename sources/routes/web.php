@@ -16,13 +16,13 @@ use App\Http\Livewire\Livewire;
 
 
 //DASHBOARD
-<<<<<<< HEAD
-Route::get('/', 'MenuController@index')->name('dashboard');
-
-=======
 Route::get('/', 'DashboardController@index')->name('dashboard');
 Route::get('/dashboard', 'DashboardController@index');
->>>>>>> 3a4d4ffe077f5d90467eb069b7cd43d543193bb4
+
+//SELL
+Route::get('/sell-list', 'SellController@index')->name('sell-list');
+Route::get('/return-list', 'SellController@return_list')->name('return-list');
+Route::get('/sell-log', 'SellController@sell_log')->name('sell-log');
 
 //PRODUK
 Route::get('/produk-list', 'productController@index')->name('product');

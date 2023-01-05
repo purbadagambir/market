@@ -13,6 +13,6 @@ class UnitController extends Controller
             'page'  => 'Unit',
             'toko'  => 'Market 001'
         ];
-        return view('units.index', compact('data'));
+        return view('units.unit', compact('data'));
     }
 }

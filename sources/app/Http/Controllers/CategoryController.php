@@ -12,6 +12,6 @@ class CategoryController extends Controller
             'page'  => 'Category',
             'toko'  => 'Market 001'
         ];
-        return view('category.index', compact('data'));
+        return view('category.category', compact('data'));
     }
 }

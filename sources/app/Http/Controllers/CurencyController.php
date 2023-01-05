@@ -13,6 +13,6 @@ class CurencyController extends Controller
             'page'  => 'Curency',
             'toko'  => 'Market 001'
         ];
-        return view('curency.index', compact('data'));
+        return view('curency.curency', compact('data'));
     }
 }
