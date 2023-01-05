@@ -140,7 +140,7 @@
           <div class="col-sm-12">
             <table id="datatable" class="table table-bordered table-striped">
               <thead>
-                <tr role="row">
+                <tr role="row" class="bg-gray">
                   <th class="text-center">Id</th>
                   <th class="text-center">Parent ID</th>
                   <th>Label</th>
@@ -149,9 +149,7 @@
                   <th>Status</th>
                   <th class="text-center">Action</th>
                 </tr>
-              </thead>
-              <tbody>
-                <tr>
+                <tr class="bg-info">
                   <td class="text-center"><input type="text" id="id" v-on:keyup="this.search('id')"></td>
                   <td class="text-center"><input type="text" id="parent_id" v-on:keyup="this.search('parent_id')"></td>
                   <td><input type="text" id="label" v-on:keyup="this.search('label')"></td>
@@ -160,6 +158,8 @@
                   <td></td>
                   <td></td>
                 </tr>
+              </thead>
+              <tbody>
                 <tr v-for="item in items">
                   <td class="text-center">@{{item.id}}</td>
                   <td class="text-center">@{{item.parent_id}}</td>
@@ -184,7 +184,7 @@
                 </tr>
               </tbody>
               <tfoot>
-                <tr role="row">
+                <tr role="row" class="bg-gray">
                   <th class="text-center">Id</th>
                   <th class="text-center">Parent ID</th>
                   <th>Label</th>
