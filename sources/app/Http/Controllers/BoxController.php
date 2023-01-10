@@ -13,6 +13,6 @@ class BoxController extends Controller
             'page'  => 'Box',
             'toko'  => 'Market 001'
         ];
-        return view('boxes.index', compact('data'));
+        return view('boxes.box', compact('data'));
     }
 }

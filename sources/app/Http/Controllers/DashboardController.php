@@ -13,6 +13,6 @@ class DashboardController extends Controller
             'page'  => 'Dashboard',
             'toko'  => 'Market 001'
         ];
-        return view('dashboard.v_dashboard', compact('data'));
+        return view('dashboard.dashboard', compact('data'));
     }
 }

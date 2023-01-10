@@ -13,6 +13,6 @@ class ProductController extends Controller
             'page'  => 'Product',
             'toko'  => 'Market 001'
         ];
-        return view('products.index', compact('data'));
+        return view('products.product', compact('data'));
     }
 }

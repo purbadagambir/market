@@ -12,6 +12,6 @@ class BrandController extends Controller
             'page'  => 'Brand',
             'toko'  => 'Market 001'
         ];
-        return view('brands.index', compact('data'));
+        return view('brands.brand', compact('data'));
     }
 }

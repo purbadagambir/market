@@ -19,6 +19,12 @@ use App\Http\Livewire\Livewire;
 Route::get('/', 'DashboardController@index')->name('dashboard');
 Route::get('/dashboard', 'DashboardController@index');
 
+
+//SELL
+Route::get('/sell-list', 'SellController@index')->name('sell-list');
+Route::get('/return-list', 'SellController@return_list')->name('return-list');
+Route::get('/sell-log', 'SellController@sell_log')->name('sell-log');
+
 //PRODUK
 Route::get('/produk-list', 'productController@index')->name('product');
 Route::get('/produk-unit', 'UnitController@index')->name('unit');

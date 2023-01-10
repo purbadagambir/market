@@ -15,6 +15,6 @@ class MenuController extends Controller
             'page'  => 'Menu',
             'toko'  => 'Market 001'
         ];
-        return view('menus.index', compact('data'));
+        return view('menus.menu', compact('data'));
     }
 }
