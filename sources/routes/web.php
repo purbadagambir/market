@@ -46,3 +46,5 @@ Route::get('/member', 'MemberController@index')->name('member');
 
 //EXPENSE
 Route::get('/expense', 'ExpenseController@index')->name('expense');
+Route::get('/expense-category', 'ExpenseController@category')->name('expense-category');
+Route::get('/expense-monthwise', 'ExpenseController@monthwise')->name('expense-monthwise');

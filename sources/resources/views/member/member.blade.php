@@ -3,7 +3,7 @@
 @section('content')
 
 <section class="content" id="app">
-<div class="box box-info" v-bind:class="{ 'collapsed-box': !show }">
+  <div class="box box-info" v-bind:class="{ 'collapsed-box': !show }">
     <div v-if="!show" class="box-header with-border" @click="this.openForm">
       <div class="box-tools pull-left">
         <button type="button" class="btn btn-box-tool">
