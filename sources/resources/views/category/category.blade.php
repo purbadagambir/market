@@ -128,7 +128,7 @@
             <div class="col-sm-12">
               <table id="datatable" class="table table-bordered table-striped">
                 <thead>
-                  <tr role="row">
+                  <tr role="row" class="bg-gray" class="bg-gray">
                     <th class="text-center">Id</th>
                     <th>Category Name</th>
                     <th class="text-center">Total Item</th>
@@ -137,9 +137,7 @@
                     <th>Created At</th>
                     <th class="text-center">Action</th>
                   </tr>
-                </thead>
-                <tbody>
-                  <tr>
+                  <tr class="bg-info">
                     <td class="text-center"><input type="text" id="category_id" v-on:keyup="this.search('category_id')"></td>
                     <td class="text-center"><input type="text" id="category_name" v-on:keyup="this.search('category_name')"></td>
                     <td><input type="text" id="category_slug" v-on:keyup="this.search('category_slug')"></td>
@@ -147,6 +145,8 @@
                     <td></td>
                     <td></td>
                   </tr>
+                </thead>
+                <tbody>
                   <tr v-for="item in items">
                     <td class="text-center">@{{item.category_id}}</td>
                     <td class="text-center">@{{item.category_name}}</td>
@@ -171,7 +171,7 @@
                   </tr>
                 </tbody>
                 <tfoot>
-                  <tr role="row">
+                  <tr role="row" class="bg-gray">
                     <th class="text-center">Id</th>
                     <th>Category Name</th>
                     <th class="text-center">Total Item</th>

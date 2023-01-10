@@ -2,15 +2,9 @@
 
 @section('content')
 
-
-@push('custom-style')
-<link rel="stylesheet" href="assets/toastr/toastr.min.css">
-<script src="assets/sweetalert/xsweetalert.css"></script>
-@endpush
-
 <section class="content" id="app">
   <div v-if="loading" class="text-primary" style="padding-left:45%; font-size: 20px;"><i class="fa fa-spin fa-refresh"></i>&nbsp loading...</div>
-  <div v-if="!loading">
+    
     <div class="box box-info" v-bind:class="{ 'collapsed-box': !show }">
       <div v-if="!show" class="box-header with-border" @click="this.openForm">
         <div class="box-tools pull-left">
@@ -40,40 +34,46 @@
       <div class="box-body">
         <form class="form-horizontal">
           <div class="box-body">
-            <div class="form-group" v-bind:class="{ 'has-error': hasError.unit_name }">
-              <label for="categoryname" class="col-sm-3 control-label">Unit Name*</label>
+            <div class="form-group">
+              <label for="categoryname" class="col-sm-3 control-label">No. Referensi <span style="color:red">*</span> </label>
               <div class="col-sm-7">
                 <input v-model="form.unit_name" type="text" name="label" class="form-control" id="form_label">
-                <span v-if="error.unit_name" class="help-block">@{{ error.unit_name }}</span>
-              </div>
-            </div>
-            <div class="form-group" v-bind:class="{ 'has-error': hasError.code_name }">
-              <label for="categoryname" class="col-sm-3 control-label">Code Name*</label>
-              <div class="col-sm-7">
-                <input v-model="form.code_name" type="text" name="link" class="form-control" id="form_link">
-                <span v-if="error.code_name" class="help-block">@{{ error.code_name }}</span>
               </div>
             </div>
             <div class="form-group">
-              <label for="categoryname" class="col-sm-3 control-label">Unit Detail</label>
+              <label class="col-sm-3 control-label">Category <span style="color:red">*</span></label>
               <div class="col-sm-7">
-                <textarea class="form-control" v-model="form.unit_details" cols="10" rows="10"></textarea>
-              </div>
-            </div>
-            <div class="form-group" v-bind:class="{ 'has-error': hasError.status }">
-              <label for="categoryname" class="col-sm-3 control-label">Status</label>
-              <div class="col-sm-7">
-              <select class="form-control select2" style="width: 100%;" name="status" v-model="form.status">
+              <select class="form-control select2" style="width: 100%;">
                   <option selected="selected" value="1">Active</option>
                   <option value="0">Inactive</option>
               </select>
-              <span v-if="error.status" class="help-block">@{{ error.status }}</span>
               </div>
             </div>
             <div class="form-group">
-              <label for="categoryname" class="col-sm-3 control-label">Short Order</label>
+              <label for="categoryname" class="col-sm-3 control-label">What For <span style="color:red">*</span> </label>
               <div class="col-sm-7">
-                <input v-model.number="form.short_order" type="number" name="short_order" class="form-control" id="short_order" min="1">
+                <input v-model="form.unit_name" type="text" name="label" class="form-control" id="form_label">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="categoryname" class="col-sm-3 control-label">Amount <span style="color:red">*</span> </label>
+              <div class="col-sm-7">
+                <input v-model="form.unit_name" type="number" name="label" class="form-control" id="form_label">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Returnable</label>
+              <div class="col-sm-7">
+              <select class="form-control select2" style="width: 100%;">
+                  <option selected="selected" value="1">Active</option>
+                  <option value="0">Inactive</option>
+              </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Notes</label>
+              <div class="col-sm-7">
+                <textarea class="form-control" v-model="form.brand_details" cols="10" rows="2"></textarea>
               </div>
             </div>
             <div class="form-group">
@@ -119,39 +119,37 @@
             <div class="col-sm-12">
               <table id="datatable" class="table table-bordered table-striped">
                 <thead>
-                  <tr class="bg-gray">
-                    <th class="text-center">Id</th>
-                    <th>Unit Name</th>
-                    <th class="text-center">Unit Code</th>
-                    <th>Unit Detail</th>
-                    <th>Status</th>
+                  <tr role="row" class="bg-gray">
+                    <th class="text-center">Serial No</th>
+                    <th class="text-center">Description</th>
+                    <th class="text-center">Category Name</th>
+                    <th class="text-center">Amount</th>
+                    <th class="text-center">Tanggal Pembuatan</th>
                     <th class="text-center">Action</th>
                   </tr>
                   <tr class="bg-info">
-                    <td class="text-center"><input type="text" id="unit_id" v-on:keyup="this.search('unit_id')"></td>
-                    <td class="text-center"><input type="text" id="unit_name" v-on:keyup="this.search('unit_name')"></td>
-                    <td><input type="text" id="code_name" v-on:keyup="this.search('code_name')"></td>
-                    <td><input type="text" id="unit_details" v-on:keyup="this.search('unit_details')"></td>
-                    <td></td>
+                    <td class="text-center"><input type="text" id="currency_id" v-on:keyup="this.search('currency_id')"></td>
+                    <td><input type="text" id="title" v-on:keyup="this.search('title')"></td>
+                    <td><input type="text" id="code" v-on:keyup="this.search('code')"></td>
+                    <td><input type="text" id="symbol_left" v-on:keyup="this.search('symbol_left')"></td>
+                    <td><input type="text" id="symbol_right" v-on:keyup="this.search('symbol_right')"></td>
                     <td></td>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in items">
-                    <td class="text-center">@{{item.unit_id}}</td>
-                    <td class="text-center">@{{item.unit_name}}</td>
-                    <td>@{{item.code_name}}</td>
-                    <td>@{{item.unit_details}}</td>
-                    <td>
-                      <span class="badge btn-success" v-if="item.status == 1">Active</span>
-                      <span class="badge btn-warning" v-else>Inactive</span>
-                    </td>
+                  <tr>
+                    <td style="text-align: center; vertical-align: middle;">599</td>
+                    <td style="text-align: center; vertical-align: middle;">insentif karyawan 01 january 2023</td>
+                    <td style="text-align: center; vertical-align: middle;">GAJI KARYAWAN</td>
+                    <td style="text-align: center; vertical-align: middle;">2,474,999</td>
+                    <td style="text-align: center; vertical-align: middle;">2023-01-09 18:57:24</td>
                     <td class="text-center">
                       <div class="btn-group">
                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           . . .
                         </button>
                         <div class="dropdown-menu pull-right">
+                          <li @click="this.editData(item.unit_id)"><a>View</a></li>
                           <li @click="this.editData(item.unit_id)"><a>Edit</a></li>
                           <li @click="this.deleteData(item.unit_id)"><a>Delete</a></li>
                         </div>
@@ -160,12 +158,12 @@
                   </tr>
                 </tbody>
                 <tfoot>
-                  <tr class="bg-gray">
-                    <th class="text-center">Id</th>
-                    <th>Unit Name</th>
-                    <th class="text-center">Unit Code</th>
-                    <th>Unit Detail</th>
-                    <th>Status</th>
+                  <tr role="row" class="bg-gray">
+                    <th class="text-center">Serial No</th>
+                    <th class="text-center">Description</th>
+                    <th class="text-center">Category Name</th>
+                    <th class="text-center">Amount</th>
+                    <th class="text-center">Tanggal Pembuatan</th>
                     <th class="text-center">Action</th>
                   </tr>
                 </tfoot>
@@ -202,7 +200,7 @@
 <script src="assets/toastr/toastr.min.js"></script>
 <script src="assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="assets/js/page/unit.js"></script>
+<script src="assets/js/page/expense.js"></script>
 <script src="assets/js/page/app.js"></script>
 <script src="assets/js/notif.js"></script>
 @endpush
