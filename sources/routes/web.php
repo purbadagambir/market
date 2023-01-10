@@ -34,3 +34,15 @@ Route::get('/produk-brand', 'BrandController@index')->name('brand');
 //SISTEM
 Route::get('/sistem-menu', 'MenuController@index')->name('menu');
 Route::get('/sistem-curency', 'CurencyController@index')->name('curency');
+
+//PEMBELIAN
+Route::get('/pembelian', 'PurchaseController@index')->name('pembelian');
+
+//MUTASI
+Route::get('/mutasi', 'TransferController@index')->name('mutasi');
+
+//MEMBER
+Route::get('/member', 'MemberController@index')->name('member');
+
+//EXPENSE
+Route::get('/expense', 'ExpenseController@index')->name('expense');
