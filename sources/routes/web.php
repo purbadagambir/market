@@ -49,3 +49,6 @@ Route::get('/member', 'MemberController@index')->name('member');
 Route::get('/expense', 'ExpenseController@index')->name('expense');
 Route::get('/expense-category', 'ExpenseController@category')->name('expense-category');
 Route::get('/expense-monthwise', 'ExpenseController@monthwise')->name('expense-monthwise');
+
+//POS
+Route::get('/pos', 'OrderController@index')->name('pos');
