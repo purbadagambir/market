@@ -16,13 +16,13 @@
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <li>
-            <a href=""><i class="fa fa-cart-plus"></i> POS </a>
+            <a href=""><i class="fa fa-cart-plus"></i> <span class="hidden-xs">POS</span></a>
           </li>
           <li>
-            <a href=""><i class="fa fa-book"></i> BUKU KAS</a>
+            <a href=""><i class="fa fa-book"></i> <span class="hidden-xs">BUKU KAS</span></a>
           </li>
           <li>
-            <a href=""><i class="fa fa-list"></i> STRUK</a>
+            <a href=""><i class="fa fa-list"></i> <span class="hidden-xs">STRUK</span></a>
           </li>
           <li>
             <a href="" title="referensi pengguna"><i class="fa fa-heart"></i></a>
