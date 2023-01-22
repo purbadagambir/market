@@ -31,12 +31,16 @@
 
 table {
     border-collapse: collapse;
-    width: 100%;
     border: 1px solid #ddd;
 }
 
 table th, tr {
     text-align: center;
+    margin-top: 20px;
+}
+
+table tr{
+    border-bottom: 1px solid #ddd;
 }
 
 
@@ -45,6 +49,32 @@ table th, tr {
     padding-bottom: 100px;
 }
 
-.btn-product{
-    width: 10px;
+.box{
+    border-radius: 0;
+}
+
+.product-name{
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 25px;
+    text-transform: uppercase;
+    margin: 5px;
+}
+
+.chat{
+    height: 80%;
+    overflow: auto;
+}
+
+.direct-chat-messages{
+    height: 440px;
+}
+
+.box-footer{
+    text-align: center;
+    padding: 0;
+}
+
+.pay-hold{
+    font-size: 30px;
 }
