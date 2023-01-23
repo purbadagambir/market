@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,23 +8,22 @@ use \App\Http\Resources\ProductToStoreResource;
 use App\Models\ProductToStore as ProductToStoreModel;
 use DB;
 
-class DashboardController extends Controller
+
+class ApiOrderController extends Controller
 {
-    public function index()
+    public function product_list(Request $request)
     {
-        $data = [
-            'page'  => 'Dashboard',
-            'toko'  => 'Market 001'
-        ];
-        return view('dashboard.dashboard', compact('data'));
+        $data_product = ProductToStoreModel::with('product')->where('store_id', 5)->limit(8)->get();
+
+        return  ProductToStoreResource::collection($data_product);
     }
 
-    public function tes()
+    public function product_code(Request $request)
     {
         $data_product = DB::table('product_to_store')
                             ->join('products', 'product_to_store.product_id', '=', 'products.p_id')
                             ->where('product_to_store.store_id', 5)
-                            ->where('products.p_code', 8998866602921)
+                            ->where('products.p_code', $request->code)
                             ->get();
         return $data_product;
     }

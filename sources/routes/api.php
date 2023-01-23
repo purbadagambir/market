@@ -67,5 +67,9 @@ Route::post('/show-unit', 'API\ApiUnitController@show');
 Route::post('/update-unit', 'API\ApiUnitController@update');
 Route::post('/delete-unit', 'API\ApiUnitController@delete');
 
+//ORDER
+Route::post('/get-product-list', 'API\ApiOrderController@product_list');
+Route::post('/get-product-code', 'API\ApiOrderController@product_code');
+
 
 

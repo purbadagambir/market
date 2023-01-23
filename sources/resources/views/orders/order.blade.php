@@ -57,7 +57,7 @@
               <div class="col-lg-7 col-xs-7">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                  <input type="text" class="form-control" placeholder="Cari Produk">
+                  <input type="text" class="form-control" placeholder="Cari Produk" v-model="keyword" @change="getProduct()">
                 </div>
               </div>
               <div class="col-lg-5 col-xs-5">
@@ -68,149 +68,17 @@
             </div>
           </div>
           <div class="box-body">
-            <div class="direct-chat-messages">
-              <div class="col-lg-3 col-xs-4 text-center">
-                <div class="info-box">
+            <div class="direct-chat-messages product-list">
+
+              <div class="col-lg-3 col-xs-4 text-center" v-for="item in items">
+                <div class="info-box product-box" @click="addCart(item.product_code)">
                   <div class="inner">
                     <i class="fa fa-barcode fa-3x barcode"></i>
-                    <p class="text-product">Beras Cap Panah 15KG</p>
-                  </div>
-                  <div class="add-cart bg-black">
-                    <b><i class="fa fa-plus"></i> Tambah Ke Keranjang </b>
+                    <p class="text-product">@{{item.product_name}}</p>
                   </div>
                 </div>
-              </div>
-
-              <div class="col-lg-3 col-xs-4 text-center">
-                <div class="info-box">
-                  <div class="inner">
-                    <i class="fa fa-barcode fa-3x barcode"></i>
-                    <p class="text-product">Beras Cap Panah 15KG</p>
-                  </div>
-                  <div class="add-cart bg-black">
+                <div class="add-cart bg-black">
                     <b><i class="fa fa-plus"></i> Tambah Ke Keranjang </b>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-3 col-xs-4 text-center">
-                <div class="info-box">
-                  <div class="inner">
-                    <i class="fa fa-barcode fa-3x barcode"></i>
-                    <p class="text-product">Beras Cap Panah 15KG</p>
-                  </div>
-                  <div class="add-cart bg-black">
-                    <b><i class="fa fa-plus"></i> Tambah Ke Keranjang </b>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-3 col-xs-4 text-center">
-                <div class="info-box">
-                  <div class="inner">
-                    <i class="fa fa-barcode fa-3x barcode"></i>
-                    <p class="text-product">Beras Cap Panah 15KG</p>
-                  </div>
-                  <div class="add-cart bg-black">
-                    <b><i class="fa fa-plus"></i> Tambah Ke Keranjang </b>
-                  </div>
-                </div>
-              </div>
-
-
-              <div class="col-lg-3 col-xs-4 text-center">
-                <div class="info-box">
-                  <div class="inner">
-                    <i class="fa fa-barcode fa-3x barcode"></i>
-                    <p class="text-product">Beras Cap Panah 15KG</p>
-                  </div>
-                  <div class="add-cart bg-black">
-                    <b><i class="fa fa-plus"></i> Tambah Ke Keranjang </b>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-3 col-xs-4 text-center">
-                <div class="info-box">
-                  <div class="inner">
-                    <i class="fa fa-barcode fa-3x barcode"></i>
-                    <p class="text-product">Beras Cap Panah 15KG</p>
-                  </div>
-                  <div class="add-cart bg-black">
-                    <b><i class="fa fa-plus"></i> Tambah Ke Keranjang </b>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-3 col-xs-4 text-center">
-                <div class="info-box">
-                  <div class="inner">
-                    <i class="fa fa-barcode fa-3x barcode"></i>
-                    <p class="text-product">Beras Cap Panah 15KG</p>
-                  </div>
-                  <div class="add-cart bg-black">
-                    <b><i class="fa fa-plus"></i> Tambah Ke Keranjang </b>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-3 col-xs-4 text-center">
-                <div class="info-box">
-                  <div class="inner">
-                    <i class="fa fa-barcode fa-3x barcode"></i>
-                    <p class="text-product">Beras Cap Panah 15KG</p>
-                  </div>
-                  <div class="add-cart bg-black">
-                    <b><i class="fa fa-plus"></i> Tambah Ke Keranjang </b>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-3 col-xs-4 text-center">
-                <div class="info-box">
-                  <div class="inner">
-                    <i class="fa fa-barcode fa-3x barcode"></i>
-                    <p class="text-product">Beras Cap Panah 15KG</p>
-                  </div>
-                  <div class="add-cart bg-black">
-                    <b><i class="fa fa-plus"></i> Tambah Ke Keranjang </b>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-3 col-xs-4 text-center">
-                <div class="info-box">
-                  <div class="inner">
-                    <i class="fa fa-barcode fa-3x barcode"></i>
-                    <p class="text-product">Beras Cap Panah 15KG</p>
-                  </div>
-                  <div class="add-cart bg-black">
-                    <b><i class="fa fa-plus"></i> Tambah Ke Keranjang </b>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-3 col-xs-4 text-center">
-                <div class="info-box">
-                  <div class="inner">
-                    <i class="fa fa-barcode fa-3x barcode"></i>
-                    <p class="text-product">Beras Cap Panah 15KG</p>
-                  </div>
-                  <div class="add-cart bg-black">
-                    <b><i class="fa fa-plus"></i> Tambah Ke Keranjang </b>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-3 col-xs-4 text-center">
-                <div class="info-box">
-                  <div class="inner">
-                    <i class="fa fa-barcode fa-3x barcode"></i>
-                    <p class="text-product">Beras Cap Panah 15KG</p>
-                  </div>
-                  <div class="add-cart bg-black">
-                    <b><i class="fa fa-plus"></i> Tambah Ke Keranjang </b>
-                  </div>
                 </div>
               </div>
 
@@ -258,304 +126,27 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr v-for="cart in carts">
                     <td>
                       
                         <button type="button" class="btn btn-success btn-xs"> - </button>
-                        <button type="button" class="btn btn-default btn-xs">100</button>
+                        <button type="button" class="btn btn-default btn-xs">@{{cart.qty}}</button>
                         <button type="button" class="btn btn-danger btn-xs"> + </button>
                     </td>
                     <td>
                       <select name="" id="">
-                        <option value="">Pieces</option>
-                        <option value="">Pack</option>
-                        <option value="">Kotak</option>
+                        <option value="">@{{cart.unit}}</option>
                       </select>
                     </td>
                     <td>
                         <div class="bg-green product-name">
-                          Beras Cap Panah 15kg
+                        @{{cart.p_name}}
                         </div>
                     </td>
-                    <td>20.000</td>
-                    <td>0</td>
-                    <td>2000</td>
-                    <td>180.000</td>
-                    <td><i class="fa fa-close text-danger"></i></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      
-                        <button type="button" class="btn btn-success btn-xs"> - </button>
-                        <button type="button" class="btn btn-default btn-xs">100</button>
-                        <button type="button" class="btn btn-danger btn-xs"> + </button>
-                    </td>
-                    <td>
-                      <select name="" id="">
-                        <option value="">Pieces</option>
-                        <option value="">Pack</option>
-                        <option value="">Kotak</option>
-                      </select>
-                    </td>
-                    <td>
-                        <div class="bg-green product-name">
-                          Beras Cap Panah 15kg
-                        </div>
-                    </td>
-                    <td>20.000</td>
-                    <td>0</td>
-                    <td>2000</td>
-                    <td>180.000</td>
-                    <td><i class="fa fa-close text-danger"></i></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      
-                        <button type="button" class="btn btn-success btn-xs"> - </button>
-                        <button type="button" class="btn btn-default btn-xs">100</button>
-                        <button type="button" class="btn btn-danger btn-xs"> + </button>
-                    </td>
-                    <td>
-                      <select name="" id="">
-                        <option value="">Pieces</option>
-                        <option value="">Pack</option>
-                        <option value="">Kotak</option>
-                      </select>
-                    </td>
-                    <td>
-                        <div class="bg-green product-name">
-                          Beras Cap Panah 15kg
-                        </div>
-                    </td>
-                    <td>20.000</td>
-                    <td>0</td>
-                    <td>2000</td>
-                    <td>180.000</td>
-                    <td><i class="fa fa-close text-danger"></i></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      
-                        <button type="button" class="btn btn-success btn-xs"> - </button>
-                        <button type="button" class="btn btn-default btn-xs">100</button>
-                        <button type="button" class="btn btn-danger btn-xs"> + </button>
-                    </td>
-                    <td>
-                      <select name="" id="">
-                        <option value="">Pieces</option>
-                        <option value="">Pack</option>
-                        <option value="">Kotak</option>
-                      </select>
-                    </td>
-                    <td>
-                        <div class="bg-green product-name">
-                          Beras Cap Panah 15kg
-                        </div>
-                    </td>
-                    <td>20.000</td>
-                    <td>0</td>
-                    <td>2000</td>
-                    <td>180.000</td>
-                    <td><i class="fa fa-close text-danger"></i></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      
-                        <button type="button" class="btn btn-success btn-xs"> - </button>
-                        <button type="button" class="btn btn-default btn-xs">100</button>
-                        <button type="button" class="btn btn-danger btn-xs"> + </button>
-                    </td>
-                    <td>
-                      <select name="" id="">
-                        <option value="">Pieces</option>
-                        <option value="">Pack</option>
-                        <option value="">Kotak</option>
-                      </select>
-                    </td>
-                    <td>
-                        <div class="bg-green product-name">
-                          Beras Cap Panah 15kg
-                        </div>
-                    </td>
-                    <td>20.000</td>
-                    <td>0</td>
-                    <td>2000</td>
-                    <td>180.000</td>
-                    <td><i class="fa fa-close text-danger"></i></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      
-                        <button type="button" class="btn btn-success btn-xs"> - </button>
-                        <button type="button" class="btn btn-default btn-xs">100</button>
-                        <button type="button" class="btn btn-danger btn-xs"> + </button>
-                    </td>
-                    <td>
-                      <select name="" id="">
-                        <option value="">Pieces</option>
-                        <option value="">Pack</option>
-                        <option value="">Kotak</option>
-                      </select>
-                    </td>
-                    <td>
-                        <div class="bg-green product-name">
-                          Beras Cap Panah 15kg
-                        </div>
-                    </td>
-                    <td>20.000</td>
-                    <td>0</td>
-                    <td>2000</td>
-                    <td>180.000</td>
-                    <td><i class="fa fa-close text-danger"></i></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      
-                        <button type="button" class="btn btn-success btn-xs"> - </button>
-                        <button type="button" class="btn btn-default btn-xs">100</button>
-                        <button type="button" class="btn btn-danger btn-xs"> + </button>
-                    </td>
-                    <td>
-                      <select name="" id="">
-                        <option value="">Pieces</option>
-                        <option value="">Pack</option>
-                        <option value="">Kotak</option>
-                      </select>
-                    </td>
-                    <td>
-                        <div class="bg-green product-name">
-                          Beras Cap Panah 15kg
-                        </div>
-                    </td>
-                    <td>20.000</td>
-                    <td>0</td>
-                    <td>2000</td>
-                    <td>180.000</td>
-                    <td><i class="fa fa-close text-danger"></i></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      
-                        <button type="button" class="btn btn-success btn-xs"> - </button>
-                        <button type="button" class="btn btn-default btn-xs">100</button>
-                        <button type="button" class="btn btn-danger btn-xs"> + </button>
-                    </td>
-                    <td>
-                      <select name="" id="">
-                        <option value="">Pieces</option>
-                        <option value="">Pack</option>
-                        <option value="">Kotak</option>
-                      </select>
-                    </td>
-                    <td>
-                        <div class="bg-green product-name">
-                          Beras Cap Panah 15kg
-                        </div>
-                    </td>
-                    <td>20.000</td>
-                    <td>0</td>
-                    <td>2000</td>
-                    <td>180.000</td>
-                    <td><i class="fa fa-close text-danger"></i></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      
-                        <button type="button" class="btn btn-success btn-xs"> - </button>
-                        <button type="button" class="btn btn-default btn-xs">100</button>
-                        <button type="button" class="btn btn-danger btn-xs"> + </button>
-                    </td>
-                    <td>
-                      <select name="" id="">
-                        <option value="">Pieces</option>
-                        <option value="">Pack</option>
-                        <option value="">Kotak</option>
-                      </select>
-                    </td>
-                    <td>
-                        <div class="bg-green product-name">
-                          Beras Cap Panah 15kg
-                        </div>
-                    </td>
-                    <td>20.000</td>
-                    <td>0</td>
-                    <td>2000</td>
-                    <td>180.000</td>
-                    <td><i class="fa fa-close text-danger"></i></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      
-                        <button type="button" class="btn btn-success btn-xs"> - </button>
-                        <button type="button" class="btn btn-default btn-xs">100</button>
-                        <button type="button" class="btn btn-danger btn-xs"> + </button>
-                    </td>
-                    <td>
-                      <select name="" id="">
-                        <option value="">Pieces</option>
-                        <option value="">Pack</option>
-                        <option value="">Kotak</option>
-                      </select>
-                    </td>
-                    <td>
-                        <div class="bg-green product-name">
-                          Beras Cap Panah 15kg
-                        </div>
-                    </td>
-                    <td>20.000</td>
-                    <td>0</td>
-                    <td>2000</td>
-                    <td>180.000</td>
-                    <td><i class="fa fa-close text-danger"></i></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      
-                        <button type="button" class="btn btn-success btn-xs"> - </button>
-                        <button type="button" class="btn btn-default btn-xs">100</button>
-                        <button type="button" class="btn btn-danger btn-xs"> + </button>
-                    </td>
-                    <td>
-                      <select name="" id="">
-                        <option value="">Pieces</option>
-                        <option value="">Pack</option>
-                        <option value="">Kotak</option>
-                      </select>
-                    </td>
-                    <td>
-                        <div class="bg-green product-name">
-                          Beras Cap Panah 15kg
-                        </div>
-                    </td>
-                    <td>20.000</td>
-                    <td>0</td>
-                    <td>2000</td>
-                    <td>180.000</td>
-                    <td><i class="fa fa-close text-danger"></i></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      
-                        <button type="button" class="btn btn-success btn-xs"> - </button>
-                        <button type="button" class="btn btn-default btn-xs">100</button>
-                        <button type="button" class="btn btn-danger btn-xs"> + </button>
-                    </td>
-                    <td>
-                      <select name="" id="">
-                        <option value="">Pieces</option>
-                        <option value="">Pack</option>
-                        <option value="">Kotak</option>
-                      </select>
-                    </td>
-                    <td>
-                        <div class="bg-green product-name">
-                          Beras Cap Panah 15kg
-                        </div>
-                    </td>
-                    <td>20.000</td>
-                    <td>0</td>
-                    <td>2000</td>
-                    <td>180.000</td>
+                    <td>@{{cart.price}}</td>
+                    <td>@{{cart.discon}}</td>
+                    <td>@{{cart.discon_price}}</td>
+                    <td>@{{cart.subtotal}}</td>
                     <td><i class="fa fa-close text-danger"></i></td>
                   </tr>
                 </tbody>
@@ -563,7 +154,42 @@
             </div>
           </div>
           <!-- /.box-body -->
+          
           <div class="box-footer">
+            <table cellspacing="0" cellpadding="0">
+              <thead>
+                <tr class="bg-gray">
+                  <th>Total Item</th>
+                  <th>6(11)</th>
+                  <th>1,671,000</th>
+                  <th>0</th>
+                  <th>1,671,000</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>DISKON</td>
+                  <td><input type="number"></td>
+                  <td>JUMLAH PAJAK (%)</td>
+                  <td><input type="number"></td>
+                </tr>
+                <tr>
+                  <td>ONGKOS KIRIM</td>
+                  <td><input type="number"></td>
+                  <td>BIAYA LAINNYA</td>
+                  <td><input type="number"></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr class="bg-gray">
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th>TOTAL BAYAR</th>
+                  <th>1,671,000</th>
+                </tr>
+              </tfoot>
+            </table>
             <div class="row">
               <div class="col-lg-6">
                 <button class="btn btn-success btn-block btn-lg pay-hold">
@@ -623,5 +249,13 @@
   <script src="assets/dist/js/demo.js"></script>
 
   <script src="assets/bower_components/select2/dist/js/select2.full.min.js"></script>
+
+  <script src="assets/vue/vue.js"></script>
+  <script src="assets/vue/table.js"></script>
+  <script src="assets/vue/axios.js"></script>
+  <script src="assets/sweetalert/xsweetalert.js"></script>
+  <script src="assets/toastr/toastr.min.js"></script>
+  <script src="assets/js/page/order.js"></script>
+  <script src="assets/js/notif.js"></script>
 </body>
 </html>
