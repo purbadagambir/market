@@ -7,10 +7,6 @@
     text-transform: uppercase;
 }
 
-.info-box {
-    border: 1px solid green;
-}
-
 .barcode {
     margin-top: 20px;
 }
@@ -67,14 +63,42 @@ table tr{
 }
 
 .direct-chat-messages{
-    height: 440px;
+    height: 300px;
+}
+
+.product-list
+{
+    height: 413px;
+}
+
+.product-box{
+    height: 170px;
+    border: 1px solid green;
+    margin-bottom: 0;
+    margin-top: 5px;
 }
 
 .box-footer{
     text-align: center;
     padding: 0;
+    margin-left: 10px;
 }
 
 .pay-hold{
     font-size: 30px;
+}
+
+.box-footer table {
+    width: 100%;
+}
+
+.box-footer table input{
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    width: 80px;
+    margin: 5px;
+    text-align: center;
+    padding: 2;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
 }

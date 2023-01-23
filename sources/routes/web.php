@@ -18,6 +18,7 @@ use App\Http\Livewire\Livewire;
 //DASHBOARD
 Route::get('/', 'DashboardController@index')->name('dashboard');
 Route::get('/dashboard', 'DashboardController@index');
+Route::get('/tes', 'DashboardController@tes');
 
 
 //SELL
