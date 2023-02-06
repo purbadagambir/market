@@ -49,17 +49,17 @@ const App = {
       this.form_cart.qty++
     },
 
-    unitCart: function(unit, price)
+    unitCart: function(unit, type)
     {
       this.form_cart.unit_name = unit
+      this.form_cart.unit_type = type
     },
 
     getProductCode: function(data){
-      console.log(data)
       axios.post('api/get-product-code', data)
       .then(response => {
+          this.beep()
           if(response.status == 200 & response.data.length > 0){
-            console.log(response.data[0].sell_discount)
             newCart = {
                             'qty'           : this.form_cart.qty, 
                             'unit'          : this.form_cart.unit_name, 
@@ -72,7 +72,6 @@ const App = {
                         };
 
             this.carts.push(newCart)
-            console.log(this.carts)
             this.form_cart.qty = 1
             this.form_cart.unit_id = null,
             this.form_cart.unit_small = null
@@ -150,7 +149,7 @@ const App = {
     },
 
     showModal: function(p_id, p_code, unit_small, unit_small_id, unit_medium, unit_medium_id, unit_large, unit_large_id){
-      console.log(unit_small)
+      
       this.form_cart.unit_small = unit_small
       this.form_cart.unit_small_id = unit_small_id
       this.form_cart.unit_medium = unit_medium
