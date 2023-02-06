@@ -71,25 +71,55 @@
             <div class="direct-chat-messages product-list">
 
               <div class="col-lg-3 col-xs-4 text-center" v-for="item in items">
-                <div class="info-box product-box" @click="addCart(item.product_code)">
+                <div class="info-box product-box" @click="showModal(item.product_id, item.p_code, item.unit_small_name, item.unit_small_id, item.unit_medium_name, item.unit_medium_id, item.unit_large_name, item.unit_large_id)" data-toggle="modal" data-target="#modal-default">
                   <div class="inner">
                     <i class="fa fa-barcode fa-3x barcode"></i>
-                    <p class="text-product">@{{item.product_name}}</p>
+                    <p class="text-product">@{{item.p_name}}</p>
                   </div>
                 </div>
                 <div class="add-cart bg-black">
                     <b><i class="fa fa-plus"></i> Tambah Ke Keranjang </b>
                 </div>
               </div>
-
             </div>
           </div>
           <div class="box-footer">
             <button class="btn btn-warning btn-block btn-lg pay-hold">
-              Rp. 569,000
+              @{{carts_footer.sum_total_amount_carts}}
             </button>
           </div>
         </div>
+
+        <div class="modal fade" id="modal-default">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">WAJIB DI ISI!!!</h4>
+            </div>
+            <div class="modal-body">
+              <div class="input-group">
+                <span class="input-group-addon bg-danger" @click="minus">-</span>
+                <input type="text" class="form-control" v-model="form_cart.qty" disabled>
+                <span class="input-group-addon bg-success" @click="plus">+</span>
+              </div>
+              <select class="form-control" style="margin-top:10px" v-model="form_cart.unit">
+                <option selected :value="form_cart.unit_small_id" @click="unitCart(form_cart.unit_small, 'small')">@{{form_cart.unit_small}}</option>
+                <option :value="form_cart.unit_medium_id" @click="unitCart(form_cart.unit_medium, 'medium')">@{{form_cart.unit_medium}}</option>
+                <option :value="form_cart.unit_large_id" @click="unitCart(form_cart.unit_large, 'large')">@{{form_cart.unit_large}}</option>
+              </select>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" @click="addCartItem(form_cart.p_code)"> <i class="fa fa-cart-plus"></i> Add to Chart</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+        
 
       </div>
       <div class="col-lg-5">
@@ -126,17 +156,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="cart in carts">
+                  <tr v-for="(cart, index) in carts">
                     <td>
-                      
-                        <button type="button" class="btn btn-success btn-xs"> - </button>
-                        <button type="button" class="btn btn-default btn-xs">@{{cart.qty}}</button>
-                        <button type="button" class="btn btn-danger btn-xs"> + </button>
+                      <button type="button" class="btn btn-default">@{{cart.qty}}</button>
                     </td>
                     <td>
-                      <select name="" id="">
-                        <option value="">@{{cart.unit}}</option>
-                      </select>
+                      <button type="button" class="btn btn-default">@{{cart.unit}}</button>
                     </td>
                     <td>
                         <div class="bg-green product-name">
@@ -144,10 +169,10 @@
                         </div>
                     </td>
                     <td>@{{cart.price}}</td>
-                    <td>@{{cart.discon}}</td>
-                    <td>@{{cart.discon_price}}</td>
+                    <td>@{{cart.discont}}</td>
+                    <td>@{{cart.discont_price}}</td>
                     <td>@{{cart.subtotal}}</td>
-                    <td><i class="fa fa-close text-danger"></i></td>
+                    <td><i class="fa fa-close text-danger" @click="deleteCartItem(index)"></i></td>
                   </tr>
                 </tbody>
               </table>
@@ -160,10 +185,10 @@
               <thead>
                 <tr class="bg-gray">
                   <th>Total Item</th>
-                  <th>6(11)</th>
-                  <th>1,671,000</th>
-                  <th>0</th>
-                  <th>1,671,000</th>
+                  <th>@{{carts.length}}(@{{carts_footer.sum_qty_carts}})</th>
+                  <th>@{{carts_footer.sum_total_carts}}</th>
+                  <th>@{{carts_footer.sum_discont_carts}}</th>
+                  <th>@{{carts_footer.sum_subtotal_carts}}</th>
                 </tr>
               </thead>
               <tbody>
@@ -186,7 +211,7 @@
                   <th></th>
                   <th></th>
                   <th>TOTAL BAYAR</th>
-                  <th>1,671,000</th>
+                  <th>@{{carts_footer.sum_total_amount_carts}}</th>
                 </tr>
               </tfoot>
             </table>
