@@ -34,6 +34,10 @@ class ProductToStoreResource extends JsonResource
             'sort_order'        => $this->sort_order,
             'product_name'      => $this->product->p_name,
             'product_code'      => $this->product->p_code,
+            'unit_small'        => $this->product->unit_small->unit_small_name,
+            'unit_small_id'        => $this->product->unit_small->unit_id,
+            'unit_medium'       => $this->product->unit_medium->unit_medium_name,
+            'unit_medium_id'       => $this->product->unit_medium->unit_id
         ];
     }
 }

@@ -10,6 +10,6 @@ class ProductToStore extends Model
 
     public function product()
     {
-        return $this->hasOne(Product::class,'p_id', 'product_id');
+        return $this->hasOne(Product::class,'p_id', 'product_id')->with(['unit_small', 'unit_medium', 'unit_large']);
     }
 }
