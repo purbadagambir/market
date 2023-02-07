@@ -4,12 +4,17 @@ const App = {
       loading : false,
       items : [],
       carts : [],
+      customer_mobile: '00000000000',
+      customer_name: 'Non-Member',
       carts_footer : {
         sum_qty_carts : 0,
         sum_discont_carts : 0,
         sum_total_carts : 0,
         sum_subtotal_carts : 0,
-        sum_total_amount_carts : 0
+        sum_total_amount_carts : 0,
+        tax_amount : 0,
+        shipping_charger : 0,
+        orders_charger : 0,
       },
       keyword : '',
       form_cart : {
@@ -23,10 +28,28 @@ const App = {
         unit_medium_id : null,
         unit_large : null,
         unit_large_id : null,
+        sell_price_small : null,
+        sell_price_medium : null,
+        sell_price_large : null,
+        price : null,
       }
     }
   },
   methods:{
+
+    getData: function(data){
+      axios.post('api/get-product-list', data)
+         .then(response => {
+            if(response.status == 200){
+              this.items = response.data.data
+            }else{
+              notifError('Data Product Error')
+            }
+         })
+         .catch(error => {
+            notifError('Error')
+         })
+    },
 
     beep: function(){
       var audio = new Audio('assets/sound/beep.mp3');
@@ -49,39 +72,26 @@ const App = {
       this.form_cart.qty++
     },
 
-    unitCart: function(unit, type)
-    {
-      this.form_cart.unit_name = unit
-      this.form_cart.unit_type = type
-    },
-
     getProductCode: function(data){
       axios.post('api/get-product-code', data)
       .then(response => {
+          
+          console.log(this.form_cart.price)
           this.beep()
           if(response.status == 200 & response.data.length > 0){
             newCart = {
                             'qty'           : this.form_cart.qty, 
                             'unit'          : this.form_cart.unit_name, 
                             'p_name'        : response.data[0].p_name,
-                            'price'         : parseInt(response.data[0].sell_price),
+                            'price'         : parseInt(this.form_cart.price),
                             'discont'       : response.data[0].sell_discount,
-                            'discont_price' : response.data[0].sell_price * response.data[0].sell_discount/100,
-                            'subtotal'      : this.form_cart.qty * response.data[0].sell_price,
-                            'total'         : this.form_cart.qty * (response.data[0].sell_price - (response.data[0].sell_price * 0/100))
+                            'discont_price' : this.form_cart.qty * (this.form_cart.price * response.data[0].sell_discount/100),
+                            'subtotal'      : this.form_cart.qty * this.form_cart.price,
+                            'total'         : this.form_cart.qty * (this.form_cart.price - (this.form_cart.price * 0/100))
                         };
 
             this.carts.push(newCart)
-            this.form_cart.qty = 1
-            this.form_cart.unit_id = null,
-            this.form_cart.unit_small = null
-            this.form_cart.unit_small_id = null
-            this.form_cart.unit_medium = null
-            this.form_cart.unit_medium_id = null
-            this.form_cart.unit_large = null
-            this.form_cart.unit_large_id = null
-            this.form_cart.p_code = null
-
+            this.resetFormCart()
             this.calculte()
 
           }
@@ -94,6 +104,94 @@ const App = {
           this.stop()
           notifError('Error')
       })
+    },
+
+    getProductInfo: function(data){
+      axios.post('api/get-product-info', data)
+      .then(response => {
+          if(response.status == 200){
+            this.form_cart.unit_small = response.data[0].unit_small_name
+            this.form_cart.unit_small_id = response.data[0].unit_small_id
+            this.form_cart.unit_medium = response.data[0].unit_medium_name
+            this.form_cart.unit_medium_id = response.data[0].unit_medium_id
+            this.form_cart.unit_large = response.data[0].unit_large_name
+            this.form_cart.unit_large_id = response.data[0].unit_large_id
+            this.form_cart.p_code = response.data[0].p_code
+            this.form_cart.sell_price_small = response.data[0].sell_price_small
+            this.form_cart.sell_price_medium = response.data[0].sell_price_medium
+            this.form_cart.sell_price_large = response.data[0].sell_price_large
+
+            //auto select
+            this.form_cart.unit_id = response.data[0].unit_small_id
+            this.form_cart.unit_name = response.data[0].unit_small_name
+            this.form_cart.price = response.data[0].sell_price_small
+            console.log(this.form_cart.price)
+            this.showModal()
+          }
+          else{
+            notifError('Product not found')
+            this.stop()
+          }
+      })
+      .catch(error => {
+          this.stop()
+          notifError('Error')
+      })
+    },
+
+    getProductClik: function(code){
+      const data = {'code' : code};
+      this.getProductInfo(data)
+    },
+
+    getProductSearch: function(){
+      
+      const data = {'code' : this.keyword};
+      this.getProductInfo(data)
+      
+    },
+
+    setCustomer: function(mobile, name){
+        this.customer_name = name
+        this.customer_mobile = mobile
+
+        console.log(name)
+    },
+
+    showModalPayment: function(){
+      if(this.carts.length == 0)
+      {
+        notifError('Please, select at least one product item')
+        this.stop()
+      }
+      else{
+        $('#modal-payment').modal('show')
+      }
+    },
+
+    showModal: function(){
+      $('#modal-default').modal('show')
+    },
+
+    hideModalPayment: function(){
+      $('#modal-payment').modal('hide')
+    },
+
+    hideModal: function(){
+      $('#modal-default').modal('hide')
+    },
+
+    addCartItem: function(code){
+      const data = {'code' : code};
+      this.getProductCode(data)
+      this.hideModal()
+    },
+
+    
+    unitCart: function(unit, price)
+    {
+      this.form_cart.unit_name = unit
+      this.form_cart.price = price
     },
 
     calculte: function(){
@@ -116,53 +214,20 @@ const App = {
       this.carts_footer.sum_total_amount_carts = total_amount - discont
     },
 
-    getProductInfo: function(data){
-      axios.post('api/get-product-info', data)
-      .then(response => {
-          if(response.status == 200){
-            this.form_cart.unit_small = response.data.data[0].unit_small
-            this.form_cart.unit_medium = response.data.data[0].unit_medium
-            this.form_cart.unit_large = response.data.data[0].unit_large
-            this.form_cart.p_code = response.data.data[0].product_code
-          }
-          else{
-            notifError('Product not found')
-            this.stop()
-          }
-      })
-      .catch(error => {
-          this.stop()
-          notifError('Error')
-      })
-    },
-
-    getProduct: function(){
-      if(isNaN(parseInt(this.keyword)))
-      {
-        console.log('string')
-      }
-      else
-      {
-        const data = {'code' : this.keyword};
-        this.getProductCode(data)
-      }
-    },
-
-    showModal: function(p_id, p_code, unit_small, unit_small_id, unit_medium, unit_medium_id, unit_large, unit_large_id){
-      
-      this.form_cart.unit_small = unit_small
-      this.form_cart.unit_small_id = unit_small_id
-      this.form_cart.unit_medium = unit_medium
-      this.form_cart.unit_medium_id = unit_medium_id
-      this.form_cart.unit_large = unit_large
-      this.form_cart.unit_large_id = unit_large_id
-      this.form_cart.p_code = p_code
-      
-    },
-
-    addCartItem: function(code){
-      const data = {'code' : code};
-      this.getProductCode(data)
+    resetFormCart: function(){
+      this.form_cart.qty = 1
+      this.form_cart.unit_id = null,
+      this.form_cart.unit_small = null
+      this.form_cart.unit_small_id = null
+      this.form_cart.unit_medium = null
+      this.form_cart.unit_medium_id = null
+      this.form_cart.unit_large = null
+      this.form_cart.unit_large_id = null
+      this.form_cart.p_code = null
+      this.form_cart.sell_price_small = null
+      this.form_cart.sell_price_medium = null
+      this.form_cart.sell_price_large = null
+      this.form_cart.price = null
     },
 
     deleteCartItem: function(index) {
@@ -170,20 +235,6 @@ const App = {
       this.calculte()
     },
 
-    //CRUD FUNCTION
-    getData: function(data){
-      axios.post('api/get-product-list', data)
-         .then(response => {
-            if(response.status == 200){
-              this.items = response.data.data
-            }else{
-              notifError('Data Product Error')
-            }
-         })
-         .catch(error => {
-            notifError('Error')
-         })
-    },
   },
 
   mounted() {
