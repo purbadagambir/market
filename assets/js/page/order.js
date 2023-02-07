@@ -181,7 +181,11 @@ const App = {
       $('#modal-default').modal('hide')
     },
 
-    addCartItem: function(code){
+    addCartItem: function(code, unit, price, unit_id){
+      console.log(unit)
+      this.form_cart.unit_id = unit_id
+      this.form_cart.unit_name = unit
+      this.form_cart.price = price
       const data = {'code' : code};
       this.getProductCode(data)
       this.hideModal()
