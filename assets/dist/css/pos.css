@@ -102,3 +102,11 @@ table tr{
     -webkit-appearance: none;
     -moz-appearance: textfield;
 }
+
+.input-group{
+    margin-top: 10px;
+}
+
+.modal-lg{
+    width: 90%;
+}

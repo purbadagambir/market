@@ -16,6 +16,13 @@ const App = {
         shipping_charger : 0,
         orders_charger : 0,
       },
+      payment : {
+        paid_amount : 0,
+        due_amount : 0,
+        balance : 0,
+        bal_credit : 0,
+        bal_cash : this.balance
+      },
       keyword : '',
       form_cart : {
         p_code : null,
