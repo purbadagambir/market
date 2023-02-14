@@ -20,6 +20,7 @@ Route::get('/', 'DashboardController@index')->name('dashboard');
 Route::get('/dashboard', 'DashboardController@index');
 Route::get('/tes', 'DashboardController@tes');
 
+
 //SELL
 Route::get('/sell-list', 'SellController@index')->name('sell-list');
 Route::get('/return-list', 'SellController@return_list')->name('return-list');
