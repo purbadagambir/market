@@ -50,7 +50,7 @@
   
   <section class="content" id="app">
     <div class="row">
-      <div class="col-lg-7">
+      <div class="col-md-7 col-sm-7">
         <div class="box box-info direct-chat direct-chat-warning">
           <div class="box-header">
             <div class="row filter">
@@ -197,7 +197,7 @@
         
 
       </div>
-      <div class="col-lg-5">
+      <div class="col-md-5 col-sm-5">
         <div class="box box-warning direct-chat direct-chat-warning">
           <div class="box-header with-border">
             <div class="row">
