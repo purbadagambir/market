@@ -1,0 +1,35 @@
+.print-area{
+    margin: auto; 
+    width: 40%; 
+    padding: 10px;
+    border: 1px solid rgb(206, 212, 206);
+}
+
+.logo{
+    width : 15rem;
+    margin-bottom: 10px;
+}
+
+.order-info{
+    text-align: none;
+}
+
+.store-info{
+    text-align: center;
+    line-height: 0.5;
+}
+
+.w-50{
+    font-weight: bold;
+}
+
+.w-100{
+    width: 100%;
+}
+
+.warning{
+    font-style: italic;
+    font-size: 10px;
+    text-align: center;
+    margin-top: 10px;
+}

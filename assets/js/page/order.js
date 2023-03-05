@@ -19,9 +19,8 @@ const App = {
       payment : {
         paid_amount : 0,
         due_amount : 0,
-        balance : 0,
         bal_credit : 0,
-        bal_cash : this.balance
+        p_method : 1,
       },
       keyword : '',
       form_cart : {
@@ -82,19 +81,20 @@ const App = {
     getProductCode: function(data){
       axios.post('api/get-product-code', data)
       .then(response => {
-          
-          console.log(this.form_cart.price)
           this.beep()
           if(response.status == 200 & response.data.length > 0){
             newCart = {
-                            'qty'           : this.form_cart.qty, 
-                            'unit'          : this.form_cart.unit_name, 
-                            'p_name'        : response.data[0].p_name,
-                            'price'         : parseInt(this.form_cart.price),
-                            'discont'       : response.data[0].sell_discount,
-                            'discont_price' : this.form_cart.qty * (this.form_cart.price * response.data[0].sell_discount/100),
-                            'subtotal'      : this.form_cart.qty * this.form_cart.price,
-                            'total'         : this.form_cart.qty * (this.form_cart.price - (this.form_cart.price * 0/100))
+                            'qty'             : this.form_cart.qty, 
+                            'unit'            : this.form_cart.unit_name, 
+                            'p_id'            : response.data[0].p_id,
+                            'p_name'          : response.data[0].p_name,
+                            'price'           : parseInt(this.form_cart.price),
+                            'purchase_price'  : parseInt(response.data[0].purchase_price),
+                            'taxrate_id'      : response.data[0].taxrate_id,
+                            'discont'         : response.data[0].sell_discount,
+                            'discont_price'   : this.form_cart.qty * (this.form_cart.price * response.data[0].sell_discount/100),
+                            'subtotal'        : this.form_cart.qty * this.form_cart.price,
+                            'total'           : this.form_cart.qty * (this.form_cart.price - (this.form_cart.price * 0/100))
                         };
 
             this.carts.push(newCart)
@@ -132,7 +132,6 @@ const App = {
             this.form_cart.unit_id = response.data[0].unit_small_id
             this.form_cart.unit_name = response.data[0].unit_small_name
             this.form_cart.price = response.data[0].sell_price_small
-            console.log(this.form_cart.price)
             this.showModal()
           }
           else{
@@ -161,8 +160,6 @@ const App = {
     setCustomer: function(mobile, name){
         this.customer_name = name
         this.customer_mobile = mobile
-
-        console.log(name)
     },
 
     showModalPayment: function(){
@@ -189,7 +186,6 @@ const App = {
     },
 
     addCartItem: function(code, unit, price, unit_id){
-      console.log(unit)
       this.form_cart.unit_id = unit_id
       this.form_cart.unit_name = unit
       this.form_cart.price = price
@@ -244,6 +240,36 @@ const App = {
     deleteCartItem: function(index) {
       this.carts.splice(index, 1)
       this.calculte()
+    },
+
+    addOrder: function(){
+      const store_id = document.getElementById("store_id").value;
+      const data = {orders : this.carts, 
+                    payments : this.payment, 
+                    customer_mobile : this.customer_mobile,
+                    total_orders : this.carts_footer,
+                    store_id : store_id
+                  }
+      
+      axios.post('api/add-orders', data)
+      .then(response => {
+          if(response.status == 200){
+            var invoice_number = response.data.data
+            this.hideModal()
+            this.resetFormCart()
+            window.open("invoice?number="+invoice_number); 
+            window.location.href = "pos"
+          }
+          else{
+            notifError('Product not found')
+            this.stop()
+          }
+      })
+      .catch(error => {
+          this.stop()
+          notifError('Error')
+      })
+
     },
 
   },

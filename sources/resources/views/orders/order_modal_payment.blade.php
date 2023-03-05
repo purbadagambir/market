@@ -19,9 +19,10 @@
                 <h5>Pmethod</h5>
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
-                        <button class="btn btn-block btn-success"><i class="fa fa-money"></i> Full Payment</button>
+                        <button class="btn btn-block btn-success" @click="addOrder"><i class="fa fa-money"></i> Full Payment</button>
                     </div>
                 </div>
+                <input type="hidden" id="store_id" value="{{session('store')->store_id}}">
                 <div class="input-group">
                     <span class="input-group-addon">Nilai Bayar</span>
                     <input type="text" class="form-control" placeholder="Input An Amount" v-model="payment.paid_amount">

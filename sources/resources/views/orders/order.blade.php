@@ -72,14 +72,16 @@
               <div class="direct-chat-messages product-list">
 
                 <div class="col-lg-3 col-xs-4 text-center" v-for="item in items">
-                  <div class="info-box product-box" @click="getProductClik(item.p_code)">
-                    <div class="inner">
-                      <i class="fa fa-barcode fa-3x barcode"></i>
-                      <p class="text-product">@{{item.p_name}}</p>
+                  <div @click="getProductClik(item.p_code)">
+                    <div class="info-box product-box">
+                      <div class="inner">
+                        <i class="fa fa-barcode fa-3x barcode"></i>
+                        <p class="text-product">@{{item.p_name}}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="add-cart bg-black">
-                      <b><i class="fa fa-plus"></i> Tambah Ke Keranjang </b>
+                    <div class="add-cart bg-black">
+                        <b><i class="fa fa-plus"></i> Tambah Ke Keranjang </b>
+                    </div>
                   </div>
                 </div>
               </div>

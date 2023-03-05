@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class SellingPrice extends Model
 {
     protected $table="selling_price";
-    protected $primaryKey ="invoice_id";
-    protected $fillable=[''];
+    protected $guarded = ['price_id'];
+    public $timestamps = false;
 }

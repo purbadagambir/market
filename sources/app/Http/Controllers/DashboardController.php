@@ -14,18 +14,13 @@ class DashboardController extends Controller
     {
         $data = [
             'page'  => 'Dashboard',
-            'toko'  => 'Market 001'
+            'toko'  => session('store')->name
         ];
         return view('dashboard.dashboard', compact('data'));
     }
 
     public function tes()
     {
-        $data_product = DB::table('product_to_store')
-                            ->join('products', 'product_to_store.product_id', '=', 'products.p_id')
-                            ->where('product_to_store.store_id', 5)
-                            ->where('products.p_code', 8998866602921)
-                            ->get();
-        return $data_product;
+        echo session('store');
     }
 }
