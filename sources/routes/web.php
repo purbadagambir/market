@@ -67,6 +67,7 @@ Route::middleware(['auth', 'store'])->group(function() {
     //POS
     Route::get('/pos', 'OrderController@index')->name('pos');
     Route::get('/invoice', 'OrderController@print');
+    Route::get('/struk', 'OrderController@struk');
 
     //LOGOUT
     Route::post('/logout', 'LoginController@logout')->name('logout');

@@ -39,13 +39,15 @@ class OrderController extends Controller
         $data_invoice = SellingItemModel::where('invoice_id', $invoice_id)->get();
         $data_order = DB::table('selling_info')
         ->join('customers', 'selling_info.customer_id', '=', 'customers.customer_id')
+        ->join('users', 'selling_info.created_by', '=', 'users.id')
         ->where('selling_info.invoice_id', $invoice_id)
         ->select('selling_info.invoice_id AS invoice_id',
                 'selling_info.created_at AS tanggal', 
                 'customers.customer_address AS alamat',
                 'customers.customer_name AS member',
                 'selling_info.total_points AS poin', 
-                'customers.total_points AS jumlah_poin')
+                'customers.total_points AS jumlah_poin',
+                'users.username AS kasir')
         ->first();
 
         $data_price = SellingPriceModel::where('invoice_id', $invoice_id)->first();
@@ -61,5 +63,42 @@ class OrderController extends Controller
         ];
 
         return view('orders.print', compact('data'));
+    }
+
+    public function struk()
+    {
+        $invoice_id = $_GET['number'];
+
+        // $data_invoice = SellingItemModel::where('invoice_id', $invoice_id)->get();
+        $data_invoice = DB::table('selling_item')
+                            ->join('units', 'selling_item.sell_unit_id', '=', 'units.unit_id')
+                            ->where('selling_item.invoice_id', $invoice_id)
+                            ->get();
+        $data_order = DB::table('selling_info')
+        ->join('customers', 'selling_info.customer_id', '=', 'customers.customer_id')
+        ->join('users', 'selling_info.created_by', '=', 'users.id')
+        ->where('selling_info.invoice_id', $invoice_id)
+        ->select('selling_info.invoice_id AS invoice_id',
+                'selling_info.created_at AS tanggal', 
+                'customers.customer_address AS alamat',
+                'customers.customer_name AS member',
+                'selling_info.total_points AS poin', 
+                'customers.total_points AS jumlah_poin',
+                'users.username AS kasir')
+        ->first();
+
+        $data_price = SellingPriceModel::where('invoice_id', $invoice_id)->first();
+        $data_payment = PaymentModel::where('invoice_id', $invoice_id)->first();
+        
+        $data = [
+            'page'      => 'Invoice',
+            'toko'      => $invoice_id,
+            'invoice'   => $data_invoice,
+            'order'     => $data_order,
+            'price'     => $data_price,
+            'payment'     => $data_payment,
+        ];
+
+        return view('orders.struk', compact('data'));
     }
 }

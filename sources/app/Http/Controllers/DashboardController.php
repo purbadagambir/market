@@ -21,6 +21,6 @@ class DashboardController extends Controller
 
     public function tes()
     {
-        echo session('store');
+        return request()->segment(1);
     }
 }

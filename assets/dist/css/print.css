@@ -2,7 +2,10 @@
     margin: auto; 
     width: 40%; 
     padding: 10px;
-    border: 1px solid rgb(206, 212, 206);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
 }
 
 .logo{
@@ -32,4 +35,38 @@
     font-size: 10px;
     text-align: center;
     margin-top: 10px;
+}
+
+.button-invoice{
+    margin-top: 20px;
+}
+
+.border-solid-1{
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+}
+
+.dashed{
+    border-bottom: 1px dashed;
+}
+
+.solid-top{
+    border-top: 2px solid;
+}
+
+@media print{
+    .noprint{
+        display: none;
+    }
+    .box-info{
+        border: none;
+    }
+
+    .print-area{
+        margin: auto; 
+        width: 100%; 
+        padding: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
 }

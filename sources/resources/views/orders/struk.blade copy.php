@@ -105,15 +105,19 @@
 
         <div class="warning">
             <p class="w-50">Nama Kasir : {{$data['order']->kasir}}</p>
-            <span class="notes">Barang yang sudah dibeli tidak dapat di tukar atau di kembalikan.</span>
+            <span class="notes">Terimakasih telah berbelanja.</span>
         </div>
 
-        <div class="button-invoice noprint">
-            <a class="btn btn-info btn-block text-center noprint" href="{{url('struk?number='.$data['order']->invoice_id)}}" target="_blank"> <i class="fa fa-print"></i> Print </button>
-            <a class="btn btn-default btn-block text-center noprint" href="{{route('pos')}}"> <i class="fa fa-long-arrow-left" aria-hidden="true"></i> Back to  print </a>
-        </div>
     </div>
   </div>
 </section>
+    @push('custom-scripts')
 
+    <script>
+        $( document ).ready(function() { 
+            window.print();
+        });
+    </script>
+
+    @endpush
 @endsection

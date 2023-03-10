@@ -11,29 +11,50 @@
             <div class="col-md-3 col-sm-12">
                 <div class="list-group">
                 @foreach($data['pmethod'] as $pmethod)
-                <a class="list-group-item" id="pmethod{{$pmethod->pmethod_id}}">{{$pmethod->name}}</a>
+                <button class="list-group-item payment" id="pmethod{{$pmethod->pmethod_id}}" @click="setPayment({{$pmethod->pmethod_id}}, '{{$pmethod->code_name}}')">{{$pmethod->name}}</button>
                 @endforeach
                 </div>
             </div>
             <div class="col-md-5 col-sm-12 text-center">
-                <h5>Pmethod</h5>
+                <h5>Pmethod : @{{payment.p_method_name}}</h5>
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
-                        <button class="btn btn-block btn-success" @click="addOrder"><i class="fa fa-money"></i> Full Payment</button>
+                        <button class="btn btn-block btn-success" @click="fullPayent()"><i class="fa fa-money"></i> Full Payment</button>
                     </div>
                 </div>
+                <input type="hidden" id="user_id" value="{{Auth::user()->id}}">
                 <input type="hidden" id="store_id" value="{{session('store')->store_id}}">
                 <div class="input-group">
                     <span class="input-group-addon">Nilai Bayar</span>
-                    <input type="text" class="form-control" placeholder="Input An Amount" v-model="payment.paid_amount">
+                    <input type="number" class="form-control" placeholder="Input An Amount" v-model="payment.paid_amount" @keyup="pay_amount">
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">Balance To Credit</span>
-                    <input type="text" class="form-control" placeholder="Input An Balance To Credit" v-model="payment.bal_credit">
+                    <input type="number" class="form-control" placeholder="Input An Balance To Credit" v-model="payment.bal_credit" @keyup="pay_credit">
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon"> <i class="fa fa-pencil"></i> </span>
-                    <input type="text" class="form-control" placeholder="Note here">
+                    <input type="text" class="form-control"  v-model="payment.noted" placeholder="Note here">
+                </div>
+                <div class="bcash" id="bcash" v-if="payment.p_method == 2">
+                    <div class="input-group">
+                        <span class="input-group-addon"> Trx ID </span>
+                        <input type="text" class="form-control"  v-model="payment.trxid" placeholder="Note here">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"> Mobile Number </span>
+                        <input type="text" class="form-control"  v-model="payment.mobile" placeholder="Note here">
+                    </div>
+                </div>
+                <div class="bcash" id="gcard" v-if="payment.p_method == 3">
+                    <div class="input-group">
+                        <span class="input-group-addon"> Trx ID </span>
+                        <input type="text" class="form-control"  v-model="payment.noted" placeholder="Note here">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"> Mobile Number </span>
+                        <input type="text" class="form-control"  v-model="payment.noted" placeholder="Note here">
+                    </div>
                 </div>
             </div>
             <div class="col-md-4 col-sm-12 text-center">
@@ -82,19 +103,19 @@
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align:right">Nilai Tagihan</td>
-                        <td style="text-align:right">@{{0 - (carts_footer.sum_total_amount_carts - payment.paid_amount)}}</td>
+                        <td style="text-align:right">@{{payment.due_amount}}</td>
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align:right">Balance</td>
-                        <td style="text-align:right" v-if="0 - (carts_footer.sum_total_amount_carts - payment.paid_amount) > 0">@{{0 - (carts_footer.sum_total_amount_carts - payment.paid_amount)}}</td>
+                        <td style="text-align:right">@{{payment.balance}}</td>
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align:right">Balance To Credit</td>
-                        <td style="text-align:right" v-if="0 - (carts_footer.sum_total_amount_carts - payment.paid_amount) > 0">@{{payment.bal_credit}}</td>
+                        <td style="text-align:right">@{{payment.bal_credit}}</td>
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align:right">Balance To Cash</td>
-                        <td style="text-align:right" v-if="0 - (carts_footer.sum_total_amount_carts - payment.paid_amount) > 0">@{{(0 - (carts_footer.sum_total_amount_carts - payment.paid_amount)) - payment.bal_credit}}</td>
+                        <td style="text-align:right">@{{payment.pos_balance}}</td>
                     </tr>
                 </table>
             </div>
@@ -102,7 +123,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal"> <i class="fa fa-close"></i> Cancel</button>
-            <button type="button" class="btn btn-success"> <i class="fa fa-money"></i> Checkout <i class="fa fa-arrow-right"></i> </button>
+            <button type="button" class="btn btn-success" @click="checkOut"> <i class="fa fa-money"></i> Checkout <i class="fa fa-arrow-right"></i> </button>
         </div>
         </div>
         <!-- /.modal-content -->

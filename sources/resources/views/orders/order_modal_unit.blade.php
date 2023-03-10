@@ -13,9 +13,9 @@
             <span class="input-group-addon bg-success" @click="plus">+</span>
             </div>
             <div class="button-unit" style="margin-top:10px; text-align:center">
-            <button class="btn btn-info" @click="addCartItem(form_cart.p_code, form_cart.unit_small, form_cart.sell_price_small, form_cart.unit_small_id)">@{{form_cart.unit_small}}</button>
-            <button class="btn btn-info" style="margin-left:10px; margin-right:10px" @click="addCartItem(form_cart.p_code, form_cart.unit_medium, form_cart.sell_price_medium, form_cart.unit_medium_id)">@{{form_cart.unit_medium}}</button>
-            <button class="btn btn-info" @click="addCartItem(form_cart.p_code, form_cart.unit_large, form_cart.sell_price_large, form_cart.unit_large_id)">@{{form_cart.unit_large}}</button>
+            <button class="btn btn-info" @click="addCartItem(form_cart.p_code, form_cart.unit_small, form_cart.sell_price_small, form_cart.unit_small_id, form_cart.vol_unit_small)">@{{form_cart.unit_small}}</button>
+            <button class="btn btn-info" style="margin-left:10px; margin-right:10px" @click="addCartItem(form_cart.p_code, form_cart.unit_medium, form_cart.sell_price_medium, form_cart.unit_medium_id, form_cart.vol_unit_medium)">@{{form_cart.unit_medium}}</button>
+            <button class="btn btn-info" @click="addCartItem(form_cart.p_code, form_cart.unit_large, form_cart.sell_price_large, form_cart.unit_large_id, form_cart.vol_unit_large)">@{{form_cart.unit_large}}</button>
             </div>
             <!-- <select class="form-control" style="margin-top:10px" v-model="form_cart.unit_id">
             <option selected :value="form_cart.unit_small_id" @click="unitCart(form_cart.unit_small, form_cart.sell_price_small)">@{{form_cart.unit_small}}</option>

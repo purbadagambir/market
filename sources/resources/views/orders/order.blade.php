@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>PONDOPOS | {{$data['page']}}</title>
+  <title>{{session('store')->name}} | {{$data['page']}}</title>
+  <link rel="icon"  type="image/x-icon" href="{{url('assets/img/logo/1_favicon.png')}}">
 
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -106,11 +107,12 @@
                 <div class="col-md-10 col-xs-10">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <select class="form-control">
-                      @foreach($data['members'] as $member)
-                      <option value="{{$member->customer_id}}" @click="setCustomer('{{$member->customer_mobile}}', '{{$member->customer_name}}')"> {{$member->customer_mobile}} ({{$member->customer_name}}) </option>
-                      @endforeach
-                    </select>
+                    <input type="text" class="form-control" @keyup="searchMember()" v-model="search_member">
+                  </div>
+                  <div class="list-group" v-if="list_member.length > 0">
+                    <div v-for="member in list_member">
+                      <button class="list-group-item payment" @click="setCustomer(member.customer_mobile, member.customer_name)"> <i class="fa fa-user"></i> @{{member.customer_name}} (@{{member.customer_mobile}})</button>
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-2 col-xs-2">

@@ -32,7 +32,6 @@ class LoginController extends Controller
             {
                 Auth::login($user);
 
-                Toastr::success('Login berhasil!');
                 return Redirect('select_store');
             }
             else
@@ -58,6 +57,7 @@ class LoginController extends Controller
     {
         $store = StoreModel::where('store_id', $request->store_id)->first();
         session(['store' => $store], time() + 2629700);
+        Toastr::success('Login berhasil!');
         return Redirect('dashboard');
     }
 

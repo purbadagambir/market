@@ -23,15 +23,65 @@ class ApiOrderController extends Controller
     {
         DB::beginTransaction();
             try {
+                $user_id = $request->user_id;
                 $store_id = $request->store_id;
                 $year = date('Y');
                 $last_id = DB::select("SELECT AUTO_INCREMENT 
                                     FROM information_schema.TABLES
                                     WHERE TABLE_SCHEMA = 'modern_pos'
                                     AND TABLE_NAME = 'selling_price'");
+                
+                $last_ref = DB::select("SELECT AUTO_INCREMENT 
+                                    FROM information_schema.TABLES
+                                    WHERE TABLE_SCHEMA = 'modern_pos'
+                                    AND TABLE_NAME = 'selling_info'");
 
                 $invoice_number = $store_id.$year.'/'.$last_id[0]->AUTO_INCREMENT;
+                $ref_number = 'CT'.date('ymd').$store_id.$last_ref[0]->AUTO_INCREMENT;
                 
+                $profit = 0;
+                $purchase = 0;
+                for ($i = 0; $i < count($request->orders); $i++) {
+                    $selling_item[] = [
+                        'invoice_id'            => $invoice_number,
+                        'category_id'           => $request->orders[$i]['category_id'],
+                        'brand_id'              => $request->orders[$i]['brand_id'],
+                        'sup_id'                => $request->orders[$i]['sup_id'],
+                        'store_id'              => $store_id,
+                        'item_id'               => $request->orders[$i]['p_id'],
+                        'item_name'             => $request->orders[$i]['p_name'],
+                        'item_price'            => $request->orders[$i]['price'],
+                        'item_discount'         => 0,
+                        'item_tax'              => 0,
+                        'tax_method'            => $request->orders[$i]['tax_method'],
+                        'taxrate_id'            => $request->orders[$i]['taxrate_id'],
+                        'tax'                   => 0,
+                        'gst'                   => 0,
+                        'cgst'                  => 0,
+                        'sgst'                  => 0,
+                        'igst'                  => 0,
+                        'item_quantity'         => $request->orders[$i]['qty'],
+                        'item_purchase_price'   => $request->orders[$i]['purchase_price'],
+                        'item_total'            => $request->orders[$i]['qty'] * $request->orders[$i]['price'],
+                        'purchase_invoice_id'   => 1,
+                        'print_counter'         => 1,
+                        'print_counter_time'    => null,
+                        'printed_by'            => $user_id,
+                        'return_quantity'       => 0,
+                        'installment_quantity'  => 1,
+                        'created_at'            => now(),
+                        'sell_unit_id'          => $request->orders[$i]['unit_id'],
+                        'sell_vol_unit'         => $request->orders[$i]['vol_unit'],
+                        'sell_qty_conversi'     => $request->orders[$i]['qty'] * $request->orders[$i]['vol_unit'],
+                        'sell_amount'           => $request->orders[$i]['qty'] * $request->orders[$i]['price'],
+                        'sell_profit'           => ($request->orders[$i]['qty'] * $request->orders[$i]['price']) - $request->orders[$i]['purchase_price'],
+                    ];
+
+                    $profit =+ ($request->orders[$i]['qty'] * $request->orders[$i]['price']) - $request->orders[$i]['purchase_price'];
+                    $purchase =+ $request->orders[$i]['purchase_price'];
+                }
+
+                SellingItemModel::insert($selling_item);
 
                 $selling_price = [
                     'invoice_id'            => $invoice_number,
@@ -46,62 +96,23 @@ class ApiOrderController extends Controller
                     'cgst'                  => 0,
                     'sgst'                  => 0,
                     'igst'                  => 0,
-                    'total_purchase'        => 12000,
+                    'total_purchase_price'  => $purchase,
                     'shipping_type'         => 'plain',
                     'shipping_amount'       => 0,
                     'orthers_charge'        => 0,
-                    'payable_amount'        => 12000,
-                    'paid_amount'           => 12000,
+                    'payable_amount'        => $request->total_orders['sum_total_carts'],
+                    'paid_amount'           => $request->total_orders['sum_total_carts'],
                     'due'                   => 0,
                     'due_paid'              => 0,
                     'return_amount'         => 0,
-                    'balance'               => 0,
-                    'profit'                => 1000,
+                    'balance'               => $request->payments['pos_balance'],
+                    'profit'                => $profit,
                     'previous_due'          => 0,
                     'prev_due_paid'         => 0,
-                    'total_bruto'           => 0,
+                    'total_brutto'           => $request->total_orders['sum_total_carts'],
                 ];
-    
+                
                 SellingPriceModel::create($selling_price);
-
-                for ($i = 0; $i < count($request->orders); $i++) {
-                    $selling_item[] = [
-                        'invoice_id'            => $invoice_number,
-                        'category_id'           => 1,
-                        'brand_id'              => 1,
-                        'sup_id'                => 1,
-                        'store_id'              => $store_id,
-                        'item_id'               => $request->orders[$i]['p_id'],
-                        'item_name'             => $request->orders[$i]['p_name'],
-                        'item_price'            => $request->orders[$i]['price'],
-                        'item_discount'         => 1,
-                        'item_tax'              => 1,
-                        'tax_method'            => 1,
-                        'taxrate_id'            => 1,
-                        'tax'                   => 1,
-                        'gst'                   => 1,
-                        'cgst'                  => 1,
-                        'sgst'                  => 1,
-                        'igst'                  => 1,
-                        'item_quantity'         => $request->orders[$i]['qty'],
-                        'item_purchase_price'   => $request->orders[$i]['purchase_price'],
-                        'item_total'            => $request->orders[$i]['qty'] * $request->orders[$i]['price'],
-                        'purchase_invoice_id'   => 1,
-                        'print_counter'         => 1,
-                        'print_counter_time'    => null,
-                        'printed_by'            => 1,
-                        'return_quantity'       => 0,
-                        'installment_quantity'  => 1,
-                        'created_at'            => now(),
-                        'sell_unit_id'          => 1,
-                        'sell_vol_unit'         => 1,
-                        'sell_qty_conversi'     => 1,
-                        'sell_amount'           => 1,
-                        'sell_profit'           => 1,
-                    ];
-                }
-
-                SellingItemModel::insert($selling_item);
 
                 $customer = CustomerModel::where('customer_mobile', $request->customer_mobile)->first();
 
@@ -121,8 +132,8 @@ class ApiOrderController extends Controller
                     'pmethod_id'            => null,
                     'payment_status'        => 'paid',
                     'checkout_status'       => 1,
-                    'total_points'          => 0,
-                    'created_by'            => 1,
+                    'total_points'          => $profit * (20 / 100),
+                    'created_by'            => $user_id,
                     'created_at'            => now(),
                     'updated_at'            => null,
                 ];
@@ -131,14 +142,14 @@ class ApiOrderController extends Controller
 
                 $sell_log = [
                     'customer_id'           => $customer->customer_id,
-                    'reference_no'          => null,
+                    'reference_no'          => $ref_number,
                     'ref_invoice_id'        => $invoice_number,
                     'type'                  => 'sell',
-                    'pmethod_id'            => 5,
+                    'pmethod_id'            => $request->payments['p_method'],
                     'description'           => 'Paid while selling',
-                    'amount'                => 5000,
+                    'amount'                => $request->total_orders['sum_total_amount_carts'],
                     'store_id'              => $store_id,
-                    'created_by'            => 1,
+                    'created_by'            => $user_id,
                     'created_at'            => now(),
                     'updated_at'            => null,
                 ];
@@ -152,42 +163,42 @@ class ApiOrderController extends Controller
                     'store_id'              => $store_id,
                     'invoice_id'            => $invoice_number,
                     'reference_no'          => null,
-                    'pmethod_id'            => 5,
+                    'pmethod_id'            => $request->payments['p_method'],
                     'transaction_id'        => null,
-                    'capital'               => 1,
-                    'amount'                => 5000,
+                    'capital'               => $purchase,
+                    'amount'                => $request->total_orders['sum_total_amount_carts'],
                     'details'               => null,
                     'attachment'            => null,
-                    'note'                  => null,
-                    'total_paid'            => 5000,
-                    'pos_balance'           => 0,
-                    'created_by'            => 1,
+                    'note'                  => $request->payments['noted'],
+                    'total_paid'            => $request->payments['paid_amount'],
+                    'pos_balance'           => $request->payments['pos_balance'],
+                    'created_by'            => $user_id,
                     'created_at'            => now(),
-                    'balance_to_credit'     => null,
+                    'balance_to_credit'     => $request->payments['bal_credit'],
                 ];
 
                 PaymentModel::create($payment);
 
-                DB::commit();
+        DB::commit();
 
-                return response([
-                    'data'      => $invoice_number,
-                    'message'  => 'Success'
-                 ], 200);
+        return response([
+            'data'      => $invoice_number,
+            'message'  => 'Success'
+            ], 200);
 
-            } catch (Exception $e) {
-                DB::rollback();
-                return response([
-                    'data'      => 0,
-                    'message'  => 'Error'
-                 ], 201); 
-            }
+        } catch (Exception $e) {
+            DB::rollback();
+            return response([
+                'data'      => 0,
+                'message'  => 'Error'
+                ], 201); 
+        }
 
-        return count($request->data);
     }
 
     public function product_list(Request $request)
     {
+        $store_id = $request->store_id;
 
         $data_product = DB::table('product_to_store')
                 ->join('products', 'product_to_store.product_id', '=', 'products.p_id')
@@ -205,7 +216,7 @@ class ApiOrderController extends Controller
                         'unit_large.unit_id as unit_large_id',
                         'unit_large.unit_name AS unit_large_name', 
                         )
-                ->where('product_to_store.store_id', 5)
+                ->where('product_to_store.store_id', $store_id)
                 ->limit(8)
                 ->get();
 
@@ -217,9 +228,10 @@ class ApiOrderController extends Controller
 
     public function product_code(Request $request)
     {
+        $store_id = $request->store_id;
         $data_product = DB::table('product_to_store')
                             ->join('products', 'product_to_store.product_id', '=', 'products.p_id')
-                            ->where('product_to_store.store_id', 5)
+                            ->where('product_to_store.store_id', $store_id)
                             ->where('products.p_code', $request->code)
                             ->get();
         return $data_product;
@@ -227,6 +239,7 @@ class ApiOrderController extends Controller
 
     public function product_info(Request $request)
     {
+        $store_id = $request->store_id;
         $data_product = DB::table('product_to_store')
                         ->join('products', 'product_to_store.product_id', '=', 'products.p_id')
                         ->join('units as unit_small', 'products.unit_id', '=', 'unit_small.unit_id')
@@ -238,12 +251,15 @@ class ApiOrderController extends Controller
                                 'product_to_store.sell_price_large',
                                 'unit_small.unit_id as unit_small_id',
                                 'unit_small.unit_name AS unit_small_name',
+                                'products.vol_unit_small AS vol_unit_small',
                                 'unit_medium.unit_id as unit_medium_id',
                                 'unit_medium.unit_name AS unit_medium_name',
+                                'products.vol_unit_medium AS vol_unit_medium',
                                 'unit_large.unit_id as unit_large_id',
-                                'unit_large.unit_name AS unit_large_name', 
+                                'unit_large.unit_name AS unit_large_name',
+                                'products.vol_unit_large AS vol_unit_large', 
                                 )
-                        ->where('product_to_store.store_id', 5)
+                        ->where('product_to_store.store_id', $store_id)
                         ->where('products.p_code', $request->code)
                         ->orWhere('products.p_name', $request->code)
                         ->get();
@@ -257,6 +273,24 @@ class ApiOrderController extends Controller
 
         return $data_product;
         
+    }
+
+    public function search_member(Request $request)
+    {
+        $member = CustomerModel::where('customer_name', 'LIKE', '%'.$request->keyword.'%')
+                                    ->orWhere('customer_mobile', 'LIKE', '%'.$request->keyword.'%')
+                                    ->select('customer_mobile', 'customer_name')
+                                    ->limit(5)
+                                    ->get();
+
+        if(!$member){
+            return response([
+                'data'      => 'not found',
+                'message'  => 'failed'
+                ], 201);
+        }
+
+        return $member;
     }
     
 }

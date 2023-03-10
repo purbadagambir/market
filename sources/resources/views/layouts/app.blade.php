@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>PONDOPOS | {{$data['page']}}</title>
+  <title>{{session('store')->name}} | {{$data['page']}}</title>
+  <link rel="icon"  type="image/x-icon" href="{{url('assets/img/logo/1_favicon.png')}}">
 
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -31,6 +32,7 @@
   <link rel="stylesheet" href="assets/bower_components/select2/dist/css/select2.min.css">
   <link rel="stylesheet" href="assets/vue/grid.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

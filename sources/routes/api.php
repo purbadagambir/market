@@ -72,6 +72,7 @@ Route::post('/get-product-list', 'API\ApiOrderController@product_list');
 Route::post('/get-product-code', 'API\ApiOrderController@product_code');
 Route::post('/get-product-info', 'API\ApiOrderController@product_info');
 Route::post('/add-orders', 'API\ApiOrderController@add_orders');
+Route::post('/search-member', 'API\ApiOrderController@search_member');
 
 
 
