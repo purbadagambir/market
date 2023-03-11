@@ -8,7 +8,7 @@
 
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="stylesheet" href="assets/dist/css/print.css">
+  <link rel="stylesheet" href="assets/dist/css/struk.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link rel="stylesheet" href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
@@ -38,7 +38,7 @@
 <body class="hold-transition skin-blue sidebar-mini">
     <section class="content" id="app">
         <div class="container-fluid">
-            <div class="box">
+            <div>
                 <div class="print-area">
                     <div class="store-info">
                         <img src="{{url('assets\img\logo\5_logo.png')}}" alt="Logo Pondo" class="logo">
@@ -71,65 +71,60 @@
                                 <td class='w-50'>Jml. Point</td>
                                 <td>: {{$data['order']->jumlah_poin}}</td>
                             </tr>
+                        </table>
+                        <table class="table-order">
                             <tr class="border-solid-1">
                                 <td class='w-50'>Sl.</td>
-                                <td class='w-50'>Name</td>
-                                <td class='w-50'>Qty</td>
-                                <td class='w-50'>Price</td>
-                                <td class='w-50'>Disc</td>
-                                <td class='w-50'>Amount</td>
+                                <td class='w-50 center'>Name</td>
+                                <td class='w-50 center'>Qty</td>
+                                <td class='w-50 right'>Price</td>
+                                <td class='w-50 right'>Disc</td>
+                                <td class='w-50 right'>Amount</td>
                             </tr>
                             @foreach($data['invoice'] as $item)
                             <tr class="item-order dashed">
                                 <td>{{$loop->iteration}}</td>
-                                <td>{{$item->item_name}}</td>
-                                <td>{{intval($item->item_quantity)}}</td>
-                                <td>{{number_format(intval($item->item_price))}}</td>
-                                <td>{{number_format(intval($item->item_discount))}}</td>
-                                <td>{{number_format(intval($item->item_total))}}</td>
+                                <td class='center'>{{$item->item_name}}</td>
+                                <td class='center' width="5%">{{intval($item->item_quantity)}} {{$item->unit_name}}</td>
+                                <td class='right'>{{number_format(intval($item->item_price))}}</td>
+                                <td class='right'>{{number_format(intval($item->item_discount))}}</td>
+                                <td class='right'>{{number_format(intval($item->item_total))}}</td>
                             </tr>
                             @endforeach
                             <tr class="solid-top">
                                 <td></td>
-                                <td></td>
-                                <td colspan="3" class='w-50'>Sub. Total</td>
-                                <td class="dashed">: {{number_format(intval($data['price']->subtotal))}}</td>
+                                <td colspan="3" class='w-50 right'>Sub. Total :</td>
+                                <td colspan="2" class="dashed right">{{number_format(intval($data['price']->subtotal))}}</td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td></td>
-                                <td colspan="3" class='w-50'>Diskon</td>
-                                <td class="dashed">: {{number_format(intval($data['price']->discount_amount))}}</td>
+                                <td colspan="3" class='w-50 right'>Diskon :</td>
+                                <td colspan="2" class="dashed right">{{number_format(intval($data['price']->discount_amount))}}</td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td></td>
-                                <td colspan="3" class='w-50'>Total</td>
-                                <td class="dashed">: {{number_format(intval($data['price']->subtotal - $data['price']->discount_amount))}}</td>
+                                <td colspan="3" class='w-50 right'>Total :</td>
+                                <td colspan="2" class="dashed right">{{number_format(intval($data['price']->subtotal - $data['price']->discount_amount))}}</td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td></td>
-                                <td colspan="3" class='w-50'>Dibayar</td>
-                                <td class="dashed">: {{number_format(intval($data['payment']->total_paid))}}</td>
+                                <td colspan="3" class='w-50 right'>Dibayar :</td>
+                                <td colspan="2" class="dashed right">{{number_format(intval($data['payment']->total_paid))}}</td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td></td>
-                                <td colspan="3" class='w-50'>Sisa</td>
-                                <td class="dashed">: {{number_format(intval($data['payment']->total_paid - ($data['price']->subtotal - $data['price']->discount_amount)))}}</td>
+                                <td colspan="3" class='w-50 right'>Sisa :</td>
+                                <td colspan="2" class="dashed right">{{number_format(intval($data['payment']->total_paid - ($data['price']->subtotal - $data['price']->discount_amount)))}}</td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td></td>
-                                <td colspan="3" class='w-50'>Set Ke Kredit</td>
-                                <td class="dashed">: {{number_format(intval($data['payment']->balance_to_credit))}}</td>
+                                <td colspan="3" class='w-50 right'>Set Ke Kredit :</td>
+                                <td colspan="2" class="dashed right">{{number_format(intval($data['payment']->balance_to_credit))}}</td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td></td>
-                                <td colspan="3" class='w-50'>Kembalian</td>
-                                <td class="dashed">: {{number_format(intval($data['payment']->balance_to_credit - ($data['payment']->total_paid - ($data['price']->subtotal - $data['price']->discount_amount))))}}</td>
+                                <td colspan="3" class='w-50 right'>Kembalian :</td>
+                                <td colspan="2" class="dashed right">{{number_format(intval($data['payment']->balance_to_credit - ($data['payment']->total_paid - ($data['price']->subtotal - $data['price']->discount_amount))))}}</td>
                             </tr>
                         </table>
                     </div>

@@ -109,11 +109,16 @@
         </div>
 
         <div class="button-invoice noprint">
-            <a class="btn btn-info btn-block text-center noprint" href="{{url('struk?number='.$data['order']->invoice_id)}}" target="_blank"> <i class="fa fa-print"></i> Print </button>
+            <button class="btn btn-info btn-block text-center noprint" onclick="printStruk('{{$data['order']->invoice_id}}')" target="_blank"> <i class="fa fa-print"></i> Print </button>
             <a class="btn btn-default btn-block text-center noprint" href="{{route('pos')}}"> <i class="fa fa-long-arrow-left" aria-hidden="true"></i> Back to  print </a>
         </div>
     </div>
   </div>
 </section>
 
+<script type="text/javascript"> 
+    function printStruk(invoice){
+        window.open("struk?number="+invoice, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=750,height=650");
+    }
+</script>
 @endsection

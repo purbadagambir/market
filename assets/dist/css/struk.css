@@ -1,0 +1,82 @@
+.print-area{
+    margin: auto; 
+    width: 45%; 
+    padding: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+}
+
+.right{
+    text-align: right;
+}
+
+.table-order td{
+    padding-left : 5px;
+}
+
+.logo{
+    width : 15rem;
+    margin-bottom: 10px;
+}
+
+.order-info{
+    text-align: none;
+}
+
+.store-info{
+    text-align: center;
+    line-height: 0.5;
+}
+
+.w-50{
+    font-weight: bold;
+}
+
+.w-100{
+    width: 100%;
+}
+
+.warning{
+    font-style: italic;
+    font-size: 10px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.button-invoice{
+    margin-top: 20px;
+}
+
+.border-solid-1{
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+}
+
+.dashed{
+    border-bottom: 1px dashed;
+}
+
+.solid-top{
+    border-top: 2px solid;
+}
+
+.center{
+    text-align: center;
+}
+
+@media print{
+    .noprint{
+        display: none;
+    }
+    .box-info{
+        border: none;
+    }
+
+    .print-area{
+        margin: auto; 
+        width: 100%; 
+        padding: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
