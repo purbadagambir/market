@@ -65,12 +65,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td >52023/00036092</td>
-                    <td class="text-center">2023-01-05 09:41:52</td>
-                    <td class="text-center">FAUZIAH</td>
+                  <tr v-for="item in items">
+                    <td >@{{item.invoice_id}}</td>
+                    <td class="text-center">@{{item.created_at}}</td>
+                    <td class="text-center">@{{item.customer_name}}</td>
                     <td class="text-center">
-                      <span class="badge btn-success">Paid</span>
+                      <span class="badge btn-success">@{{item.payment_status}}</span>
                     </td>
                     <td class="text-center">-</td>
                     <td class="text-center">
@@ -131,7 +131,7 @@
 <script src="assets/toastr/toastr.min.js"></script>
 <script src="assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="assets/js/page/curency.js"></script>
+<script src="assets/js/page/sell.js"></script>
 <script src="assets/js/page/app.js"></script>
 <script src="assets/js/notif.js"></script>
 @endpush

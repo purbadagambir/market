@@ -30,13 +30,12 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
-  <div class="login-logo">
-    <img src="{{url('assets\img\logo\5_logo.png')}}" alt="Logo Pondo" style="width : 15rem">
-    <h1>PONDO NETWORK</h1>
-  </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg"> <b>Login</b> </p>
+    <div class="login-logo">
+      <img src="{{url('assets\img\logo\logo_new.png')}}" alt="Logo Pondo" style="width : 20rem">
+    </div>
+    <p class="login-box-msg"> <b>Pondo User Login</b> </p>
 
     <form action="{{route('login')}}" method="post">
       @csrf
