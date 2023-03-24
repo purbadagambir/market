@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use \App\Http\Resources\ProductToStoreResource;
 use App\Models\ProductToStore as ProductToStoreModel;
+use App\Models\SellingInfo as SellingInfoModel;
 use DB;
 
 class DashboardController extends Controller
@@ -21,6 +22,12 @@ class DashboardController extends Controller
 
     public function tes()
     {
-        return request()->segment(1);
+        $last_id = count(SellingInfoModel::where('store_id', session('store')->store_id)->get()) + 1;
+
+        
+        $bilangan=1234; // Nilai Proses
+        $fzeropadded = sprintf("%08d", $bilangan);
+
+        return $fzeropadded;
     }
 }

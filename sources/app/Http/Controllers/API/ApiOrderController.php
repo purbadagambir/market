@@ -26,17 +26,14 @@ class ApiOrderController extends Controller
                 $user_id = $request->user_id;
                 $store_id = $request->store_id;
                 $year = date('Y');
-                $last_id = DB::select("SELECT AUTO_INCREMENT 
-                                    FROM information_schema.TABLES
-                                    WHERE TABLE_SCHEMA = 'modern_pos'
-                                    AND TABLE_NAME = 'selling_price'");
+                $last_id = count(SellingInfoModel::where('store_id', $store_id)->get()) + 1;
                 
                 $last_ref = DB::select("SELECT AUTO_INCREMENT 
                                     FROM information_schema.TABLES
                                     WHERE TABLE_SCHEMA = 'modern_pos'
                                     AND TABLE_NAME = 'selling_info'");
 
-                $invoice_number = $store_id.$year.'/'.$last_id[0]->AUTO_INCREMENT;
+                $invoice_number = $store_id.$year.'/'.sprintf("%08d", $last_id);
                 $ref_number = 'CT'.date('ymd').$store_id.$last_ref[0]->AUTO_INCREMENT;
                 
                 $profit = 0;
