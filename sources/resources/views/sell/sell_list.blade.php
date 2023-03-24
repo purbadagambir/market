@@ -3,6 +3,7 @@
 @section('content')
 
 <section class="content" id="app">
+  <input type="hidden" value="{{session('store')->store_id}}" id="store_id">
   <div v-if="loading" class="text-primary" style="padding-left:45%; font-size: 20px;"><i class="fa fa-spin fa-refresh"></i>&nbsp loading...</div>
   <div v-else="loading">
 
@@ -79,10 +80,10 @@
                           . . .
                         </button>
                         <div class="dropdown-menu pull-right">
-                          <li @click="this.editData(item.currency_id)"><a>Return</a></li>
-                          <li @click="this.editData(item.currency_id)"><a>View</a></li>
-                          <li @click="this.editData(item.currency_id)"><a>Edit</a></li>
-                          <li @click="this.deleteData(item.currency_id)"><a>Delete</a></li>
+                          <li><a>Return</a></li>
+                          <li><a :href="'invoice?number='+item.invoice_id">View</a></li>
+                          <li><a>Edit</a></li>
+                          <li><a>Delete</a></li>
                         </div>
                       </div>
                     </td>

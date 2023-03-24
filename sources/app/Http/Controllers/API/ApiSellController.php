@@ -11,13 +11,15 @@ class ApiSellController extends Controller
     public function sell_list(Request $request)
     {
         $query = DB::table('selling_info')
-        ->join('customers', 'selling_info.customer_mobile', '=', 'customers.customer_mobile')
-        ->whereDate('selling_info.created_at', now())
-        ->select('selling_info.info_id', 'selling_info.invoice_id', 'selling_info.created_at', 'selling_info.payment_status', 'customers.customer_name');
+                    ->join('customers', 'selling_info.customer_mobile', '=', 'customers.customer_mobile')
+                    ->whereDate('selling_info.created_at', now())
+                    ->where('selling_info.store_id', $request->store_id)
+                    ->select('selling_info.info_id', 'selling_info.invoice_id', 'selling_info.created_at', 'selling_info.payment_status', 'customers.customer_name')
+                    ->orderBy('selling_info.created_at', 'desc');
     
-        $sell_list = $query->paginate($request->perPage, ['*'], 'page', $request->pageSelect);
+        $sell_list = $query->paginate($request['table']['perPage'], ['*'], 'page', $request['table']['pageSelect']);
 
-        if($sell_list){
+        if($sell_list->count() > 0){
 
             foreach($sell_list as $list){
                 $data[] = $list;
@@ -33,19 +35,19 @@ class ApiSellController extends Controller
                 "total" => $sell_list->total()
             ];
     
-            $data = [
+            $response = [
                 'data'  => $data,
                 'meta'  => $meta,
                 'message' => 'success'
             ];
 
-            return response($data, 200);
+            return response($response, 200);
 
         }else{
             return response([
                 'data'      => null,
-                'message'  => 'Error'
-                ], 201);
+                'message'  => 'Data not found'
+                ], 200);
         }
     }
 }

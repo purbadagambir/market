@@ -35,7 +35,7 @@
     <h1 class="text-danger">SELECT STORE</h1>
   </div>
   <!-- /.login-logo -->
-  <div class="login-box-body">
+  <div class="login-box-body" style="overflow: auto;">
     <ul class="list-group">
       @foreach($data['store'] as $store)
       <button class="list-group-item" onclick="select_store({{$store->store_id}})">

@@ -42,8 +42,8 @@
                 <div class="print-area">
                     <div class="store-info">
                         <img src="{{url('assets\img\logo\5_logo.png')}}" alt="Logo Pondo" class="logo">
-                        <p>Jalan Pasar Induk Cureh</p>
-                        <p>Mobile: 082117736760, Email: marketpondo@gmail.com</p>
+                        <p>{{$data['order']->store_address}}</p>
+                        <p>Mobile: {{$data['order']->store_mobile}}, Email: {{$data['order']->store_email}}</p>
                     </div>
                     <div class='order-info'>
                         <table class='w-100'>
@@ -59,10 +59,10 @@
                                 <td>Nama</td>
                                 <td>: {{$data['order']->member}}</td>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <td>Alamat</td>
                                 <td>: {{$data['order']->alamat}}</td>
-                            </tr>
+                            </tr> --}}
                             <tr>
                                 <td class='w-50'>Point TX</td>
                                 <td>: {{$data['order']->poin}}</td>
@@ -75,7 +75,7 @@
                         <table class="table-order">
                             <tr class="border-solid-1">
                                 <td class='w-50'>Sl.</td>
-                                <td class='w-50 center'>Name</td>
+                                <td class='w-50 left'>Name</td>
                                 <td class='w-50 center'>Qty</td>
                                 <td class='w-50 right'>Price</td>
                                 <td class='w-50 right'>Disc</td>
@@ -84,7 +84,7 @@
                             @foreach($data['invoice'] as $item)
                             <tr class="item-order dashed">
                                 <td>{{$loop->iteration}}</td>
-                                <td class='center'>{{$item->item_name}}</td>
+                                <td class='left'>{{$item->item_name}}</td>
                                 <td class='center' width="5%">{{intval($item->item_quantity)}} {{$item->unit_name}}</td>
                                 <td class='right'>{{number_format(intval($item->item_price))}}</td>
                                 <td class='right'>{{number_format(intval($item->item_discount))}}</td>
@@ -124,12 +124,13 @@
                             <tr>
                                 <td></td>
                                 <td colspan="3" class='w-50 right'>Kembalian :</td>
-                                <td colspan="2" class="dashed right">{{number_format(intval($data['payment']->balance_to_credit - ($data['payment']->total_paid - ($data['price']->subtotal - $data['price']->discount_amount))))}}</td>
+                                <td colspan="2" class="dashed right">{{number_format(intval(($data['payment']->total_paid - ($data['price']->subtotal - $data['price']->discount_amount))) - $data['payment']->balance_to_credit)}}</td>
                             </tr>
                         </table>
                     </div>
 
                     <div class="warning">
+                        <p class="w-50">Type Pembayaran : {{$data['order']->p_method}}</p>
                         <p class="w-50">Nama Kasir : {{$data['order']->kasir}}</p>
                         <span class="notes">Terimakasih telah berbelanja.</span>
                     </div>

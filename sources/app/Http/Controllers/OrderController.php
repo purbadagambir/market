@@ -36,19 +36,30 @@ class OrderController extends Controller
     {
         $invoice_id = $_GET['number'];
 
-        $data_invoice = SellingItemModel::where('invoice_id', $invoice_id)->get();
+        $data_invoice = DB::table('selling_item')
+                            ->join('units', 'selling_item.sell_unit_id', '=', 'units.unit_id')
+                            ->where('selling_item.invoice_id', $invoice_id)
+                            ->get();
+
         $data_order = DB::table('selling_info')
-        ->join('customers', 'selling_info.customer_id', '=', 'customers.customer_id')
-        ->join('users', 'selling_info.created_by', '=', 'users.id')
-        ->where('selling_info.invoice_id', $invoice_id)
-        ->select('selling_info.invoice_id AS invoice_id',
-                'selling_info.created_at AS tanggal', 
-                'customers.customer_address AS alamat',
-                'customers.customer_name AS member',
-                'selling_info.total_points AS poin', 
-                'customers.total_points AS jumlah_poin',
-                'users.username AS kasir')
-        ->first();
+                            ->join('customers', 'selling_info.customer_id', '=', 'customers.customer_id')
+                            ->join('point_logs', 'selling_info.invoice_id', '=', 'point_logs.trans_no')
+                            ->join('users', 'selling_info.created_by', '=', 'users.id')
+                            ->join('pmethods', 'selling_info.pmethod_id', '=', 'pmethods.pmethod_id')
+                            ->join('stores', 'selling_info.store_id', '=', 'stores.store_id')
+                            ->where('selling_info.invoice_id', $invoice_id)
+                            ->select('selling_info.invoice_id AS invoice_id',
+                                    'selling_info.created_at AS tanggal', 
+                                    'customers.customer_address AS alamat',
+                                    'customers.customer_name AS member',
+                                    'point_logs.point AS poin', 
+                                    'point_logs.new_point AS jumlah_poin',
+                                    'users.username AS kasir',
+                                    'pmethods.name AS p_method',
+                                    'stores.email AS store_email',
+                                    'stores.mobile AS store_mobile',
+                                    'stores.address AS store_address')
+                            ->first();
 
         $data_price = SellingPriceModel::where('invoice_id', $invoice_id)->first();
         $data_payment = PaymentModel::where('invoice_id', $invoice_id)->first();
@@ -74,18 +85,26 @@ class OrderController extends Controller
                             ->join('units', 'selling_item.sell_unit_id', '=', 'units.unit_id')
                             ->where('selling_item.invoice_id', $invoice_id)
                             ->get();
-        $data_order = DB::table('selling_info')
-        ->join('customers', 'selling_info.customer_id', '=', 'customers.customer_id')
-        ->join('users', 'selling_info.created_by', '=', 'users.id')
-        ->where('selling_info.invoice_id', $invoice_id)
-        ->select('selling_info.invoice_id AS invoice_id',
-                'selling_info.created_at AS tanggal', 
-                'customers.customer_address AS alamat',
-                'customers.customer_name AS member',
-                'selling_info.total_points AS poin', 
-                'customers.total_points AS jumlah_poin',
-                'users.username AS kasir')
-        ->first();
+
+                            $data_order = DB::table('selling_info')
+                            ->join('customers', 'selling_info.customer_id', '=', 'customers.customer_id')
+                            ->join('point_logs', 'selling_info.invoice_id', '=', 'point_logs.trans_no')
+                            ->join('users', 'selling_info.created_by', '=', 'users.id')
+                            ->join('pmethods', 'selling_info.pmethod_id', '=', 'pmethods.pmethod_id')
+                            ->join('stores', 'selling_info.store_id', '=', 'stores.store_id')
+                            ->where('selling_info.invoice_id', $invoice_id)
+                            ->select('selling_info.invoice_id AS invoice_id',
+                                    'selling_info.created_at AS tanggal', 
+                                    'customers.customer_address AS alamat',
+                                    'customers.customer_name AS member',
+                                    'point_logs.point AS poin', 
+                                    'point_logs.new_point AS jumlah_poin',
+                                    'users.username AS kasir',
+                                    'pmethods.name AS p_method',
+                                    'stores.email AS store_email',
+                                    'stores.mobile AS store_mobile',
+                                    'stores.address AS store_address')
+                            ->first();
 
         $data_price = SellingPriceModel::where('invoice_id', $invoice_id)->first();
         $data_payment = PaymentModel::where('invoice_id', $invoice_id)->first();
