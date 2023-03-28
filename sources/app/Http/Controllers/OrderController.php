@@ -40,10 +40,7 @@ class OrderController extends Controller
                             ->join('units', 'selling_item.sell_unit_id', '=', 'units.unit_id')
                             ->where('selling_item.invoice_id', $invoice_id)
                             ->get();
-<<<<<<< HEAD
-
-=======
->>>>>>> eb18e0b1 (invoice number)
+                            
         $data_order = DB::table('selling_info')
                             ->join('customers', 'selling_info.customer_id', '=', 'customers.customer_id')
                             ->join('point_logs', 'selling_info.invoice_id', '=', 'point_logs.trans_no')

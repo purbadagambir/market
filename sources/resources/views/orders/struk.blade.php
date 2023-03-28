@@ -139,12 +139,10 @@
             </div>
         </div>
     </section>
-
-    <script>
-        $( document ).ready(function() { 
-            window.print();
-        });
-    </script>
-  
 </body>
+<script>
+    $( document ).ready(function() { 
+        window.print();
+    });
+</script>
 </html>
