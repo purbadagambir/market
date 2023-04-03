@@ -2,6 +2,10 @@
 
 @section('content')
 
+@push('custom-style')
+<link rel="stylesheet" href="assets/dist/css/sell.css">
+@endpush
+
 <section class="content" id="app">
   <input type="hidden" value="{{session('store')->store_id}}" id="store_id">
   <div v-if="loading" class="text-primary" style="padding-left:45%; font-size: 20px;"><i class="fa fa-spin fa-refresh"></i>&nbsp loading...</div>
@@ -80,9 +84,9 @@
                           . . .
                         </button>
                         <div class="dropdown-menu pull-right">
-                          <li><a>Return</a></li>
+                          <li @click="showModalReturn(item.invoice_id)"><a>Return</a></li>
                           <li><a :href="'invoice?number='+item.invoice_id">View</a></li>
-                          <li><a>Edit</a></li>
+                          <li @click="showModalEdit(item.invoice_id)"><a>Edit</a></li>
                           <li><a>Delete</a></li>
                         </div>
                       </div>
@@ -117,6 +121,9 @@
             </div>
           </div>
         </div>
+        
+      @include('sell.sell_modal_edit')
+      @include('sell.sell_modal_return')
       </div><!-- /.box-body -->
     </div>
   </div>
