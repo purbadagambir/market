@@ -14,28 +14,12 @@ const App = {
       },
       meta : [],
       buttonPage : [],
-      form:{
-        id : null,
-        title : null,
-        code : null,
-        symbol_left : '-',
-        symbol_right : '-',
-        decimal_place : null,
-        status : null,
-        short_order : null
+      modalEdit : {
+        invoice_number : ''
       },
-      hasError : {
-        title : false,
-        code : false,
-        decimal_place : false,
-        status : false
-      },
-      error: {
-        title : false,
-        code : false,
-        decimal_place : false,
-        status : false
-      },
+      modalReturn : {
+        invoice_number : ''
+      }
     }
   },
   methods:{
@@ -117,21 +101,58 @@ const App = {
     },
     //TABLE FUNCTION END
 
+    //MODAL FUNCTION
+
+    showModalEdit: function(invoice){
+      this.modalEdit.invoice_number = invoice
+      $('#modal-edit-sell').modal('show')
+
+      const data = {'invoice_number' : invoice}
+
+      axios.post('api/get-sell-info', data)
+        .then(response => {
+          this.modalEdit = response.data.data
+        })
+
+    },
+
+    hideModalReturn: function(){
+      $('#modal-return-sell').modal('hide')
+    },
+
+    showModalReturn: function(){
+      console.log('invoice')
+
+    },
+
+    hideModalReturn: function(){
+      $('#modal-return-sell').modal('hide')
+    },
+
+    updateSell: function(){
+      axios.post('api/update-sell-info', this.modalEdit)
+        .then(response => {
+          if(response.status == 200){
+            const store_id = document.getElementById("store_id").value
+            const data = {'table' : this.table, 'store_id' : store_id}
+            this.getData(data)
+            notifSuccess('Data berhasil diupdate')
+            this.hideModalEdit()
+          }else{
+            notifError('Error')
+          }
+        })
+    },
+
+    //
+
     //CRUD FUNCTION
     getData: function(data){
-      console.log(data)
       axios.post('api/get-sell-list', data)
          .then(response => {
-            if(response.status == 200){
               this.items = response.data.data
               this.meta = response.data.meta
               this.buttonPage = this.pageButton(this.meta.last_page)
-            }else{
-              notifError('Error')
-            }
-         })
-         .catch(error => {
-            notifError('Error')
          })
     },
 
