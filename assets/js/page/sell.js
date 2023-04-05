@@ -18,7 +18,13 @@ const App = {
         invoice_number : ''
       },
       modalReturn : {
-        invoice_number : ''
+        invoice_number : '',
+        item : [],
+        price : [],
+      },
+      returnItem : {
+        item_id : [],
+        item_qty : [],
       }
     }
   },
@@ -116,13 +122,23 @@ const App = {
 
     },
 
-    hideModalReturn: function(){
-      $('#modal-return-sell').modal('hide')
+    hideModalEdit: function(){
+      $('#modal-edit-sell').modal('hide')
     },
 
-    showModalReturn: function(){
-      console.log('invoice')
+    showModalReturn: function(invoice){
+      this.modalReturn.invoice_number = invoice
 
+      $('#modal-return-sell').modal('show')
+
+      const data = {'invoice_number' : invoice}
+
+      axios.post('api/get-sell-item', data)
+        .then(response => {
+          console.log(response.data.data.item)
+          this.modalReturn.item = response.data.data.item
+          this.modalReturn.price = response.data.data.price
+        })
     },
 
     hideModalReturn: function(){

@@ -58,3 +58,63 @@
         
         return $menu;
     }
+
+    function total_sales($store_id)
+    {
+        $query = DB::table('selling_price')
+                ->where('store_id', $store_id)
+                ->select(DB::raw("FLOOR(SUM(payable_amount)) as total_sales"))
+                ->get();
+
+
+        foreach($query as $loop){
+            $info['total_sales'] = $loop->total_sales;
+        }
+
+        return  $info['total_sales'];
+    }
+
+    function total_expense($store_id)
+    {
+        $query = DB::table('selling_price')
+                ->where('store_id', $store_id)
+                ->select(DB::raw("FLOOR(SUM(total_purchase_price)) as total_expense"))
+                ->get();
+
+
+        foreach($query as $loop){
+            $info['total_expense'] = $loop->total_expense;
+        }
+
+        return  $info['total_expense'];
+    }
+
+    function total_point($store_id)
+    {
+        $query = DB::table('selling_info')
+                ->where('store_id', $store_id)
+                ->select(DB::raw("FLOOR(SUM(total_points)) as total_point"))
+                ->get();
+
+
+        foreach($query as $loop){
+            $info['total_point'] = $loop->total_point;
+        }
+
+        return  $info['total_point'];
+    }
+
+    function total_balance($store_id)
+    {
+        $query = DB::table('customer_transactions')
+                ->where('store_id', $store_id)
+                ->select(DB::raw("FLOOR(SUM(amount)) as total_balance"))
+                ->get();
+
+
+        foreach($query as $loop){
+            $info['total_balance'] = $loop->total_balance;
+        }
+
+        return  $info['total_balance'];
+    }

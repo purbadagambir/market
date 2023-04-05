@@ -77,6 +77,7 @@ Route::post('/search-member', 'API\ApiOrderController@search_member');
 //SELL_LIST
 Route::post('/get-sell-list', 'API\ApiSellController@sell_list');
 Route::post('/get-sell-info', 'API\ApiSellController@sell_info');
+Route::post('/get-sell-item', 'API\ApiSellController@sell_item');
 Route::post('/update-sell-info', 'API\ApiSellController@update_sell_info');
 
 
