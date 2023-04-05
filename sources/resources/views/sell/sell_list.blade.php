@@ -122,8 +122,8 @@
           </div>
         </div>
         
-      @include('sell.sell_modal_edit')
-      @include('sell.sell_modal_return')
+        @include('sell.sell_modal_edit')
+        @include('sell.sell_modal_return')
       </div><!-- /.box-body -->
     </div>
   </div>
