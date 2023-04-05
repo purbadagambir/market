@@ -4,9 +4,30 @@
 
 .tb-right {
     text-align: right;
-    width: 40%;
+    width: 70%;
 }
 
 .tb-left {
-    text-align: left;
+    text-align: right;
+}
+
+.tb-center {
+    text-align: center;
+}
+
+.tb-number{
+    width: 5%;
+}
+
+.return-item-table{
+    border: 1px solid #ddd;
+    height: 30px;
+}
+
+.modal-lg{
+    width: 90%;
+}
+
+.return-list-header{
+    font-size: 50px;
 }
