@@ -39,10 +39,55 @@ class DashboardController extends Controller
         return view('dashboard.monitoring', compact('data'));
     }
 
+    public function dashboard_member()
+    {
+        $data_member = DB::table('customers')->get();
+        $data_member_aktif = DB::table('customers')->where('status_frontend', 1)->get();
+        $query_point = DB::table('customers')
+                    ->select(DB::raw("FLOOR(SUM(total_points)) as total_point"))
+                    ->get();
+
+        $query_balance = DB::table('customer_transactions')
+                    ->where('notes', 'Points To Credits')
+                    ->select(DB::raw("FLOOR(SUM(amount)) as total_balance"))
+                    ->get();
+        
+        foreach($query_point as $point){
+            $data_point = $point->total_point;
+        }
+
+        foreach($query_balance as $balance){
+            $data_balance = $balance->total_balance;
+        }
+
+        $data_member = DB::table('customers')->offset(0)->limit(20)->orderBy('total_points', 'DESC')->get();
+        $data_activity_member = DB::table('customer_transactions')
+                                    ->join('customers', 'customer_transactions.customer_id', '=', 'customers.customer_id')
+                                    ->select('customers.customer_name','customers.customer_mobile', 'customer_transactions.customer_id', DB::raw('count(*) as total'))
+                                    ->groupBy('customers.customer_name', 'customers.customer_mobile', 'customer_transactions.customer_id')
+                                    ->orderBy('total', 'DESC')
+                                    ->offset(0)->limit(20)
+                                    ->get();
+
+
+        $data = [
+            'page'                  => 'Dashboard',
+            'toko'                  => session('store')->name,
+            'total_member'          => number_format(intval(count($data_member))),
+            'total_member_aktif'    => number_format(intval(count($data_member_aktif))),
+            'total_point'           => number_format(intval($data_point)),
+            'total_balance'         => number_format(intval($data_balance)),
+            'data_member'           => $data_member,
+            'data_activity_member'  => $data_activity_member,
+        ];
+
+        return view('dashboard.dashboard_member', compact('data'));
+    }
+
     public function tes()
     {   
         $periode = [
-            'start'     => date('2022-05-20'),
+            'start'     => date('2023-04-07'),
             'end'       => date('Y-m-d')
         ];
         return total_expense(5, $periode);

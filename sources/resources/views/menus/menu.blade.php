@@ -9,8 +9,8 @@
 @endpush
 
 <section class="content" id="app">
-  <i class="fa fa-spin fa-refresh" v-if="loading"></i>&nbsp
   <div class="box box-info" v-bind:class="{ 'collapsed-box': !show }">
+    <div v-if="loading" class="text-primary" style="padding-left:45%; font-size: 20px;"><i class="fa fa-spin fa-refresh"></i>&nbsp loading...</div>
     <div v-if="!show" class="box-header with-border" @click="this.openForm">
       <div class="box-tools pull-left">
         <button type="button" class="btn btn-box-tool">

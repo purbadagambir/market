@@ -14,8 +14,8 @@ class ApiDashboardController extends Controller
             $periode = null;
         }else{
             $periode = [
-                'start'     => date('2022-05-20'),
-                'end'       => date('Y-m-d')
+                'start'     => $request->start,
+                'end'       => $request->end
             ];
         }
 
