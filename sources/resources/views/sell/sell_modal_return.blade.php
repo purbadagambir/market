@@ -80,15 +80,17 @@
                                     <td class="tb-number bg-gray">
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" :value="item.id">
+                                                <input type="checkbox" name="item_id" :value="item.id">
                                             </label>
                                         </div>
                                     </td>
                                     <td class="tb-left">@{{item.item_name}} (x @{{item.item_quantity}})</td>
-                                    <td class="tb-center"><input type="number" class="form-control" :value="item.item_quantity"></td>
+                                    <td class="tb-center"><input type="number" class="form-control" :id="'item_qty_' + item.id" :value="item.item_quantity" :max="item.item_quantity" min="1"></td>
                                 </tr>
                             </tbody>
                         </table>
+                        <textarea class="form-control" name="" id="" cols="70" rows="2" placeholder="Any Message Here"></textarea>
+                        <input type="hidden" id="store_id" value="{{session('store')->store_id}}">
                     </div>
                 </div>
                 <div class="modal-footer">

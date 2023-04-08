@@ -22,10 +22,7 @@ const App = {
         item : [],
         price : [],
       },
-      returnItem : {
-        item_id : [],
-        item_qty : [],
-      }
+      return_item : []
     }
   },
   methods:{
@@ -135,7 +132,6 @@ const App = {
 
       axios.post('api/get-sell-item', data)
         .then(response => {
-          console.log(response.data.data.item)
           this.modalReturn.item = response.data.data.item
           this.modalReturn.price = response.data.data.price
         })
@@ -143,6 +139,30 @@ const App = {
 
     hideModalReturn: function(){
       $('#modal-return-sell').modal('hide')
+    },
+
+    returnNow: function(){
+      
+      const item_id = [];
+      const store_id = document.getElementById("store_id").value;
+
+      $("input:checkbox[name=item_id]:checked").each(function(){
+          item_id.push($(this).val());
+      });
+
+      
+      var data = {item_id : [], item_qty : [], store_id : store_id, invoice_id : modalReturn.invoice_number}
+
+      for (var i = 0; i < item_id.length; i++) {
+        data.item_id.push(item_id[i])
+        data.item_qty.push(document.getElementById('item_qty_'+item_id[i]).value)
+      }
+
+      axios.post('api/return-sell-item', data)
+      .then(response => {
+        console.log(response)
+      })
+
     },
 
     updateSell: function(){

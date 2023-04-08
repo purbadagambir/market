@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use \App\Http\Resources\ProductToStoreResource;
 use App\Models\ProductToStore as ProductToStoreModel;
 use App\Models\SellingInfo as SellingInfoModel;
+use App\Models\Returns as ReturnsModel;
 use DB;
 
 class DashboardController extends Controller
@@ -39,15 +40,11 @@ class DashboardController extends Controller
     }
 
     public function tes()
-    {
-        
-
-        $sell_item = DB::table('selling_item')
-        ->join('units', 'selling_item.sell_unit_id', '=', 'units.unit_id')
-        ->where('invoice_id', '52023/00000215')
-        ->select(DB::raw('FLOOR(item_price) AS item_price, FLOOR(item_quantity) AS item_quantity, selling_item.item_name'))
-        ->get();
-        
-        return $sell_item;
+    {   
+        $periode = [
+            'start'     => date('2022-05-20'),
+            'end'       => date('Y-m-d')
+        ];
+        return total_expense(5, $periode);
     }
 }

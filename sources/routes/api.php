@@ -18,6 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//DASHBOARD
+Route::post('/get-monitoring', 'API\ApiDashboardController@monitoring');
+
 //PRODUCT-LIST
 Route::post('/get-product', 'API\ApiProductController@index');
 Route::post('/create-product', 'API\ApiProductController@store');
@@ -78,6 +81,7 @@ Route::post('/search-member', 'API\ApiOrderController@search_member');
 Route::post('/get-sell-list', 'API\ApiSellController@sell_list');
 Route::post('/get-sell-info', 'API\ApiSellController@sell_info');
 Route::post('/get-sell-item', 'API\ApiSellController@sell_item');
+Route::post('/return-sell-item', 'API\ApiSellController@return_item');
 Route::post('/update-sell-info', 'API\ApiSellController@update_sell_info');
 
 
