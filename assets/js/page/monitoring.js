@@ -1,7 +1,7 @@
 const App = {
   data() {
     return {
-      loading : false,
+      loading : true,
       items : [],
       periode : {
         start : null,
@@ -14,6 +14,7 @@ const App = {
       axios.post('api/get-monitoring', data)
          .then(response => {
             this.items = response.data.data
+            this.loading = false
          })
          .catch(error => {
             notifError('Error')
@@ -21,6 +22,7 @@ const App = {
     },
 
     searchByPeriode: function(){
+      this.loading = true
       if(this.periode.start == null || this.periode.end == null)
       {
         notifError('Periode harus di isi lengkap')

@@ -31,6 +31,7 @@ Route::middleware(['auth', 'store'])->group(function() {
     //DASHBOARD
     Route::get('/', 'DashboardController@index')->name('home');
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('/dashboard-member', 'DashboardController@dashboard_member')->name('dashboard-member');
     Route::get('/monitoring', 'DashboardController@monitoring')->name('monitoring');
     Route::get('/tes', 'DashboardController@tes');
 
