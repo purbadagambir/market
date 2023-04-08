@@ -60,7 +60,7 @@ class DashboardController extends Controller
             $data_balance = $balance->total_balance;
         }
 
-        $data_member = DB::table('customers')->offset(0)->limit(20)->orderBy('total_points', 'DESC')->get();
+        $data_member_aktif = DB::table('customers')->offset(0)->limit(20)->orderBy('total_points', 'DESC')->get();
         $data_activity_member = DB::table('customer_transactions')
                                     ->join('customers', 'customer_transactions.customer_id', '=', 'customers.customer_id')
                                     ->select('customers.customer_name','customers.customer_mobile', 'customer_transactions.customer_id', DB::raw('count(*) as total'))
@@ -77,7 +77,7 @@ class DashboardController extends Controller
             'total_member_aktif'    => number_format(intval(count($data_member_aktif))),
             'total_point'           => number_format(intval($data_point)),
             'total_balance'         => number_format(intval($data_balance)),
-            'data_member'           => $data_member,
+            'data_member'           => $data_member_aktif,
             'data_activity_member'  => $data_activity_member,
         ];
 
