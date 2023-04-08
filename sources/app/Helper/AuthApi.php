@@ -147,6 +147,7 @@
         if($periode == null){
             $query = DB::table('customer_transactions')
                     ->where('store_id', $store_id)
+                    ->where('notes', 'add while shoping')
                     ->select(DB::raw("FLOOR(SUM(amount)) as total_balance"))
                     ->get();
 
@@ -157,6 +158,7 @@
         }else{
             $query = DB::table('customer_transactions')
                     ->where('store_id', $store_id)
+                    ->where('notes', 'add while shoping')
                     ->whereBetween('created_at', [$periode['start'], $periode['end']])
                     ->select(DB::raw("FLOOR(SUM(amount)) as total_balance"))
                     ->get();

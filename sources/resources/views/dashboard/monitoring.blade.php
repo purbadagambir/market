@@ -22,7 +22,7 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr class="bg-gray" role="row">
-                                    <th class="text-center">Label</th>
+                                    <th>Label</th>
                                     <th>Jumlah</th>
                                 </tr>
                                 </thead>

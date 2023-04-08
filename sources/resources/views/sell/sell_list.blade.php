@@ -120,7 +120,6 @@
               </ul>
             </div>
           </div>
-        </div>
       </div><!-- /.box-body -->
     </div>
   </div>
