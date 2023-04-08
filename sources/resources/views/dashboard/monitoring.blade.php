@@ -11,6 +11,7 @@
                 <input type="date" class="form-controll" v-model="periode.end" style="margin-left : 10px">
                 <button class="btn btn-primary" @click="searchByPeriode" style="margin-left : 10px">Cari</button>
             </div>
+            <div v-if="loading" class="text-primary" style="padding-left:45%; font-size: 20px;"><i class="fa fa-spin fa-refresh"></i>&nbsp loading...</div>
             <div class="row" style="margin-top : 25px">
                 <div class="col-sm-4" v-for='item in items'>
                     <div class="box box-success">
