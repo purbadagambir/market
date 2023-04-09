@@ -21,13 +21,13 @@ class DashboardController extends Controller
         $data = [
             'page'                  => 'Dashboard',
             'toko'                  => session('store')->name,
-            'total_selling'         => number_format(intvalcount($query_selling->get())),
-            'total_selling_today'   => number_format(intvalcount($query_selling->where('created_at', now())->get())),
-            'total_member'          => number_format(intvalcount($query_member->get())),
-            'total_member_today'    => number_format(intvalcount($query_member->where('created_at', now())->get())),
-            'total_purchase'        => number_format(intvalcount($query_purchase->get())),
-            'total_purchase_today'  => number_format(intvalcount($query_purchase->where('created_at', now())->get())),
-            'total_product'         => number_format(intvalcount($query_product->where('store_id', session('store')->store_id)->where('status', 1)->get())),
+            'total_selling'         => number_format(intval(count($query_selling->get()))),
+            'total_selling_today'   => number_format(intval(count($query_selling->where('created_at', now())->get()))),
+            'total_member'          => number_format(intval(count($query_member->get()))),
+            'total_member_today'    => number_format(intval(count($query_member->where('created_at', now())->get()))),
+            'total_purchase'        => number_format(intval(count($query_purchase->get()))),
+            'total_purchase_today'  => number_format(intval(count($query_purchase->where('created_at', now())->get()))),
+            'total_product'         => number_format(intval(count($query_product->where('store_id', session('store')->store_id)->where('status', 1)->get()))),
         ];
 
         return view('dashboard.dashboard', compact('data'));
