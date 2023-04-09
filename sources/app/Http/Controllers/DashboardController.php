@@ -14,10 +14,20 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        
+        $query_member = DB::table('customers');
+        $query_selling = DB::table('selling_info');
+        $query_purchase = DB::table('purchase_info');
+        $query_product = DB::table('product_to_store');
         $data = [
-            'page'  => 'Dashboard',
-            'toko'  => session('store')->name,
+            'page'                  => 'Dashboard',
+            'toko'                  => session('store')->name,
+            'total_selling'         => count($query_selling->get()),
+            'total_selling_today'   => count($query_selling->where('created_at', now())->get()),
+            'total_member'          => count($query_member->get()),
+            'total_member_today'    => count($query_member->where('created_at', now())->get()),
+            'total_purchase'        => count($query_purchase->get()),
+            'total_purchase_today'  => count($query_purchase->where('created_at', now())->get()),
+            'total_product'         => count($query_product->where('store_id', session('store')->store_id)->where('status', 1)->get()),
         ];
 
         return view('dashboard.dashboard', compact('data'));

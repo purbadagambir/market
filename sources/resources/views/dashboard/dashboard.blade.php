@@ -2,15 +2,20 @@
 
 @section('content')
 
+@push('custom-style')
+<link rel="stylesheet" href="assets/dist/css/dashboard.css">
+@endpush
+
 <section class="content" id="app">
     <div class="row">
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>150</h3>
-
-              <p>New Orders</p>
+              <span>Total Penjualan</span>
+              <h4>{{$data['total_selling']}}</h4>
+              <span>Total Penjualan Hari Ini</span>
+              <h4>{{$data['total_selling_today']}}</h4>
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>
@@ -23,9 +28,10 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-              <p>Bounce Rate</p>
+              <span>Total Member</span>
+              <h4>{{$data['total_member']}}</h4>
+              <span>Total Pelanggan Hari Ini</span>
+              <h4>{{$data['total_member_today']}}</h4>
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
@@ -38,9 +44,10 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>44</h3>
-
-              <p>User Registrations</p>
+              <span>Total Pemasok</span>
+              <h4>{{$data['total_purchase']}}</h4>
+              <span>Total Pemasok Hari Ini</span>
+              <h4>{{$data['total_purchase_today']}}</h4>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
@@ -53,9 +60,10 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>65</h3>
-
-              <p>Unique Visitors</p>
+              <span>Total Produk</span>
+              <h4>{{$data['total_product']}}</h4>
+              <span>Total Produk Hari Ini</span>
+              <h4>4500</h4>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
