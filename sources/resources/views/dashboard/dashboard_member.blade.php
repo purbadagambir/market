@@ -15,11 +15,7 @@
             <div class="icon">
               <i class="fa fa-users"></i>
             </div>
-<<<<<<< HEAD
             <a href="#" class="small-box-footer">This info</a>
-=======
-            <a href="#" class="small-box-footer">This Info <i class="fa fa-arrow-circle-right"></i></a>
->>>>>>> 0da9c7fc8b8fdf3e17f75411b4171ddb4aad9ac6
           </div>
         </div>
         <!-- ./col -->
@@ -34,11 +30,7 @@
             <div class="icon">
               <i class="fa fa-power-off"></i>
             </div>
-<<<<<<< HEAD
             <a href="#" class="small-box-footer">This info</a>
-=======
-            <a href="#" class="small-box-footer">This Info <i class="fa fa-arrow-circle-right"></i></a>
->>>>>>> 0da9c7fc8b8fdf3e17f75411b4171ddb4aad9ac6
           </div>
         </div>
         <!-- ./col -->
@@ -53,11 +45,7 @@
             <div class="icon">
               <i class="fa fa-money"></i>
             </div>
-<<<<<<< HEAD
             <a href="#" class="small-box-footer">This info</a>
-=======
-            <a href="#" class="small-box-footer">This Info <i class="fa fa-arrow-circle-right"></i></a>
->>>>>>> 0da9c7fc8b8fdf3e17f75411b4171ddb4aad9ac6
           </div>
         </div>
         <!-- ./col -->
@@ -72,11 +60,7 @@
             <div class="icon">
               <i class="fa fa-exchange"></i>
             </div>
-<<<<<<< HEAD
             <a href="#" class="small-box-footer">This info</a>
-=======
-            <a href="#" class="small-box-footer">This Info <i class="fa fa-arrow-circle-right"></i></a>
->>>>>>> 0da9c7fc8b8fdf3e17f75411b4171ddb4aad9ac6
           </div>
         </div>
         <!-- ./col -->
