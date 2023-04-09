@@ -23,14 +23,14 @@
             <a href=""><i class="fa fa-book"></i> <span class="hidden-xs">BUKU KAS</span></a>
           </li>
           <li>
-            <a href=""><i class="fa fa-list"></i> <span class="hidden-xs">STRUK</span></a>
+            <a href="{{route('sell-list')}}"><i class="fa fa-list"></i> <span class="hidden-xs">STRUK</span></a>
           </li>
-          <li>
+          <!-- <li>
             <a href="" title="referensi pengguna"><i class="fa fa-heart"></i></a>
           </li>
           <li>
             <a href="" title="pengaturan"><i class="fa fa-cog"></i></a>
-          </li>
+          </li> -->
           <li>
             <a href="" title="peringatan stock">
               <i class="fa fa-book"></i>

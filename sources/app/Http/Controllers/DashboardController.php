@@ -88,9 +88,19 @@ class DashboardController extends Controller
     public function tes()
     {   
         $periode = [
-            'start'     => date('2023-04-07'),
-            'end'       => date('Y-m-d')
+            'start'     => date('y-m-01'),
+            'end'       => date('y-m-d')
         ];
-        return total_expense(5, $periode);
+
+        $data_activity_member = DB::table('customer_transactions')
+        ->join('customers', 'customer_transactions.customer_id', '=', 'customers.customer_id')
+        ->whereBetween('customer_transactions.created_at',  [$periode['start'], $periode['end']])
+        ->select('customers.customer_name','customers.customer_mobile', 'customer_transactions.customer_id', DB::raw('count(*) as total'))
+        ->groupBy('customers.customer_name', 'customers.customer_mobile', 'customer_transactions.customer_id')
+        ->orderBy('total', 'DESC')
+        ->offset(0)->limit(20)
+        ->get();
+
+        return $data_activity_member;
     }
 }
