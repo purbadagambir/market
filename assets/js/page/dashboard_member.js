@@ -26,11 +26,12 @@ const App = {
       if(this.periode.start == null || this.periode.end == null)
       {
         notifError('Periode harus di isi lengkap')
+      }else
+      {
+        const data = {'start' : this.periode.start, 'end' : this.periode.end}
+        this.getData(data)
       }
 
-      const data = {'start' : this.periode.start, 'end' : this.periode.end}
-
-      this.getData(data)
 
     }
   },

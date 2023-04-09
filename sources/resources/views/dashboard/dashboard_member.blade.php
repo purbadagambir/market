@@ -72,12 +72,17 @@
           <input type="date" class="form-controll" v-model="periode.end" style="margin-left : 10px">
           <button class="btn btn-primary" @click="searchByPeriode" style="margin-left : 10px">Cari</button>
       </div>
+
       <div class="col-lg-6 col-xs-12">
         <div class="box box-info">
+          <div v-if="loading" class="text-primary" style="padding-left:45%; font-size: 20px;"><i class="fa fa-spin fa-refresh"></i>&nbsp loading...</div>
           <div class="box-header with-border">
             <h3 class="box-title">Member Sering Belanja</h3>
           </div>
-          <table class="table table-bordered table-striped">
+          <div v-if="items.length == 0" class="text-primary" style="padding-left:20%; font-size: 20px;">
+            Data Pada Periode Tidak Di temukan
+          </div>
+          <table class="table table-bordered table-striped" v-else="items">
             <thead class="bg-gray">
               <tr>
                 <th>No</th>
@@ -87,14 +92,12 @@
               </tr>
             </thead>
             <tbody>
-              @foreach($data['data_activity_member'] as $member)
-              <tr>
-                <td>{{$loop->iteration}}</td>
-                <td>{{$member->customer_name}}</td>
-                <td>{{$member->customer_mobile}}</td>
-                <td>{{$member->total}}</td>
+              <tr v-for='(item, index) in items'>
+                <td>@{{index + 1}}</td>
+                <td>@{{item.customer_name}}</td>
+                <td>@{{item.customer_mobile}}</td>
+                <td>@{{item.total}}</td>
               </tr>
-              @endforeach
             </tbody>
           </table>
         </div>
