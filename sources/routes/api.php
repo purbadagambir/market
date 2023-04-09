@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //DASHBOARD
 Route::post('/get-monitoring', 'API\ApiDashboardController@monitoring');
+Route::post('/get-data-member', 'API\ApiDashboardController@dashboard_member');
 
 //PRODUCT-LIST
 Route::post('/get-product', 'API\ApiProductController@index');
@@ -72,6 +73,7 @@ Route::post('/delete-unit', 'API\ApiUnitController@delete');
 
 //ORDER
 Route::post('/get-product-list', 'API\ApiOrderController@product_list');
+Route::post('/get-product-search', 'API\ApiOrderController@product_list_search');
 Route::post('/get-product-code', 'API\ApiOrderController@product_code');
 Route::post('/get-product-info', 'API\ApiOrderController@product_info');
 Route::post('/add-orders', 'API\ApiOrderController@add_orders');

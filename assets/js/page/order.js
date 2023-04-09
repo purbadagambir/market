@@ -136,26 +136,30 @@ const App = {
       axios.post('api/get-product-info', data)
       .then(response => {
           if(response.status == 200){
-            this.form_cart.unit_small = response.data[0].unit_small_name
-            this.form_cart.unit_small_id = response.data[0].unit_small_id
-            this.form_cart.unit_medium = response.data[0].unit_medium_name
-            this.form_cart.unit_medium_id = response.data[0].unit_medium_id
-            this.form_cart.unit_large = response.data[0].unit_large_name
-            this.form_cart.unit_large_id = response.data[0].unit_large_id
-            this.form_cart.p_code = response.data[0].p_code
-            this.form_cart.sell_price_small = response.data[0].sell_price_small
-            this.form_cart.sell_price_medium = response.data[0].sell_price_medium
-            this.form_cart.sell_price_large = response.data[0].sell_price_large
-            this.form_cart.vol_unit_small = response.data[0].vol_unit_small
-            this.form_cart.vol_unit_medium = response.data[0].vol_unit_medium
-            this.form_cart.vol_unit_large = response.data[0].vol_unit_large
+            if(response.data.searchby == 'code'){
+              this.form_cart.unit_small = response.data.data[0].unit_small_name
+              this.form_cart.unit_small_id = response.data.data[0].unit_small_id
+              this.form_cart.unit_medium = response.data.data[0].unit_medium_name
+              this.form_cart.unit_medium_id = response.data.data[0].unit_medium_id
+              this.form_cart.unit_large = response.data.data[0].unit_large_name
+              this.form_cart.unit_large_id = response.data.data[0].unit_large_id
+              this.form_cart.p_code = response.data.data[0].p_code
+              this.form_cart.sell_price_small = response.data.data[0].sell_price_small
+              this.form_cart.sell_price_medium = response.data.data[0].sell_price_medium
+              this.form_cart.sell_price_large = response.data.data[0].sell_price_large
+              this.form_cart.vol_unit_small = response.data.data[0].vol_unit_small
+              this.form_cart.vol_unit_medium = response.data.data[0].vol_unit_medium
+              this.form_cart.vol_unit_large = response.data.data[0].vol_unit_large
 
-            //auto select
-            this.form_cart.unit_id = response.data[0].unit_small_id
-            this.form_cart.unit_name = response.data[0].unit_small_name
-            this.form_cart.price = response.data[0].sell_price_small
-            this.form_cart.vol_unit = response.data[0].vol_unit_small
-            this.showModal()
+              //auto select
+              this.form_cart.unit_id = response.data.data[0].unit_small_id
+              this.form_cart.unit_name = response.data.data[0].unit_small_name
+              this.form_cart.price = response.data.data[0].sell_price_small
+              this.form_cart.vol_unit = response.data.data[0].vol_unit_small
+              this.showModal()
+            }else{
+              this.items = response.data.data
+            }
           }
           else{
             notifError('Product not found')
@@ -178,7 +182,6 @@ const App = {
       const store_id = document.getElementById("store_id").value;
       const data = {'code' : this.keyword, 'store_id' : store_id};
       this.getProductInfo(data)
-      
     },
 
     setCustomer: function(mobile, name){

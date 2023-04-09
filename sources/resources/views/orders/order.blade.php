@@ -57,15 +57,21 @@
             <div class="box-header">
               <div class="row filter">
                 <div class="col-lg-7 col-xs-7">
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                    <input type="text" class="form-control" placeholder="Cari Produk" v-model="keyword" @change="getProductSearch()">
-                  </div>
+                  <form action="">
+                    <div class="input-group input-group">
+                      <input type="text" class="form-control" v-model="keyword" @keyup="getProductSearch()">
+                          <span class="input-group-btn">
+                            <button type="button" class="btn btn-info btn-flat"> <i class="fa fa-search"></i> </button>
+                          </span>
+                    </div>
+                  </form>
                 </div>
                 <div class="col-lg-5 col-xs-5">
-                  <select class="form-control pull-right" name="" id="">
-                    <option value="">Lihat Semua</option>
-                  </select>
+                  <div class="input-group input-group pull-right">
+                    <select class="form-control" name="" id="">
+                      <option value="">Lihat Semua</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>

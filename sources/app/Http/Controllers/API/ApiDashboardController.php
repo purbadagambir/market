@@ -11,7 +11,10 @@ class ApiDashboardController extends Controller
     public function monitoring(Request $request)
     {
         if($request->start == null || $request->end == null ){
-            $periode = null;
+            $periode = [
+                'start'     => date('y-m-d'),
+                'end'       => date('y-m-d')
+            ];
         }else{
             $periode = [
                 'start'     => $request->start,
@@ -33,6 +36,38 @@ class ApiDashboardController extends Controller
             ];
         }
 
+        $response = [
+            'data'  => $data,
+            'message' => 'success'
+        ];
+
+        return response($response, 200);
+    }
+
+    public function dashboard_member(Request $request)
+    {   
+
+        if($request->start == null || $request->end == null ){
+            $periode = [
+                'start'     => date('2020-m-01'),
+                'end'       => date('y-m-d')
+            ];
+        }else{
+            $periode = [
+                'start'     => $request->start,
+                'end'       => $request->end
+            ];
+        }
+
+        $data = DB::table('customer_transactions')
+                    ->join('customers', 'customer_transactions.customer_id', '=', 'customers.customer_id')
+                    ->whereBetween('customer_transactions.created_at',  [$periode['start'], $periode['end']])
+                    ->select('customers.customer_name','customers.customer_mobile', 'customer_transactions.customer_id', DB::raw('count(*) as total'))
+                    ->groupBy('customers.customer_name', 'customers.customer_mobile', 'customer_transactions.customer_id')
+                    ->orderBy('total', 'DESC')
+                    ->offset(0)->limit(20)
+                    ->get();
+        
         $response = [
             'data'  => $data,
             'message' => 'success'
