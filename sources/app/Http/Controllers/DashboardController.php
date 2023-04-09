@@ -43,6 +43,7 @@ class DashboardController extends Controller
     {
         $data_member = DB::table('customers')->get();
         $data_member_aktif = DB::table('customers')->where('status_frontend', 1)->get();
+        
         $query_point = DB::table('customers')
                     ->select(DB::raw("FLOOR(SUM(total_points)) as total_point"))
                     ->get();
@@ -60,7 +61,7 @@ class DashboardController extends Controller
             $data_balance = $balance->total_balance;
         }
 
-        $data_member_aktif = DB::table('customers')->offset(0)->limit(20)->orderBy('total_points', 'DESC')->get();
+        $data_member_point = DB::table('customers')->offset(0)->limit(20)->orderBy('total_points', 'DESC')->get();
         $data_activity_member = DB::table('customer_transactions')
                                     ->join('customers', 'customer_transactions.customer_id', '=', 'customers.customer_id')
                                     ->select('customers.customer_name','customers.customer_mobile', 'customer_transactions.customer_id', DB::raw('count(*) as total'))
@@ -71,13 +72,13 @@ class DashboardController extends Controller
 
 
         $data = [
-            'page'                  => 'Dashboard',
+            'page'                  => 'Dashboard Member',
             'toko'                  => session('store')->name,
             'total_member'          => number_format(intval(count($data_member))),
             'total_member_aktif'    => number_format(intval(count($data_member_aktif))),
             'total_point'           => number_format(intval($data_point)),
             'total_balance'         => number_format(intval($data_balance)),
-            'data_member'           => $data_member_aktif,
+            'data_member'           => $data_member_point,
             'data_activity_member'  => $data_activity_member,
         ];
 
