@@ -20,6 +20,55 @@ class DashboardController extends Controller
         $query_supplier         = DB::table('supplier_to_store')->where('store_id', session('store')->store_id);
         $query_supplier_today   = DB::table('suppliers');
 
+        $penjualan              = DB::table('selling_info')
+                                ->join('customers', 'selling_info.customer_id', '=', 'customers.customer_id')
+                                ->join('sell_logs', 'selling_info.invoice_id', '=', 'sell_logs.ref_invoice_id')
+                                ->where('selling_info.store_id', session('store')->store_id)
+                                ->where('selling_info.status', 1)
+                                ->select('selling_info.info_id', 'selling_info.invoice_id', 'selling_info.created_at', 'selling_info.payment_status', 'customers.customer_name', 'sell_logs.amount')
+                                ->orderBy('selling_info.created_at', 'desc')
+                                ->limit(5)
+                                ->get();
+
+        $pembelian              = DB::table('purchase_info')
+                                ->join('suppliers', 'purchase_info.sup_id', '=', 'suppliers.sup_id')
+                                ->join('purchase_payments', 'purchase_info.invoice_id', '=', 'purchase_payments.invoice_id')
+                                ->where('purchase_info.store_id', session('store')->store_id)
+                                ->where('purchase_info.status', 1)
+                                ->select('purchase_info.info_id', 'purchase_info.invoice_id', 'purchase_info.created_at', 'purchase_info.payment_status', 'suppliers.sup_name', 'purchase_payments.amount')
+                                ->orderBy('purchase_info.created_at', 'desc')
+                                ->limit(5)
+                                ->get();
+
+        $transfers               = DB::table('transfers')
+                                ->join('stores AS from', 'transfers.from_store_id', 'from.store_id')
+                                ->join('stores AS to', 'transfers.from_store_id', 'to.store_id')
+                                ->where('from.store_id', session('store')->store_id)
+                                ->select(
+                                            'transfers.created_at', 'transfers.invoice_id',
+                                            'from.name AS from_store', 'to.name AS to_store',
+                                            'transfers.status', 'transfers.total_quantity AS quantitas',
+                                        )
+                                ->limit(5)->get();
+        
+        $customers              = DB::table('customers')
+                                ->join('customers AS parent', 'customers.customer_id', '=', 'parent.customer_id')
+                                ->select(
+                                    'customers.customer_name', 'customers.customer_mobile', 
+                                    'customers.customer_address', 'customers.customer_city', 
+                                    'parent.customer_name AS sponsor', 
+                                    'customers.customer_email', 'customers.created_at')
+                                ->orderBy('customers.created_at', 'desc')
+                                ->limit(5)
+                                ->get();
+
+                                
+        $pemasok              = DB::table('suppliers')
+                                ->orderBy('created_at', 'desc')
+                                ->limit(5)
+                                ->get();
+                                // return $transfers;
+
         $data = [
             'page'                  => 'Dashboard',
             'toko'                  => session('store')->name,
@@ -30,6 +79,12 @@ class DashboardController extends Controller
             'total_supplier'        => number_format(intval(count($query_supplier->get()))),
             'total_supplier_today'  => number_format(intval(count($query_supplier_today->whereDate('created_at', date('Y-m-d'))->get()))),
             'total_product'         => number_format(intval(count($query_product->where('status', 1)->get()))),
+            'total_product_today'   => number_format(intval(count($query_product->where('status', 1)->whereDate('p_date', date('Y-m-d'))->get()))),
+            'penjualan'             => $penjualan,
+            'pembelian'             => $pembelian,
+            'transfers'             => $transfers,
+            'customers'             => $customers,
+            'pemasok'               => $pemasok,
         ];
 
         return view('dashboard.dashboard', compact('data'));

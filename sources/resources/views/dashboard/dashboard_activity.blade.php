@@ -1,7 +1,7 @@
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#penjualan" data-toggle="tab">Penjualan</a></li>
-        <li><a href="#kutipan" data-toggle="tab">Kutipan</a></li>
+        <!-- <li><a href="#kutipan" data-toggle="tab">Kutipan</a></li> -->
         <li><a href="#pembelian" data-toggle="tab">Pembelian</a></li>
         <li><a href="#transfer" data-toggle="tab">Transfer</a></li>
         <li><a href="#pelanggan" data-toggle="tab">Pelanggan</a></li>
@@ -22,45 +22,19 @@
                     </tr>
                     </thead>
                     <tbody>
+                        @foreach($data['penjualan'] as $penjualan)
                         <tr class="text-center">
-                            <td>52023/00035880</td>
-                            <td>2023-01-04 10:14:02</td>
-                            <td>DEWI SEPTIA</td>
-                            <td>55,000</td>
-                            <td><span class="badge btn-success">Lunas</span></td>
+                            <td>{{$penjualan->invoice_id}}</td>
+                            <td>{{$penjualan->created_at}}</td>
+                            <td>{{$penjualan->customer_name}}</td>
+                            <td>{{ number_format(intval($penjualan->amount))}}</td>
+                            <td><span class="badge btn-success">{{$penjualan->payment_status}}</span></td>
                         </tr>
-                        <tr class="text-center">
-                            <td>52023/00035880</td>
-                            <td>2023-01-04 10:14:02</td>
-                            <td>DEWI SEPTIA</td>
-                            <td>55,000</td>
-                            <td><span class="badge btn-success">Lunas</span></td>
-                        </tr>
-                        <tr class="text-center">
-                            <td>52023/00035880</td>
-                            <td>2023-01-04 10:14:02</td>
-                            <td>DEWI SEPTIA</td>
-                            <td>55,000</td>
-                            <td><span class="badge btn-success">Lunas</span></td>
-                        </tr>
-                        <tr class="text-center">
-                            <td>52023/00035880</td>
-                            <td>2023-01-04 10:14:02</td>
-                            <td>DEWI SEPTIA</td>
-                            <td>55,000</td>
-                            <td><span class="badge btn-success">Lunas</span></td>
-                        </tr>
-                        <tr class="text-center">
-                            <td>52023/00035880</td>
-                            <td>2023-01-04 10:14:02</td>
-                            <td>DEWI SEPTIA</td>
-                            <td>55,000</td>
-                            <td><span class="badge btn-success">Lunas</span></td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
-                <button class="btn btn-info btn-sm"> <i class="fa fa-plus"></i> Tambah Penjualan </button>
-                <button class="btn btn-success btn-sm"> <i class="fa fa-list"></i> Daftar Penjualan </button>
+                <a class="btn btn-info btn-sm" href="{{route('pos')}}"> <i class="fa fa-plus"></i> Tambah Penjualan </a>
+                <a class="btn btn-success btn-sm" href="{{route('sell-list')}}"> <i class="fa fa-list"></i> Daftar Penjualan </a>
             </div>
             <div class="col-lg-4">
                 <div class="progress-group-container">
@@ -107,7 +81,7 @@
         </div>
         </div>
         <!-- /.tab-pane -->
-        <div class="tab-pane" id="kutipan">
+        <!-- <div class="tab-pane" id="kutipan">
             <table id="datatable" class="table table-bordered table-striped">
                 <thead>
                 <tr class="bg-gray" role="row">
@@ -130,7 +104,7 @@
             </table>
             <button class="btn btn-info btn-sm"> <i class="fa fa-plus"></i> Tambah Quotations </button>
             <button class="btn btn-success btn-sm"> <i class="fa fa-list"></i> Daftar Quotations </button>
-        </div>
+        </div> -->
         <!-- /.tab-pane -->
         <div class="tab-pane" id="pembelian">
             <table id="datatable" class="table table-bordered table-striped">
@@ -144,41 +118,15 @@
                 </tr>
                 </thead>
                 <tbody>
+                    @foreach($data['pembelian'] as $pembelian)
                     <tr class="text-center">
-                        <td>52023/00035880</td>
-                        <td>2023-01-04 10:14:02</td>
-                        <td>DEWI SEPTIA</td>
-                        <td>55,000</td>
-                        <td><span class="badge btn-success">Lunas</span></td>
+                        <td>{{$pembelian->invoice_id}}</td>
+                        <td>{{$pembelian->created_at}}</td>
+                        <td>{{$pembelian->sup_name}}</td>
+                        <td>{{ number_format(intval($pembelian->amount))}}</td>
+                        <td><span class="badge btn-success">{{$pembelian->payment_status}}</span></td>
                     </tr>
-                    <tr class="text-center">
-                        <td>52023/00035880</td>
-                        <td>2023-01-04 10:14:02</td>
-                        <td>DEWI SEPTIA</td>
-                        <td>55,000</td>
-                        <td><span class="badge btn-success">Lunas</span></td>
-                    </tr>
-                    <tr class="text-center">
-                        <td>52023/00035880</td>
-                        <td>2023-01-04 10:14:02</td>
-                        <td>DEWI SEPTIA</td>
-                        <td>55,000</td>
-                        <td><span class="badge btn-success">Lunas</span></td>
-                    </tr>
-                    <tr class="text-center">
-                        <td>52023/00035880</td>
-                        <td>2023-01-04 10:14:02</td>
-                        <td>DEWI SEPTIA</td>
-                        <td>55,000</td>
-                        <td><span class="badge btn-success">Lunas</span></td>
-                    </tr>
-                    <tr class="text-center">
-                        <td>52023/00035880</td>
-                        <td>2023-01-04 10:14:02</td>
-                        <td>DEWI SEPTIA</td>
-                        <td>55,000</td>
-                        <td><span class="badge btn-success">Lunas</span></td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
             <button class="btn btn-info btn-sm"> <i class="fa fa-plus"></i> Tambah Pembelian </button>
@@ -198,46 +146,16 @@
                 </tr>
                 </thead>
                 <tbody>
+                    @foreach($data['transfers'] as $transfer)
                     <tr class="text-center">
-                        <td>2023-01-04 10:14:02</td>
-                        <td>52023/00035880</td>
-                        <td>Pondo Market 001</td>
-                        <td>Pondo Market 002</td>
-                        <td>Pending</td>
-                        <td>55.000</td>
+                        <td>{{$transfer->created_at}}</td>
+                        <td>{{$transfer->invoice_id}}</td>
+                        <td>{{$transfer->from_store}}</td>
+                        <td>{{$transfer->to_store}}</td>
+                        <td>{{$transfer->status}}</td>
+                        <td>{{number_format(intval($transfer->quantitas))}}</td>
                     </tr>
-                    <tr class="text-center">
-                        <td>2023-01-04 10:14:02</td>
-                        <td>52023/00035880</td>
-                        <td>Pondo Market 001</td>
-                        <td>Pondo Market 002</td>
-                        <td>Pending</td>
-                        <td>55.000</td>
-                    </tr>
-                    <tr class="text-center">
-                        <td>2023-01-04 10:14:02</td>
-                        <td>52023/00035880</td>
-                        <td>Pondo Market 001</td>
-                        <td>Pondo Market 002</td>
-                        <td>Pending</td>
-                        <td>55.000</td>
-                    </tr>
-                    <tr class="text-center">
-                        <td>2023-01-04 10:14:02</td>
-                        <td>52023/00035880</td>
-                        <td>Pondo Market 001</td>
-                        <td>Pondo Market 002</td>
-                        <td>Pending</td>
-                        <td>55.000</td>
-                    </tr>
-                    <tr class="text-center">
-                        <td>2023-01-04 10:14:02</td>
-                        <td>52023/00035880</td>
-                        <td>Pondo Market 001</td>
-                        <td>Pondo Market 002</td>
-                        <td>Pending</td>
-                        <td>55.000</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
             <button class="btn btn-info btn-sm"> <i class="fa fa-plus"></i> Tambah Transfer </button>
@@ -258,51 +176,17 @@
                 </tr>
                 </thead>
                 <tbody>
+                    @foreach($data['customers'] as $customer)
                     <tr>
-                        <td>Zulfan</td>
-                        <td>085260017800</td>
-                        <td>5a9454@gmail.com</td>
-                        <td></td>
-                        <td>KOTA BANDA ACEH</td>
-                        <td>YAYASAN PONDO ISLAMIC CENTER</td>
-                        <td>2023-01-04 10:16:39</td>
+                        <td>{{$customer->customer_name}}</td>
+                        <td>{{$customer->customer_mobile}}</td>
+                        <td>{{$customer->customer_email}}</td>
+                        <td>{{$customer->customer_address}}</td>
+                        <td>{{$customer->customer_city}}</td>
+                        <td>{{$customer->sponsor}}</td>
+                        <td>{{$customer->created_at}}</td>
                     </tr>
-                    <tr>
-                        <td>Zulfan</td>
-                        <td>085260017800</td>
-                        <td>5a9454@gmail.com</td>
-                        <td></td>
-                        <td>KOTA BANDA ACEH</td>
-                        <td>YAYASAN PONDO ISLAMIC CENTER</td>
-                        <td>2023-01-04 10:16:39</td>
-                    </tr>
-                    <tr>
-                        <td>Zulfan</td>
-                        <td>085260017800</td>
-                        <td>5a9454@gmail.com</td>
-                        <td></td>
-                        <td>KOTA BANDA ACEH</td>
-                        <td>YAYASAN PONDO ISLAMIC CENTER</td>
-                        <td>2023-01-04 10:16:39</td>
-                    </tr>
-                    <tr>
-                        <td>Zulfan</td>
-                        <td>085260017800</td>
-                        <td>5a9454@gmail.com</td>
-                        <td></td>
-                        <td>KOTA BANDA ACEH</td>
-                        <td>YAYASAN PONDO ISLAMIC CENTER</td>
-                        <td>2023-01-04 10:16:39</td>
-                    </tr>
-                    <tr>
-                        <td>Zulfan</td>
-                        <td>085260017800</td>
-                        <td>5a9454@gmail.com</td>
-                        <td></td>
-                        <td>KOTA BANDA ACEH</td>
-                        <td>YAYASAN PONDO ISLAMIC CENTER</td>
-                        <td>2023-01-04 10:16:39</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
             <button class="btn btn-info btn-sm"> <i class="fa fa-plus"></i> Tambah Pelanggan </button>
@@ -321,41 +205,15 @@
                 </tr>
                 </thead>
                 <tbody>
+                    @foreach($data['pemasok'] as $pemasok)
                     <tr>
-                        <td><a href="">UD . MANCOS</a></td>
-                        <td>082272375905</td>
-                        <td>ud_._mancos@GMAIL.COM</td>
-                        <td>krueng mane</td>
-                        <td>2023-01-04 10:14:02</td>
+                        <td><a href="#">{{$pemasok->sup_name}}</a></td>
+                        <td>{{$pemasok->sup_mobile}}</td>
+                        <td>{{$pemasok->sup_email}}</td>
+                        <td>{{$pemasok->sup_address}}</td>
+                        <td>{{$pemasok->created_at}}</td>
                     </tr>
-                    <tr>
-                        <td><a href="">UD . MANCOS</a></td>
-                        <td>082272375905</td>
-                        <td>ud_._mancos@GMAIL.COM</td>
-                        <td>krueng mane</td>
-                        <td>2023-01-04 10:14:02</td>
-                    </tr>
-                    <tr>
-                        <td><a href="">UD . MANCOS</a></td>
-                        <td>082272375905</td>
-                        <td>ud_._mancos@GMAIL.COM</td>
-                        <td>krueng mane</td>
-                        <td>2023-01-04 10:14:02</td>
-                    </tr>
-                    <tr>
-                        <td><a href="">UD . MANCOS</a></td>
-                        <td>082272375905</td>
-                        <td>ud_._mancos@GMAIL.COM</td>
-                        <td>krueng mane</td>
-                        <td>2023-01-04 10:14:02</td>
-                    </tr>
-                    <tr>
-                        <td><a href="">UD . MANCOS</a></td>
-                        <td>082272375905</td>
-                        <td>ud_._mancos@GMAIL.COM</td>
-                        <td>krueng mane</td>
-                        <td>2023-01-04 10:14:02</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
             <button class="btn btn-info btn-sm"> <i class="fa fa-plus"></i> Tambah Pemasok </button>

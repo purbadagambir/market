@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-aqua">
+          <div class="small-box bg-green">
             <div class="inner">
               <span>Total Penjualan</span>
               <h4>{{$data['total_selling']}}</h4>
@@ -18,39 +18,7 @@
               <h4>{{$data['total_selling_today']}}</h4>
             </div>
             <div class="icon">
-              <i class="ion ion-bag"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <span>Total Member</span>
-              <h4>{{$data['total_member']}}</h4>
-              <span>Total Pelanggan Hari Ini</span>
-              <h4>{{$data['total_member_today']}}</h4>
-            </div>
-            <div class="icon">
-              <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <span>Total Pemasok</span>
-              <h4>{{$data['total_supplier']}}</h4>
-              <span>Total Pemasok Hari Ini</span>
-              <h4>{{$data['total_supplier_today']}}</h4>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
+              <i class="fa fa-pencil"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -60,13 +28,45 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
+              <span>Total Member</span>
+              <h4>{{$data['total_member']}}</h4>
+              <span>Total Pelanggan Hari Ini</span>
+              <h4>{{$data['total_member_today']}}</h4>
+            </div>
+            <div class="icon">
+              <i class="fa fa-users"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-primary">
+            <div class="inner">
+              <span>Total Pemasok</span>
+              <h4>{{$data['total_supplier']}}</h4>
+              <span>Total Pemasok Hari Ini</span>
+              <h4>{{$data['total_supplier_today']}}</h4>
+            </div>
+            <div class="icon">
+              <i class="fa fa-shopping-cart"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
               <span>Total Produk</span>
               <h4>{{$data['total_product']}}</h4>
               <span>Total Produk Hari Ini</span>
-              <h4>4500</h4>
+              <h4>{{$data['total_product_today']}}</h4>
             </div>
             <div class="icon">
-              <i class="ion ion-pie-graph"></i>
+              <i class="fa fa-star"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -84,7 +84,7 @@
           <div class="row">
             <div class="col-sm-4 text-center">
               <h2>1,448,800</h2>
-              <h4>DEPOSI HARI INI</h4>
+              <h4>DEPOSIT HARI INI</h4>
             </div>
             <div class="col-sm-4 text-center">
               <h2>2,207,315,510</h2>
