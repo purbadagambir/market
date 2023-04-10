@@ -24,7 +24,7 @@ class DashboardController extends Controller
             'total_selling'         => number_format(intval(count($query_selling->get()))),
             'total_selling_today'   => number_format(intval(count($query_selling->where('created_at', now())->get()))),
             'total_member'          => number_format(intval(count($query_member->get()))),
-            'total_member_today'    => number_format(intval(count($query_member->where('created_at', now())->get()))),
+            'total_member_today'    => number_format(intval(count($query_member->whereDate('created_at', date('Y-m-d'))->get()))),
             'total_purchase'        => number_format(intval(count($query_purchase->get()))),
             'total_purchase_today'  => number_format(intval(count($query_purchase->where('created_at', now())->get()))),
             'total_product'         => number_format(intval(count($query_product->where('store_id', session('store')->store_id)->where('status', 1)->get()))),
