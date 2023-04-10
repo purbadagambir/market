@@ -45,9 +45,9 @@
           <div class="small-box bg-yellow">
             <div class="inner">
               <span>Total Pemasok</span>
-              <h4>{{$data['total_purchase']}}</h4>
+              <h4>{{$data['total_supplier']}}</h4>
               <span>Total Pemasok Hari Ini</span>
-              <h4>{{$data['total_purchase_today']}}</h4>
+              <h4>{{$data['total_supplier_today']}}</h4>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>

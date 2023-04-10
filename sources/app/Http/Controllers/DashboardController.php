@@ -14,10 +14,11 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $query_member = DB::table('customers');
-        $query_selling = DB::table('selling_info')->where('store_id', session('store')->store_id);
-        $query_purchase = DB::table('purchase_info')->where('store_id', session('store')->store_id);
-        $query_product = DB::table('product_to_store')->where('store_id', session('store')->store_id);
+        $query_member           = DB::table('customers');
+        $query_selling          = DB::table('selling_info')->where('store_id', session('store')->store_id);
+        $query_product          = DB::table('product_to_store')->where('store_id', session('store')->store_id);
+        $query_supplier         = DB::table('supplier_to_store')->where('store_id', session('store')->store_id);
+        $query_supplier_today   = DB::table('suppliers');
 
         $data = [
             'page'                  => 'Dashboard',
@@ -26,8 +27,8 @@ class DashboardController extends Controller
             'total_selling_today'   => number_format(intval(count($query_selling->whereDate('created_at', date('Y-m-d'))->get()))),
             'total_member'          => number_format(intval(count($query_member->get()))),
             'total_member_today'    => number_format(intval(count($query_member->whereDate('created_at', date('Y-m-d'))->get()))),
-            'total_purchase'        => number_format(intval(count($query_purchase->get()))),
-            'total_purchase_today'  => number_format(intval(count($query_purchase->whereDate('created_at', date('Y-m-d'))->get()))),
+            'total_supplier'        => number_format(intval(count($query_supplier->get()))),
+            'total_supplier_today'  => number_format(intval(count($query_supplier_today->whereDate('created_at', date('Y-m-d'))->get()))),
             'total_product'         => number_format(intval(count($query_product->where('status', 1)->get()))),
         ];
 
