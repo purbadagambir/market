@@ -86,5 +86,8 @@ Route::post('/get-sell-item', 'API\ApiSellController@sell_item');
 Route::post('/return-sell-item', 'API\ApiSellController@return_item');
 Route::post('/update-sell-info', 'API\ApiSellController@update_sell_info');
 
+//PURCHASE
+Route::post('/get-purchase-list', 'API\ApiPurchaseController@purchase_list');
+
 
 

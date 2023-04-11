@@ -11,7 +11,7 @@
         <div class="box box-info">
             <div class="print-area">
                 <div class="store-info">
-                    <img src="{{url('assets\img\logo\logo_new.png')}}" alt="Logo Pondo" class="logo">
+                    <img src="https://pondo.co.id/pondopos/assets/itsolution24/img/logo-favicons/{{$data['order']->store_logo}}" alt="Logo Pondo" class="logo">
                     <p>Jalan Pasar Induk Cureh</p>
                     <p>Mobile: 082117736760, Email: marketpondo@gmail.com</p>
                 </div>

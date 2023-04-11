@@ -53,7 +53,7 @@ Route::middleware(['auth', 'store'])->group(function() {
     Route::get('/sistem-curency', 'CurencyController@index')->name('curency');
 
     //PEMBELIAN
-    Route::get('/pembelian', 'PurchaseController@index')->name('pembelian');
+    Route::get('/purchase-list', 'PurchaseController@index')->name('purchase-list');
 
     //MUTASI
     Route::get('/mutasi', 'TransferController@index')->name('mutasi');

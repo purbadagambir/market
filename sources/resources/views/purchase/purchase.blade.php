@@ -40,12 +40,12 @@
                     <th class="text-center">Creator</th>
                     <th class="text-center">Amount</th>
                     <th class="text-center">Invoice Paid</th>
-                    <th class="text-center">Jatuh Tempo</th>
+                    <!-- <th class="text-center">Jatuh Tempo</th>
                     <th class="text-center">Status</th>
                     <th class="text-center">Pay</th>
-                    <th class="text-center">Action</th>
+                    <th class="text-center">Action</th> -->
                   </tr>
-                  <tr class="bg-info">
+                  <!-- <tr class="bg-info">
                     <td class="text-center"><input type="text" id="currency_id" v-on:keyup="this.search('currency_id')"></td>
                     <td><input type="text" id="title" v-on:keyup="this.search('title')"></td>
                     <td><input type="text" id="code" v-on:keyup="this.search('code')"></td>
@@ -56,20 +56,17 @@
                     <td><input type="text" id="decimal" v-on:keyup="this.search('decimal')"></td>
                     <td></td>
                     <td></td>
-                  </tr>
+                  </tr> -->
                 </thead>
                 <tbody>
-                  <tr>
-                    <td style="text-align: center; vertical-align: middle;">1</td>
-                    <td style="text-align: center; vertical-align: middle;">2023-01-05 15:13:23</td>
-                    <td style="text-align: center; vertical-align: middle;"><span class="badge btn-warning">Paid</span></td>
-                    <td style="text-align: center; vertical-align: middle;">MARYADI</td>
-                    <td style="text-align: center; vertical-align: middle;">Cash</td>
-                    <td style="text-align: center; vertical-align: middle;">NUR HAFNIZAH</td>
-                    <td style="text-align: center; vertical-align: middle;">67,300</td>
-                    <td style="text-align: center; vertical-align: middle;">67,300</td>
-                    <td style="text-align: center; vertical-align: middle;">67,300</td>
-                    <td class="text-center">
+                  <tr v-for="item in items">
+                    <td style="text-align: center; vertical-align: middle;">@{{item.created_at}}</td>
+                    <td>@{{item.invoice_id}}</td>
+                    <td>@{{item.sup_name}}</td>
+                    <td>@{{item.created_by}}</td>
+                    <td>@{{item.amount}}</td>
+                    <td>@{{item.total_paid}}</td>
+                    <!-- <td class="text-center">
                       <div class="btn-group">
                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           . . .
@@ -81,7 +78,7 @@
                           <li @click="this.deleteData(item.unit_id)"><a>Delete</a></li>
                         </div>
                       </div>
-                    </td>
+                    </td> -->
                   </tr>
                 </tbody>
                 <tfoot>
@@ -92,10 +89,7 @@
                     <th class="text-center">Creator</th>
                     <th class="text-center">Amount</th>
                     <th class="text-center">Invoice Paid</th>
-                    <th class="text-center">Jatuh Tempo</th>
-                    <th class="text-center">Status</th>
-                    <th class="text-center">Pay</th>
-                    <th class="text-center">Action</th>
+                    <!-- <th class="text-center">Action</th> -->
                   </tr>
                 </tfoot>
               </table>
@@ -119,6 +113,7 @@
       </div><!-- /.box-body -->
     </div>
   </div>
+  <input type="hidden" id="store_id" value="{{session('store')->store_id}}">
 </section>
 
 @endsection

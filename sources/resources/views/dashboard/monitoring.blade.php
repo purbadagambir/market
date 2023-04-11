@@ -15,9 +15,10 @@
             <div class="row" style="margin-top : 25px">
                 <div class="col-sm-4" v-for='item in items'>
                     <div class="box box-success">
-                        <div class="box-header with-border">
-                            <b style="font-size: 12px">@{{item.store_name}}</b>
-                            <p style="font-size: 12px;  text-align: justify;">@{{item.store_address}}</p>
+                        <div class="box-header with-border text-center" style="height: 100px">
+                            <img v-bind:src="'https://pondo.co.id/pondopos/assets/itsolution24/img/logo-favicons/' + item.image" alt="" width="100">
+                            <h4 style="font-size: 12px">@{{item.store_name}}</h4>
+                            <p style="font-size: 12px">@{{item.store_address}}</p>
                         </div>
                         <div class="box-body">
                             <table id="datatable" class="table table-bordered table-striped">

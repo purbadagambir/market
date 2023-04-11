@@ -57,8 +57,8 @@ class OrderController extends Controller
                                     'users.username AS kasir',
                                     'pmethods.name AS p_method',
                                     'stores.email AS store_email',
-                                    'stores.mobile AS store_mobile',
-                                    'stores.address AS store_address')
+                                    'stores.address AS store_address',
+                                    'stores.logo AS store_logo')
                             ->first();
 
         $data_price = SellingPriceModel::where('invoice_id', $invoice_id)->first();
@@ -103,7 +103,8 @@ class OrderController extends Controller
                                     'pmethods.name AS p_method',
                                     'stores.email AS store_email',
                                     'stores.mobile AS store_mobile',
-                                    'stores.address AS store_address')
+                                    'stores.address AS store_address',
+                                    'stores.logo AS store_logo')
                             ->first();
 
         $data_price = SellingPriceModel::where('invoice_id', $invoice_id)->first();

@@ -106,7 +106,9 @@ const App = {
       if(this.table.pageSelect < this.meta.last_page)
       {
         this.table.pageSelect++
-        this.getData(this.table)
+        const store_id = document.getElementById("store_id").value
+        const data = {'table' : this.table, 'store_id' : store_id}
+        this.getData(data)
       }
     },
 
@@ -147,14 +149,14 @@ const App = {
 
     //CRUD FUNCTION
     getData: function(data){
-      axios.post('api/get-curency', data)
+      axios.post('api/get-purchase-list', data)
          .then(response => {
             if(response.status == 200){
               this.items = response.data.data
               this.meta = response.data.meta
               this.buttonPage = this.pageButton(this.meta.last_page)
             }else{
-              notifError('Error')
+              this.items = ''
             }
          })
          .catch(error => {
@@ -281,7 +283,9 @@ const App = {
   },
 
   mounted() {
-    this.getData(this.table)
+    const store_id = document.getElementById("store_id").value
+    const data = {'table' : this.table, 'store_id' : store_id}
+    this.getData(data)
   }
 };
 Vue.createApp(App).mount("#app");

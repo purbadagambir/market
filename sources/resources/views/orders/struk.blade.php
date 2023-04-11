@@ -41,7 +41,7 @@
             <div>
                 <div class="print-area">
                     <div class="store-info">
-                        <img src="{{url('assets\img\logo\logo_new.png')}}" alt="Logo Pondo" class="logo">
+                        <img src="https://pondo.co.id/pondopos/assets/itsolution24/img/logo-favicons/{{$data['order']->store_logo}}" alt="Logo Pondo" class="logo">
                         <p>{{$data['order']->store_address}}</p>
                         <p>Mobile: {{$data['order']->store_mobile}}, Email: {{$data['order']->store_email}}</p>
                     </div>

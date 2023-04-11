@@ -129,8 +129,8 @@
                     @endforeach
                 </tbody>
             </table>
-            <button class="btn btn-info btn-sm"> <i class="fa fa-plus"></i> Tambah Pembelian </button>
-            <button class="btn btn-success btn-sm"> <i class="fa fa-list"></i> Daftar Pembelian </button>
+            <!-- <button class="btn btn-info btn-sm"> <i class="fa fa-plus"></i> Tambah Pembelian </button> -->
+            <a class="btn btn-success btn-sm" href="{{route('purchase-list')}}"> <i class="fa fa-list"></i> Daftar Pembelian </a>
         </div>
         <!-- /.tab-pane -->
         <div class="tab-pane" id="transfer">

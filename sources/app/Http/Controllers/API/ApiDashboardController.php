@@ -32,7 +32,8 @@ class ApiDashboardController extends Controller
                 'total_sales'       => number_format(intval(total_sales($store->store_id, $periode))),
                 'total_expense'     => number_format(intval(total_expense($store->store_id, $periode))),
                 'total_point'       => number_format(intval(total_point($store->store_id, $periode))),
-                'total_balance'     => number_format(intval(total_balance($store->store_id, $periode)))
+                'total_balance'     => number_format(intval(total_balance($store->store_id, $periode))),
+                'image'             => $store->logo
             ];
         }
 
