@@ -158,7 +158,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <button class="btn btn-info btn-sm"> <i class="fa fa-plus"></i> Tambah Transfer </button>
+            <!-- <button class="btn btn-info btn-sm"> <i class="fa fa-plus"></i> Tambah Transfer </button> -->
             <button class="btn btn-success btn-sm"> <i class="fa fa-list"></i> Daftar Transfer </button>
         </div>
         <!-- /.tab-pane -->
@@ -189,7 +189,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <button class="btn btn-info btn-sm"> <i class="fa fa-plus"></i> Tambah Pelanggan </button>
+            <!-- <button class="btn btn-info btn-sm"> <i class="fa fa-plus"></i> Tambah Pelanggan </button> -->
             <button class="btn btn-success btn-sm"> <i class="fa fa-list"></i> Daftar Pelanggan </button>
         </div>
         <!-- /.tab-pane -->
@@ -216,7 +216,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <button class="btn btn-info btn-sm"> <i class="fa fa-plus"></i> Tambah Pemasok </button>
+            <!-- <button class="btn btn-info btn-sm"> <i class="fa fa-plus"></i> Tambah Pemasok </button> -->
             <button class="btn btn-success btn-sm"> <i class="fa fa-list"></i> Daftar Pemasok </button>
         </div>
         <!-- /.tab-pane -->

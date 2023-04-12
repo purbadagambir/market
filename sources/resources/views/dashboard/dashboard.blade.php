@@ -83,15 +83,15 @@
         <div class="box-header bg-success">
           <div class="row">
             <div class="col-sm-4 text-center">
-              <h2>1,448,800</h2>
+              <h2>{{$data['deposit_today']}}</h2>
               <h4>DEPOSIT HARI INI</h4>
             </div>
             <div class="col-sm-4 text-center">
-              <h2>2,207,315,510</h2>
+              <h2>{{$data['total_asset']}}</h2>
               <h4>DATA ASSET</h4>
             </div>
             <div class="col-sm-4 text-center">
-              <h2>0</h2>
+              <h2>{{$data['withdraw_today']}}</h2>
               <h4>PENARIKAN TERAKHIR</h4>
             </div>
           </div>
@@ -113,26 +113,18 @@
                     </tr>
                     </thead>
                     <tbody>
+                      @foreach($data['deposit'] as $deposit)
                         <tr>
-                            <td class="text-center">2023-01-04 11:28:16</td>
-                            <td><a href="">Deposit for selling</a></td>
-                            <td>2,900</td>
+                            <td class="text-center">{{$deposit->created_at}}</td>
+                            <td><a href="">{{$deposit->title}}</a></td>
+                            <td>{{$deposit->amount}}</td>
                         </tr>
-                        <tr>
-                            <td class="text-center">2023-01-04 11:28:16</td>
-                            <td><a href="">Deposit for selling</a></td>
-                            <td>2,900</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">2023-01-04 11:28:16</td>
-                            <td><a href="">Deposit for selling</a></td>
-                            <td>2,900</td>
-                        </tr>
+                      @endforeach
                     </tbody>
                   </table>
                 </div>
                 <div class="box-footer text-center">
-                  <a href="">View All →</a> 
+                  <a href="{{route('transfer-list')}}">View All →</a> 
                 </div>
               </div>
             </div>
@@ -152,26 +144,18 @@
                     </tr>
                     </thead>
                     <tbody>
+                        @foreach($data['data_asset'] as $asset)
                         <tr>
-                            <td class="text-center">LEM TUBE CAP GAJAH 100ML</td>
-                            <td>8.0000</td>
-                            <td>99,520</td>
+                            <td class="text-center">{{$asset->p_name}}</td>
+                            <td>{{$asset->stock}}</td>
+                            <td>{{$asset->amount}}</td>
                         </tr>
-                        <tr>
-                            <td class="text-center">LEM TUBE CAP GAJAH 100ML</td>
-                            <td>8.0000</td>
-                            <td>99,520</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">LEM TUBE CAP GAJAH 100ML</td>
-                            <td>8.0000</td>
-                            <td>99,520</td>
-                        </tr>
+                        @endforeach
                     </tbody>
                   </table>
                 </div>
                 <div class="box-footer text-center">
-                  <a href="">View All →</a> 
+                  <a href="{{route('product')}}">View All →</a> 
                 </div>
               </div>
             </div>
@@ -191,26 +175,18 @@
                     </tr>
                     </thead>
                     <tbody>
+                      @foreach($data['withdraw'] as $withdraw)
                         <tr>
-                            <td class="text-center">2023-01-04 11:28:16</td>
-                            <td><a href="">Debit for Product Purchase</a></td>
-                            <td>2,900</td>
+                            <td class="text-center">{{$withdraw->created_at}}</td>
+                            <td><a href="">{{$withdraw->title}}</a></td>
+                            <td>{{$withdraw->amount}}</td>
                         </tr>
-                        <tr>
-                            <td class="text-center">2023-01-04 11:28:16</td>
-                            <td><a href="">Debit for Product Purchase</a></td>
-                            <td>2,900</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">2023-01-04 11:28:16</td>
-                            <td><a href="">Debit for Product Purchase</a></td>
-                            <td>2,900</td>
-                        </tr>
+                      @endforeach
                     </tbody>
                   </table>
                 </div>
                 <div class="box-footer text-center">
-                  <a href="">View All →</a> 
+                  <a href="{{route('transfer-list')}}">View All →</a> 
                 </div>
               </div>
             </div>

@@ -67,7 +67,66 @@ class DashboardController extends Controller
                                 ->orderBy('created_at', 'desc')
                                 ->limit(5)
                                 ->get();
-                                // return $transfers;
+
+        $asset                 = DB::table('product_to_store')
+                                ->where('store_id', session('store')->store_id);
+        
+        $total_assets          = $asset->select(DB::raw("FLOOR(SUM(purchase_price * quantity_in_stock)) as total_asset"))->get();
+
+        foreach($total_assets as $data_asset){
+            $total_asset = $data_asset->total_asset;
+        }
+
+        $data_assets           =  $asset->join('products', 'product_to_store.product_id', '=', 'products.p_id')
+                                        ->select(DB::raw('products.p_name,
+                                                        FLOOR(product_to_store.quantity_in_stock) AS stock,   
+                                                        FLOOR(product_to_store.purchase_price) AS amount
+                                                        '))
+                                        ->limit(3)
+                                        ->get();
+
+        $data_transaksi        = DB::table('bank_transaction_info')
+                                    ->join('bank_transaction_price', 'bank_transaction_info.info_id', 'bank_transaction_price.info_id');
+                                    
+
+        $data_deposit           = DB::table('bank_transaction_info')
+                                ->join('bank_transaction_price', 'bank_transaction_info.info_id', 'bank_transaction_price.info_id')
+                                ->where('bank_transaction_info.transaction_type', 'deposit')
+                                ->select(DB::raw('FLOOR(bank_transaction_price.amount) as amount, bank_transaction_info.created_at, bank_transaction_info.title'))
+                                ->limit(3)
+                                ->orderBy('bank_transaction_info.created_at', 'DESC')
+                                ->get();
+
+        $data_withdraw          = DB::table('bank_transaction_info')
+                                ->join('bank_transaction_price', 'bank_transaction_info.info_id', 'bank_transaction_price.info_id')
+                                ->where('bank_transaction_info.transaction_type', 'withdraw')
+                                ->select(DB::raw('FLOOR(bank_transaction_price.amount) as amount, bank_transaction_info.created_at, bank_transaction_info.title'))
+                                ->limit(3)
+                                ->orderBy('bank_transaction_info.created_at', 'DESC')
+                                ->get();
+
+        $data_deposit_today     = DB::table('bank_transaction_info')
+                                ->join('bank_transaction_price', 'bank_transaction_info.info_id', 'bank_transaction_price.info_id')
+                                ->where('bank_transaction_info.transaction_type', 'deposit')
+                                ->whereDate('bank_transaction_info.created_at', date('Y-m-d'))
+                                ->select(DB::raw('FLOOR(sum(bank_transaction_price.amount)) as amount'))
+                                ->get();
+        
+        foreach($data_deposit_today as $total_deposit){
+            $deposit_today = $total_deposit->amount;
+        }
+
+        $data_withdraw_today     = DB::table('bank_transaction_info')
+                                ->join('bank_transaction_price', 'bank_transaction_info.info_id', 'bank_transaction_price.info_id')
+                                ->where('bank_transaction_info.transaction_type', 'withdraw')
+                                ->whereDate('bank_transaction_info.created_at', date('Y-m-d'))
+                                ->select(DB::raw('FLOOR(sum(bank_transaction_price.amount)) as amount'))
+                                ->get();
+
+        foreach($data_withdraw_today as $total_withdraw){
+            $withdraw_today = $total_withdraw->amount;
+        }
+        
 
         $data = [
             'page'                  => 'Dashboard',
@@ -85,6 +144,12 @@ class DashboardController extends Controller
             'transfers'             => $transfers,
             'customers'             => $customers,
             'pemasok'               => $pemasok,
+            'total_asset'           => number_format(intval($total_asset)),
+            'data_asset'            => $data_assets,
+            'deposit_today'         => number_format(intval($deposit_today)),
+            'withdraw_today'        => number_format(intval($withdraw_today)),
+            'deposit'               => $data_deposit,
+            'withdraw'              => $data_withdraw
         ];
 
         return view('dashboard.dashboard', compact('data'));
@@ -154,20 +219,19 @@ class DashboardController extends Controller
 
     public function tes()
     {   
-        $periode = [
-            'start'     => date('y-m-01'),
-            'end'       => date('y-m-d')
-        ];
+        $query =    DB::table('bank_transaction_info')
+                    ->join('bank_transaction_price', 'bank_transaction_info.info_id', 'bank_transaction_price.info_id')
+                    ->join('bank_accounts', 'bank_transaction_info.account_id', 'bank_accounts.id')
+                    ->where('bank_transaction_info.store_id', 5)
+                    ->select(DB::raw('FLOOR(sum(bank_transaction_price.amount)) as amount,
+                                    bank_transaction_info.transaction_type, bank_accounts.account_name,
+                                    bank_transaction_info.invoice_id
+                                    '))
+                    ->orderBy('bank_transaction_info.created_at', 'desc')
+                    ->groupBY('bank_transaction_info.transaction_type', 
+                                'bank_accounts.account_name',
+                                'bank_transaction_info.invoice_id');
 
-        $data_activity_member = DB::table('customer_transactions')
-        ->join('customers', 'customer_transactions.customer_id', '=', 'customers.customer_id')
-        ->whereBetween('customer_transactions.created_at',  [$periode['start'], $periode['end']])
-        ->select('customers.customer_name','customers.customer_mobile', 'customer_transactions.customer_id', DB::raw('count(*) as total'))
-        ->groupBy('customers.customer_name', 'customers.customer_mobile', 'customer_transactions.customer_id')
-        ->orderBy('total', 'DESC')
-        ->offset(0)->limit(20)
-        ->get();
-
-        return $data_activity_member;
+        return $query->get();
     }
 }

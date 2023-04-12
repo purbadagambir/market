@@ -6,138 +6,72 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use \App\Http\Resources\ProductResource;
 use App\Models\Product as ProductModel;
+use DB;
 
 class ApiProductController extends Controller
 {
     public function index(Request $request)
     {
-        try {
-                $query = ProductModel::where($request->column, 'LIKE', '%' . $request->keyword . '%')
-                                    ->paginate(
-                                        $perPage = $request->perPage, $columns = ['*'], 'page', $request->pageSelect
-                                    );
-                $product = ProductResource::collection($query);
+        $query = DB::table('product_to_store')
+                ->join('products', 'product_to_store.product_id', '=', 'products.p_id')
+                ->join('units as unit_small', 'products.unit_id', '=', 'unit_small.unit_id')
+                ->join('units as unit_medium', 'products.unit_id_medium', '=', 'unit_medium.unit_id')
+                ->join('units as unit_large', 'products.unit_id_large', '=', 'unit_large.unit_id')
+                ->join('selling_item', 'products.p_id', '=', 'selling_item.item_id')
+                ->join('boxes', 'product_to_store.box_id', '=', 'boxes.box_id')
+                ->join('suppliers', 'product_to_store.sup_id', '=', 'suppliers.sup_id')
+                ->select(DB::raw('products.p_id, products.p_code, products.p_name,
+                                FLOOR(product_to_store.quantity_in_stock) AS stock, 
+                                FLOOR(product_to_store.purchase_price) AS purchase_price,
+                                FLOOR(product_to_store.sell_price_large) AS sell_price_large,
+                                FLOOR(product_to_store.sell_price_medium) AS sell_price_medium,
+                                FLOOR(product_to_store.sell_price) AS sell_price_small,
+                                product_to_store.sell_price_medium, 
+                                product_to_store.sell_price_large,
+                                unit_small.unit_id as unit_small_id,
+                                unit_small.unit_name AS unit_small_name,
+                                products.vol_unit_small,
+                                unit_medium.unit_id as unit_medium_id,
+                                unit_medium.unit_name AS unit_medium_name,
+                                products.vol_unit_medium,
+                                unit_large.unit_id as unit_large_id,
+                                unit_large.unit_name AS unit_large_name,
+                                products.vol_unit_large,
+                                boxes.box_name AS rak, suppliers.sup_name'
+                        ))
+                ->where($request->column, 'LIKE', '%' . $request->keyword . '%');
+    
+        $sell_list = $query->paginate($request->perPage, ['*'], 'page', $request->pageSelect);
 
-                return $product;
-        }catch(Exception $e){
-            return response()->json($this->generate_response(
-                array(
-                    "message" => $e->getMessage(),
-                    "status_code" => $e->getCode()
-                )
-            ));
-        }
-    }
+        if($sell_list->count() > 0){
 
-    public function store (Request $request)
-    {
-        try {
-            
-            $data_insert = [
-                'product_name'     => $request->product_name,
-                'code_name'          => $request->code_name,
-                'product_details'      => $request->product_details,
-                'status'        => $request->status
+            foreach($sell_list as $list){
+                $data[] = $list;
+            }
+    
+            $meta = [
+                "current_page" => $sell_list->currentPage(),
+                "from" => $sell_list->firstitem(),
+                "last_page" => $sell_list->lastPage(),
+                "path" => $sell_list->path(),
+                "per_page" => $sell_list->perPage(),
+                "to" => $sell_list->lastitem(),
+                "total" => $sell_list->total()
+            ];
+    
+            $response = [
+                'data'  => $data,
+                'meta'  => $meta,
+                'message' => 'success'
             ];
 
-            $insert = ProductModel::create($data_insert);
+            return response($response, 200);
 
-            if($insert)
-            {
-                $query = ProductModel::where('Product_name', 'LIKE', '%' . $request->keyword . '%')
-                                    ->paginate(
-                                        $perPage = 10, $columns = ['*'], 'page', 1
-                                    );
-                $Product = ProductResource::collection($query);
-
-                return $Product;
-            } 
-            else 
-            {
-                return response([
-                    "message" => "failed insert data",
-                    "status_code" => 500
-                 ], 500);
-            }
-        }catch(Exception $e){
-            return response()->json($this->generate_response(
-                array(
-                    "message" => $e->getMessage(),
-                    "status_code" => $e->getCode()
-                )
-            ));
-        }
-    }
-
-    public function show(Request $request)
-    {
-        $query = ProductModel::where('Product_id', '=', $request->id)->first();
-
-        return $query;
-    }
-
-    public function update(Request $request)
-    {
-
-        $data_update = [
-            "Product_name" => $request->Product_name,
-            "code_name" => $request->code_name,
-            "Product_details" => $request->Product_details,
-            "status" => $request->status
-        ];
-
-        $query = ProductModel::where('Product_id', $request->id)->update($data_update);
-
-        if($query)
-        {
-            $query = ProductModel::where('Product_name', 'LIKE', '%' . $request->keyword . '%')
-                                ->paginate(
-                                    $perPage = 10, $columns = ['*'], 'page', 1
-                                );
-            $Product = ProductResource::collection($query);
-
-            return $Product;
-        } 
-        else 
-        {
+        }else{
             return response([
-                "message" => "failed update data",
-                "status_code" => 500
-             ], 500);
-        }
-    }
-
-    public function delete(Request $request)
-    {
-        try 
-        {
-            $result=ProductModel::where('Product_id',$request->id)->delete();
-            if($request)
-            {
-                $query = ProductModel::where($request->column, 'LIKE', '%' . $request->keyword . '%')
-                                    ->paginate(
-                                        $perPage = $request->perPage, $columns = ['*'], 'page', $request->pageSelect
-                                    );
-                $Product = ProductResource::collection($query);
-
-                return $Product;
-            }
-            else
-            {
-                return response([
-                    "message" => "failed insert data",
-                    "status_code" => 500
-                 ], 500);
-            }
-        }
-        catch(Exception $e)
-        {
-            return response()->json($this->generate_response(
-                array(
-                    "message" => $e->getMessage(),
-                    "status_code" => $e->getCode()
-                )
-            ));
+                'data'      => null,
+                'message'  => 'Data not found'
+                ], 201);
         }
     }
 }

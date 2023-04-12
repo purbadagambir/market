@@ -10,9 +10,9 @@ class TransferController extends Controller
     public function index()
     {
         $data = [
-            'page'  => 'Catatan Penjualan',
-            'toko'  => 'Market 001'
+            'page'  => 'Daftar Transfer',
+            'toko'  => session('store')->name,
         ];
-        return view('mutasi.mutasi', compact('data'));
+        return view('transfer.transfer', compact('data'));
     }
 }

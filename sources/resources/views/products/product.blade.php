@@ -138,7 +138,7 @@
                   <th>Status</th>
                   <th class="text-center">Action</th>
                 </tr>
-                <tr class="bg-info">
+                <!-- <tr class="bg-info">
                   <td></td>
                   <td><input type="text" id="code_name" v-on:keyup="this.search('code_name')"></td>
                   <td><input type="text" id="code_name" v-on:keyup="this.search('code_name')"></td>
@@ -158,26 +158,26 @@
                   <td><input type="text" id="unit_details" v-on:keyup="this.search('unit_details')"></td>
                   <td></td>
                   <td></td>
-                </tr>
+                </tr> -->
               </thead>
               <tbody>
                 <tr v-for="item in items">
                   <td>@{{item.p_image}}</td>
                   <td>@{{item.p_code}}</td>
                   <td>@{{item.p_name}}</td>
-                  <td>@{{item.p_name}}</td>
-                  <td class="text-center"></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td>@{{item.sup_name}}</td>
+                  <td class="text-center">@{{item.stock}}</td>
+                  <td>@{{item.purchase_price}}</td>
+                  <td>@{{item.rak}}</td>
+                  <td>@{{item.sup_name}}</td>
+                  <td>@{{item.unit_large_name}}</td>
+                  <td>@{{item.vol_unit_large}}</td>
+                  <td>@{{item.sell_price_large}}</td>
+                  <td>@{{item.unit_medium_name}}</td>
+                  <td>@{{item.vol_unit_medium}}</td>
+                  <td>@{{item.sell_price_medium}}</td>
+                  <td>@{{item.vol_unit_small}}</td>
+                  <td>@{{item.sell_price_small}}</td>
                   <td></td>
                   <td>
                     <span class="badge btn-success" v-if="item.status == 1">Active</span>
