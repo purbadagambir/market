@@ -26,8 +26,6 @@ class ApiProductController extends Controller
                                 FLOOR(product_to_store.sell_price_large) AS sell_price_large,
                                 FLOOR(product_to_store.sell_price_medium) AS sell_price_medium,
                                 FLOOR(product_to_store.sell_price) AS sell_price_small,
-                                product_to_store.sell_price_medium, 
-                                product_to_store.sell_price_large,
                                 unit_small.unit_id as unit_small_id,
                                 unit_small.unit_name AS unit_small_name,
                                 products.vol_unit_small,
@@ -39,6 +37,15 @@ class ApiProductController extends Controller
                                 products.vol_unit_large,
                                 boxes.box_name AS rak, suppliers.sup_name'
                         ))
+                ->groupBy(
+                            'products.p_id', 'products.p_code', 'products.p_name',
+                            'product_to_store.quantity_in_stock', 'product_to_store.purchase_price',
+                            'product_to_store.sell_price_large', 'product_to_store.sell_price_medium',
+                            'product_to_store.sell_price', 'unit_small.unit_id', 'unit_small.unit_name',
+                            'products.vol_unit_small', 'unit_medium.unit_id', 'unit_medium.unit_name',
+                            'products.vol_unit_medium', 'unit_large.unit_id', 'unit_large.unit_name',
+                            'products.vol_unit_large', 'boxes.box_name', 'suppliers.sup_name'
+                            )
                 ->where($request->column, 'LIKE', '%' . $request->keyword . '%');
     
         $sell_list = $query->paginate($request->perPage, ['*'], 'page', $request->pageSelect);

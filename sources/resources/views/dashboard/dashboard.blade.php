@@ -92,7 +92,7 @@
             </div>
             <div class="col-sm-4 text-center">
               <h2>{{$data['withdraw_today']}}</h2>
-              <h4>PENARIKAN TERAKHIR</h4>
+              <h4>PENARIKAN HARI INI</h4>
             </div>
           </div>
         </div>
