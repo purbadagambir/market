@@ -108,6 +108,7 @@ class DashboardController extends Controller
         $data_deposit_today     = DB::table('bank_transaction_info')
                                 ->join('bank_transaction_price', 'bank_transaction_info.info_id', 'bank_transaction_price.info_id')
                                 ->where('bank_transaction_info.transaction_type', 'deposit')
+				->where('bank_transaction_info.store_id', session('store')->store_id)
                                 ->whereDate('bank_transaction_info.created_at', date('Y-m-d'))
                                 ->select(DB::raw('FLOOR(sum(bank_transaction_price.amount)) as amount'))
                                 ->get();
@@ -119,6 +120,7 @@ class DashboardController extends Controller
         $data_withdraw_today     = DB::table('bank_transaction_info')
                                 ->join('bank_transaction_price', 'bank_transaction_info.info_id', 'bank_transaction_price.info_id')
                                 ->where('bank_transaction_info.transaction_type', 'withdraw')
+				->where('bank_transaction_info.store_id', session('store')->store_id)
                                 ->whereDate('bank_transaction_info.created_at', date('Y-m-d'))
                                 ->select(DB::raw('FLOOR(sum(bank_transaction_price.amount)) as amount'))
                                 ->get();
