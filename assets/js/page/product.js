@@ -12,7 +12,8 @@ const App = {
         perPage : 10,
         pageSelect : 1,
         name : 'Product',
-        id : null
+        id : null,
+        store_id : '',
       },
       meta : [],
       buttonPage : [],
@@ -270,7 +271,10 @@ const App = {
   },
 
   mounted() {
+    const store_id = document.getElementById("store_id").value
+    this.table.store_id = store_id
     this.getData(this.table)
+
   }
 };
 Vue.createApp(App).mount("#app");

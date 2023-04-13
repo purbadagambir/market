@@ -239,6 +239,7 @@
       </div>
     </div><!-- /.box-body -->
   </div>
+  <input type="hidden" id="store_id" value="{{session('store')->store_id}}">
 </section>
 
 @endsection

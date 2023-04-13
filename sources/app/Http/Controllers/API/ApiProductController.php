@@ -46,7 +46,8 @@ class ApiProductController extends Controller
                             'products.vol_unit_medium', 'unit_large.unit_id', 'unit_large.unit_name',
                             'products.vol_unit_large', 'boxes.box_name', 'suppliers.sup_name'
                             )
-                ->where($request->column, 'LIKE', '%' . $request->keyword . '%');
+                ->where($request->column, 'LIKE', '%' . $request->keyword . '%')
+                ->where('product_to_store.store_id', $request->store_id);
     
         $sell_list = $query->paginate($request->perPage, ['*'], 'page', $request->pageSelect);
 
