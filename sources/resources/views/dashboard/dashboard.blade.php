@@ -20,7 +20,7 @@
             <div class="icon">
               <i class="fa fa-pencil"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{route('sell')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -36,7 +36,7 @@
             <div class="icon">
               <i class="fa fa-users"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{route('member')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -52,7 +52,7 @@
             <div class="icon">
               <i class="fa fa-shopping-cart"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{route('supplier')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -68,7 +68,7 @@
             <div class="icon">
               <i class="fa fa-star"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{route('product')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -124,7 +124,7 @@
                   </table>
                 </div>
                 <div class="box-footer text-center">
-                  <a href="{{route('transfer-list')}}">View All →</a> 
+                  <a href="{{route('transfer')}}">View All →</a> 
                 </div>
               </div>
             </div>
@@ -186,7 +186,7 @@
                   </table>
                 </div>
                 <div class="box-footer text-center">
-                  <a href="{{route('transfer-list')}}">View All →</a> 
+                  <a href="{{route('transfer')}}">View All →</a> 
                 </div>
               </div>
             </div>

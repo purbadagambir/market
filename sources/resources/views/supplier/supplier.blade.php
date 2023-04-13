@@ -2,32 +2,13 @@
 
 @section('content')
 
-@push('custom-style')
-<link rel="stylesheet" href="assets/dist/css/sell.css">
-@endpush
-
 <section class="content" id="app">
-  <input type="hidden" value="{{session('store')->store_id}}" id="store_id">
   <div v-if="loading" class="text-primary" style="padding-left:45%; font-size: 20px;"><i class="fa fa-spin fa-refresh"></i>&nbsp loading...</div>
   <div v-else="loading">
 
     <div class="box box-info">
       <div class="box-header">
         <h3 class="box-title">@{{table.name}} List</h3>
-        <div class="btn-group pull-right">
-          <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-filter"></i> Filter <i class="fa fa-angle-down"></i>
-
-          </button>
-          <div class="dropdown-menu">
-            <li><a>Today Invoice</a></li>
-            <li><a>All Invoice</a></li>
-            <li><a>Due Invoice</a></li>
-            <li><a>All Due Invoice</a></li>
-            <li><a>Paid Invoice</a></li>
-            <li><a>Inactive Invoice</a></li>
-          </div>
-        </div>
       </div>
       <div class="box-body table-responsive">
         <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
@@ -52,55 +33,36 @@
             <div class="col-sm-12">
               <table id="datatable" class="table table-bordered table-striped">
                 <thead>
-                  <tr role="row" class="bg-gray">
-                    <th class="text-center">Invoice Id</th>
-                    <th class="text-center">Date Time</th>
-                    <th class="text-center">Customer Name</th>
+                  <tr role="row" class="bg-gray">                   
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Mobile</th>
+                    <th class="text-center">Product</th>
+                    <th class="text-center">Tanggal Pembuatan</th>
                     <th class="text-center">Status</th>
-                    <th class="text-center">Pay</th>
-                    <th class="text-center">Action</th>
-                  </tr>
-                  <tr class="bg-info">
-                    <td class="text-center"><input type="text" id="currency_id" v-on:keyup="this.search('currency_id')"></td>
-                    <td><input type="text" id="title" v-on:keyup="this.search('title')"></td>
-                    <td><input type="text" id="code" v-on:keyup="this.search('code')"></td>
-                    <td><input type="text" id="symbol_left" v-on:keyup="this.search('symbol_left')"></td>
-                    <td><input type="text" id="symbol_right" v-on:keyup="this.search('symbol_right')"></td>
-                    <td></td>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="item in items">
-                    <td >@{{item.invoice_id}}</td>
+                    <td style="text-align: center; vertical-align: middle;">@{{item.sup_id}}</td>
+                    <td class="text-center">@{{item.sup_name}}</td>
+                    <td class="text-center">@{{item.sup_mobile}}</td>
+                    <td class="text-center">@{{item.jumlah_product}}</td>
                     <td class="text-center">@{{item.created_at}}</td>
-                    <td class="text-center">@{{item.customer_name}}</td>
                     <td class="text-center">
-                      <span class="badge btn-success">@{{item.payment_status}}</span>
-                    </td>
-                    <td class="text-center">-</td>
-                    <td class="text-center">
-                      <div class="btn-group">
-                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          . . .
-                        </button>
-                        <div class="dropdown-menu pull-right">
-                          <!-- <li @click="showModalReturn(item.invoice_id)"><a>Return</a></li> -->
-                          <li><a :href="'invoice?number='+item.invoice_id">View</a></li>
-                          <li @click="showModalEdit(item.invoice_id)"><a>Edit</a></li>
-                          <li><a>Delete</a></li>
-                        </div>
-                      </div>
+                      <span class="badge btn-success" v-if="item.status == 1">Active</span>
+                      <span class="badge btn-warning" v-else>Inactive</span>
                     </td>
                   </tr>
                 </tbody>
                 <tfoot>
-                  <tr role="row" class="bg-gray">
-                    <th class="text-center">Invoice Id</th>
-                    <th class="text-center">Date Time</th>
-                    <th class="text-center">Customer Name</th>
+                  <tr role="row" class="bg-gray">                   
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Mobile</th>
+                    <th class="text-center">Product</th>
+                    <th class="text-center">Tanggal Pembuatan</th>
                     <th class="text-center">Status</th>
-                    <th class="text-center">Pay</th>
-                    <th class="text-center">Action</th>
                   </tr>
                 </tfoot>
               </table>
@@ -120,13 +82,11 @@
               </ul>
             </div>
           </div>
+        </div>
       </div><!-- /.box-body -->
     </div>
   </div>
-  
-  @include('sell.sell_modal_edit')
-  @include('sell.sell_modal_return')
-        <!-- /.modal -->
+  <input type="hidden" id="store_id" value="{{session('store')->store_id}}">
 </section>
 
 @endsection
@@ -139,7 +99,7 @@
 <script src="assets/toastr/toastr.min.js"></script>
 <script src="assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="assets/js/page/sell.js"></script>
+<script src="assets/js/page/supplier.js"></script>
 <script src="assets/js/page/app.js"></script>
 <script src="assets/js/notif.js"></script>
 @endpush

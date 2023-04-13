@@ -8,6 +8,7 @@ const App = {
       search_member : 'Non-Member',
       customer_mobile: '00000000000',
       customer_name: 'Non-Member',
+      customer_credit: 0,
       carts_footer : {
         sum_qty_carts : 0,
         sum_discont_carts : 0,
@@ -31,6 +32,7 @@ const App = {
         mobile : ''
       },
       keyword : '',
+      barcode : '',
       form_cart : {
         p_code : null,
         qty : 1,
@@ -136,7 +138,6 @@ const App = {
       axios.post('api/get-product-info', data)
       .then(response => {
           if(response.status == 200){
-            if(response.data.searchby == 'code'){
               this.form_cart.unit_small = response.data.data[0].unit_small_name
               this.form_cart.unit_small_id = response.data.data[0].unit_small_id
               this.form_cart.unit_medium = response.data.data[0].unit_medium_name
@@ -157,9 +158,6 @@ const App = {
               this.form_cart.price = response.data.data[0].sell_price_small
               this.form_cart.vol_unit = response.data.data[0].vol_unit_small
               this.showModal()
-            }else{
-              this.items = response.data.data
-            }
           }
           else{
             notifError('Product not found')
@@ -180,15 +178,27 @@ const App = {
 
     getProductSearch: function(){
       const store_id = document.getElementById("store_id").value;
-      const data = {'code' : this.keyword, 'store_id' : store_id};
+      const data = {'keyword' : this.keyword, 'store_id' : store_id};
+
+      axios.post('api/get-product-search', data)
+      .then(response => {
+        this.items = response.data.data
+      })
+      
+    },
+
+    getProductScan: function(){
+      const store_id = document.getElementById("store_id").value;
+      const data = {'code' : this.barcode, 'store_id' : store_id};
       this.getProductInfo(data)
     },
 
-    setCustomer: function(mobile, name){
+    setCustomer: function(mobile, name, credit){
       this.list_member = []
       this.search_member = name
       this.customer_name = name
       this.customer_mobile = mobile
+      this.customer_credit = credit
     },
 
     showModalPayment: function(){
@@ -225,6 +235,8 @@ const App = {
       const data = {'code' : code, 'store_id' : store_id};
       this.getProductCode(data)
       this.hideModal()
+
+      this.barcode = '';
     },
 
     
@@ -285,7 +297,6 @@ const App = {
     },
 
     setPayment: function(id, code_name) {
-      console.log(code_name);
       var element = document.getElementById("pmethod"+this.payment.p_method);
       element.classList.remove("active");
       this.payment.p_method_name = code_name
@@ -332,11 +343,16 @@ const App = {
     },
 
     checkOut: function(){
+      this.payment.paid_amount = this.carts_footer.sum_total_amount_carts
+      this.payment.due_amount = 0
+
       if(this.payment.pos_balance < 0){
         notifError('Error Balance To Credit Amount Greater Than Due')
         this.stop()
+      }else if(this.customer_credit < this.payment.paid_amount){
+        notifError('Credit tidak mencukupi')
+        this.stop()
       }else{
-
         const user_id = document.getElementById("user_id").value
         const store_id = document.getElementById("store_id").value
         const data = {orders : this.carts, 

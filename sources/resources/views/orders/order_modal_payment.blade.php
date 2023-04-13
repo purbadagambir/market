@@ -11,7 +11,12 @@
             <div class="col-md-3 col-sm-12">
                 <div class="list-group">
                 @foreach($data['pmethod'] as $pmethod)
-                <button class="list-group-item payment" id="pmethod{{$pmethod->pmethod_id}}" @click="setPayment({{$pmethod->pmethod_id}}, '{{$pmethod->code_name}}')">{{$pmethod->name}}</button>
+                <button class="list-group-item payment" id="pmethod{{$pmethod->pmethod_id}}" @click="setPayment({{$pmethod->pmethod_id}}, '{{$pmethod->code_name}}')">
+                    {{$pmethod->name}}
+                    @if($pmethod->pmethod_id == 4)
+                    <span> >> (Rp. @{{customer_credit}})</span>
+                    @endif
+                </button>
                 @endforeach
                 </div>
             </div>

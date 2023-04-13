@@ -34,7 +34,7 @@
                     </tbody>
                 </table>
                 <a class="btn btn-info btn-sm" href="{{route('pos')}}"> <i class="fa fa-plus"></i> Tambah Penjualan </a>
-                <a class="btn btn-success btn-sm" href="{{route('sell-list')}}"> <i class="fa fa-list"></i> Daftar Penjualan </a>
+                <a class="btn btn-success btn-sm" href="{{route('sell')}}"> <i class="fa fa-list"></i> Daftar Penjualan </a>
             </div>
             <div class="col-lg-4">
                 <div class="progress-group-container">
@@ -130,7 +130,7 @@
                 </tbody>
             </table>
             <!-- <button class="btn btn-info btn-sm"> <i class="fa fa-plus"></i> Tambah Pembelian </button> -->
-            <a class="btn btn-success btn-sm" href="{{route('purchase-list')}}"> <i class="fa fa-list"></i> Daftar Pembelian </a>
+            <a class="btn btn-success btn-sm" href="{{route('purchase')}}"> <i class="fa fa-list"></i> Daftar Pembelian </a>
         </div>
         <!-- /.tab-pane -->
         <div class="tab-pane" id="transfer">
@@ -159,7 +159,7 @@
                 </tbody>
             </table>
             <!-- <button class="btn btn-info btn-sm"> <i class="fa fa-plus"></i> Tambah Transfer </button> -->
-            <button class="btn btn-success btn-sm"> <i class="fa fa-list"></i> Daftar Transfer </button>
+            <a class="btn btn-success btn-sm" href="{{route('transfer')}}"> <i class="fa fa-list"></i> Daftar Transfer </a>
         </div>
         <!-- /.tab-pane -->
         <div class="tab-pane" id="pelanggan">
@@ -190,7 +190,7 @@
                 </tbody>
             </table>
             <!-- <button class="btn btn-info btn-sm"> <i class="fa fa-plus"></i> Tambah Pelanggan </button> -->
-            <button class="btn btn-success btn-sm"> <i class="fa fa-list"></i> Daftar Pelanggan </button>
+            <a class="btn btn-success btn-sm" href="{{route('member')}}"> <i class="fa fa-list"></i> Daftar Pelanggan </a>
         </div>
         <!-- /.tab-pane -->
         <div class="tab-pane" id="pemasok">
@@ -217,7 +217,7 @@
                 </tbody>
             </table>
             <!-- <button class="btn btn-info btn-sm"> <i class="fa fa-plus"></i> Tambah Pemasok </button> -->
-            <button class="btn btn-success btn-sm"> <i class="fa fa-list"></i> Daftar Pemasok </button>
+            <a class="btn btn-success btn-sm" href="{{route('supplier')}}"> <i class="fa fa-list"></i> Daftar Pemasok </a>
         </div>
         <!-- /.tab-pane -->
     </div>

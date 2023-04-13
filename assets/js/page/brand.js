@@ -147,13 +147,9 @@ const App = {
     getData: function(data){
       axios.post('api/get-brand', data)
          .then(response => {
-            if(response.status == 200){
-              this.items = response.data.data
-              this.meta = response.data.meta
-              this.buttonPage = this.pageButton(this.meta.last_page)
-            }else{
-              notifError('Error')
-            }
+            this.items = response.data.data
+            this.meta = response.data.meta
+            this.buttonPage = this.pageButton(this.meta.last_page)
          })
          .catch(error => {
             notifError('Error')

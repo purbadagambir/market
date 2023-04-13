@@ -37,8 +37,8 @@ Route::middleware(['auth', 'store'])->group(function() {
 
 
     //SELL
-    Route::get('/sell-list', 'SellController@index')->name('sell-list');
-    Route::get('/return-list', 'SellController@return_list')->name('return-list');
+    Route::get('/sell-list', 'SellController@index')->name('sell');
+    Route::get('/return-list', 'SellController@return_list')->name('return');
     Route::get('/sell-log', 'SellController@sell_log')->name('sell-log');
 
     //PRODUK
@@ -53,13 +53,16 @@ Route::middleware(['auth', 'store'])->group(function() {
     Route::get('/sistem-curency', 'CurencyController@index')->name('curency');
 
     //PEMBELIAN
-    Route::get('/purchase-list', 'PurchaseController@index')->name('purchase-list');
+    Route::get('/purchase-list', 'PurchaseController@index')->name('purchase');
 
-    //MUTASI
-    Route::get('/transfer-list', 'TransferController@index')->name('transfer-list');
+    //TRANSFER
+    Route::get('/transfer-list', 'TransferController@index')->name('transfer');
+
+    //TRANSFER
+    Route::get('/supplier-list', 'SupplierController@index')->name('supplier');
 
     //MEMBER
-    Route::get('/member', 'MemberController@index')->name('member');
+    Route::get('/member-list', 'MemberController@index')->name('member');
 
     //EXPENSE
     Route::get('/expense', 'ExpenseController@index')->name('expense');

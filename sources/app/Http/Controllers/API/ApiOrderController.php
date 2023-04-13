@@ -78,6 +78,23 @@ class ApiOrderController extends Controller
                     $purchase =+ $request->orders[$i]['purchase_price'];
                 }
 
+                //UPDATE STOCK HERE
+                for ($i = 0; $i < count($request->orders); $i++) {
+                    
+                        $item_id[$i]               = $request->orders[$i]['p_id'];
+                        $item_quantity[$i]         = $request->orders[$i]['qty'] * $request->orders[$i]['vol_unit'];
+
+                        $product[$i] = DB::table('product_to_store')
+                                        ->where('product_id', $item_id[$i])
+                                        ->where('store_id', $store_id)
+                                        ->first();
+                        
+                        DB::table('product_to_store')
+                        ->where('product_id', $item_id[$i])
+                        ->where('store_id', $store_id)
+                        ->update( [ 'quantity_in_stock' => $product[$i]->quantity_in_stock -  $item_quantity[$i]]); 
+                }
+
                 SellingItemModel::insert($selling_item);
 
                 $selling_price = [
@@ -243,11 +260,47 @@ class ApiOrderController extends Controller
         return $data_product;
     }
 
+    public function product_search(Request $request)
+    {
+        $data_product = DB::table('product_to_store')
+                ->join('products', 'product_to_store.product_id', '=', 'products.p_id')
+                ->join('units as unit_small', 'products.unit_id', '=', 'unit_small.unit_id')
+                ->join('units as unit_medium', 'products.unit_id_medium', '=', 'unit_medium.unit_id')
+                ->join('units as unit_large', 'products.unit_id_large', '=', 'unit_large.unit_id')
+                ->join('selling_item', 'products.p_id', '=', 'selling_item.item_id')
+                ->select('products.p_id', 'products.p_code', 'products.p_name',
+                        'product_to_store.sell_price AS sell_price_small',
+                        'product_to_store.sell_price_medium', 
+                        'product_to_store.sell_price_large',
+                        'unit_small.unit_id as unit_small_id',
+                        'unit_small.unit_name AS unit_small_name',
+                        'unit_medium.unit_id as unit_medium_id',
+                        'unit_medium.unit_name AS unit_medium_name',
+                        'unit_large.unit_id as unit_large_id',
+                        'unit_large.unit_name AS unit_large_name', 
+                        )
+                ->selectRaw('sum(selling_item.item_id) AS dibeli')
+                ->where('product_to_store.store_id', $request->store_id)
+                ->where('products.p_name', 'LIKE', '%'.$request->keyword.'%')
+                ->groupBy(
+                            'selling_item.item_id', 'products.p_id', 'products.p_code',  'products.p_name',
+                            'product_to_store.sell_price', 'product_to_store.sell_price_medium',
+                            'product_to_store.sell_price_large', 'unit_small.unit_id', 'unit_small.unit_name',
+                            'unit_medium.unit_id', 'unit_medium.unit_name', 'unit_large.unit_id', 'unit_large.unit_name'
+                        )
+                ->orderBy('dibeli', 'desc')
+                ->limit(8)
+                ->get();
+
+        return response([
+                'data'      => $data_product,
+                'message'  => 'Success'
+                ], 200);
+    }
+
     public function product_info(Request $request)
     {
-        $store_id = $request->store_id;
-
-        $search_bycode = DB::table('product_to_store')
+        $product = DB::table('product_to_store')
                         ->join('products', 'product_to_store.product_id', '=', 'products.p_id')
                         ->join('units as unit_small', 'products.unit_id', '=', 'unit_small.unit_id')
                         ->join('units as unit_medium', 'products.unit_id_medium', '=', 'unit_medium.unit_id')
@@ -266,50 +319,17 @@ class ApiOrderController extends Controller
                                 'unit_large.unit_name AS unit_large_name',
                                 'products.vol_unit_large AS vol_unit_large', 
                                 )
-                        ->where('product_to_store.store_id', $store_id)
+                        ->where('product_to_store.store_id', $request->store_id)
                         ->where('products.p_code', $request->code)
                         ->get();
         
-        if(count($search_bycode) == 0)
-        {
-            $search_byname = DB::table('product_to_store')
-                                ->join('products', 'product_to_store.product_id', '=', 'products.p_id')
-                                ->join('units as unit_small', 'products.unit_id', '=', 'unit_small.unit_id')
-                                ->join('units as unit_medium', 'products.unit_id_medium', '=', 'unit_medium.unit_id')
-                                ->join('units as unit_large', 'products.unit_id_large', '=', 'unit_large.unit_id')
-                                ->select('products.p_id', 'products.p_code', 'products.p_name',
-                                        'product_to_store.sell_price AS sell_price_small',
-                                        'product_to_store.sell_price_medium', 
-                                        'product_to_store.sell_price_large',
-                                        'unit_small.unit_id as unit_small_id',
-                                        'unit_small.unit_name AS unit_small_name',
-                                        'products.vol_unit_small AS vol_unit_small',
-                                        'unit_medium.unit_id as unit_medium_id',
-                                        'unit_medium.unit_name AS unit_medium_name',
-                                        'products.vol_unit_medium AS vol_unit_medium',
-                                        'unit_large.unit_id as unit_large_id',
-                                        'unit_large.unit_name AS unit_large_name',
-                                        'products.vol_unit_large AS vol_unit_large', 
-                                        )
-                                ->where('product_to_store.store_id', $store_id)
-                                ->where('products.p_name', 'LIKE', '%' . $request->code . '%')
-                                ->limit(8)
-                                ->get();
+        
 
-            return response([
-                'data'          => $search_byname,
-                'searchby'      => 'name',
-                'message'       => 'success'
-                ], 200);
-        }else{
-
-            return response([
-                'data'          => $search_bycode,
-                'searchby'      => 'code',
-                'message'       => 'success'
-                ], 200);
-
-        }
+        return response([
+            'data'          => $product,
+            'searchby'      => 'code',
+            'message'       => 'success'
+            ], 200);
         
     }
 
@@ -317,7 +337,7 @@ class ApiOrderController extends Controller
     {
         $member = CustomerModel::where('customer_name', 'LIKE', '%'.$request->keyword.'%')
                                     ->orWhere('customer_mobile', 'LIKE', '%'.$request->keyword.'%')
-                                    ->select('customer_mobile', 'customer_name')
+                                    ->select('customer_mobile', 'customer_name', 'credit')
                                     ->limit(5)
                                     ->get();
 

@@ -201,4 +201,5 @@
 <script src="assets/js/page/brand.js"></script>
 <script src="assets/js/page/app.js"></script>
 <script src="assets/js/notif.js"></script>
+<script src="assets/js/buttonpage.js"></script>
 @endpush

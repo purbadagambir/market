@@ -73,7 +73,7 @@ Route::post('/delete-unit', 'API\ApiUnitController@delete');
 
 //ORDER
 Route::post('/get-product-list', 'API\ApiOrderController@product_list');
-Route::post('/get-product-search', 'API\ApiOrderController@product_list_search');
+Route::post('/get-product-search', 'API\ApiOrderController@product_search');
 Route::post('/get-product-code', 'API\ApiOrderController@product_code');
 Route::post('/get-product-info', 'API\ApiOrderController@product_info');
 Route::post('/add-orders', 'API\ApiOrderController@add_orders');
@@ -91,6 +91,12 @@ Route::post('/get-purchase-list', 'API\ApiPurchaseController@purchase_list');
 
 //TRANSFER
 Route::post('/get-transfer-list', 'API\ApiTransferController@transfer_list');
+
+//SUPPLIER
+Route::post('/get-supplier-list', 'API\ApiSupplierController@supplier_list');
+
+//MEMBER
+Route::post('/get-member-list', 'API\ApiMemberController@member_list');
 
 
 

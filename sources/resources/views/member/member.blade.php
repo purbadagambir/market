@@ -187,13 +187,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td style="text-align: center; vertical-align: middle;">1</td>
-                    <td style="text-align: center; vertical-align: middle;">JOL</td>
-                    <td style="text-align: center; vertical-align: middle;">+601111634806</td>
-                    <td style="text-align: center; vertical-align: middle;">KOTA BANDA ACEH</td>
-                    <td style="text-align: center; vertical-align: middle;">MEURAXA</td>
-                    <td style="text-align: center; vertical-align: middle;">YAYASAN PONDO ISLAMIC CENTER</td>
+                  <tr v-for="(item, index) in items">
+                    <td style="text-align: center; vertical-align: middle;">@{{index + 1}}</td>
+                    <td style="text-align: center; vertical-align: middle;">@{{item.customer_name}}</td>
+                    <td style="text-align: center; vertical-align: middle;">@{{item.customer_mobile}}</td>
+                    <td style="text-align: center; vertical-align: middle;">@{{item.customer_city}}</td>
+                    <td style="text-align: center; vertical-align: middle;">@{{item.customer_state}}</td>
+                    <td style="text-align: center; vertical-align: middle;">@{{item.customer_sponsor}}</td>
                     <td class="text-center">
                       <button class="btn btn-success btn-sm">
                         <i class="fa fa-comments-o"></i>

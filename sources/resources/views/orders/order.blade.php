@@ -59,7 +59,7 @@
                 <div class="col-lg-7 col-xs-7">
                   <form action="">
                     <div class="input-group input-group">
-                      <input type="text" class="form-control" v-model="keyword" @keyup="getProductSearch()">
+                      <input type="text" class="form-control" placeholder="Scan Here" v-model="barcode" @keyup="getProductScan()" ref='focusMe'>
                           <span class="input-group-btn">
                             <button type="button" class="btn btn-info btn-flat"> <i class="fa fa-search"></i> </button>
                           </span>
@@ -76,8 +76,11 @@
               </div>
             </div>
             <div class="box-body">
+              
               <div class="direct-chat-messages product-list">
-
+                <div class="col-lg-12 col-xs-12">
+                  <input type="text" class="form-control" placeholder="Cari Produk" v-model="keyword" @keyup="getProductSearch()">
+                </div>
                 <div class="col-lg-3 col-xs-4 text-center" v-for="item in items">
                   <div @click="getProductClik(item.p_code)">
                     <div class="info-box product-box">
@@ -117,7 +120,7 @@
                   </div>
                   <div class="list-group" v-if="list_member.length > 0">
                     <div v-for="member in list_member">
-                      <button class="list-group-item payment" @click="setCustomer(member.customer_mobile, member.customer_name)"> <i class="fa fa-user"></i> @{{member.customer_name}} (@{{member.customer_mobile}})</button>
+                      <button class="list-group-item payment" @click="setCustomer(member.customer_mobile, member.customer_name, member.credit)"> <i class="fa fa-user"></i> @{{member.customer_name}} (@{{member.customer_mobile}})</button>
                     </div>
                   </div>
                 </div>
