@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PONDOPOS - LOGIN</title>
-  <link rel="icon"  type="image/x-icon" href="{{url('assets/img/logo/1_favicon.png')}}">
+  <link rel="icon"  type="image/x-icon" href="{{url('assets/img/logo/5_favicon.png')}}">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="assets/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="assets/dist/css/login.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="assets/plugins/iCheck/square/blue.css">
 
@@ -29,9 +30,9 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition login-page">
-<div class="login-box">
+<div class="form-login">
   <!-- /.login-logo -->
-  <div class="login-box-body">
+  <div class="login-box-body text-center">
     <div class="login-logo">
       <img src="{{url('assets\img\logo\logo_new.png')}}" alt="Logo Pondo" style="width : 20rem">
     </div>
@@ -53,7 +54,7 @@
       </div>
     </form>
 
-    <a href="">Forgot Password?</a><br>
+    <a class="forgot-password">Forgot Password?</a><br>
 
   </div>
   <!-- /.login-box-body -->

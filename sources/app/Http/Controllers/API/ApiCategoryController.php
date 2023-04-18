@@ -6,19 +6,57 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use \App\Http\Resources\CategoryResource;
 use App\Models\Category as CategoryModel;
+use DB;
 
 class ApiCategoryController extends Controller
 {
     public function index(Request $request)
     {
         try {
-                $query = CategoryModel::where($request->column, 'LIKE', '%' . $request->keyword . '%')
-                                    ->paginate(
-                                        $perPage = $request->perPage, $columns = ['*'], 'page', $request->pageSelect
-                                    );
-                $category = CategoryResource::collection($query);
+            $query =    DB::table('categorys')
+                    ->join('category_to_store', 'categorys.category_id', '=', 'category_to_store.ccategory_id')
+                    ->join('products', 'categorys.category_id', '=', 'products.category_id')
+                    ->join('product_to_store', 'products.p_id', '=', 'product_to_store.product_id')
+                    ->select(DB::raw('  
+                                categorys.category_name, category_to_store.status, categorys.created_at,
+                                FLOOR(count(products.category_id)) as jumlah_product
+                            '))
+                    ->where('category_to_store.store_id', $request->store_id)
+                    ->groupBy('categorys.category_name', 'category_to_store.status', 'categorys.created_at');
 
-                return $category;
+        $category_list = $query->paginate($request->perPage, ['*'], 'page', $request->pageSelect);
+
+        if($category_list->count() > 0){
+
+            foreach($category_list as $list){
+                $data[] = $list;
+            }
+    
+            $meta = [
+                "current_page" => $category_list->currentPage(),
+                "from" => $category_list->firstitem(),
+                "last_page" => $category_list->lastPage(),
+                "path" => $category_list->path(),
+                "per_page" => $category_list->perPage(),
+                "to" => $category_list->lastitem(),
+                "total" => $category_list->total()
+            ];
+    
+            $response = [
+                'data'  => $data,
+                'meta'  => $meta,
+                'message' => 'success'
+            ];
+
+            return response($response, 200);
+
+        }else{
+            return response([
+                'data'      => null,
+                'message'  => 'Data not found'
+                ], 201);
+        }
+               
         }catch(Exception $e){
             return response()->json($this->generate_response(
                 array(

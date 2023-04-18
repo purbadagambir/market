@@ -12,7 +12,8 @@ const App = {
           perPage : 10,
           pageSelect : 1,
           name : 'Category',
-          id : null
+          id : null,
+          store_id : null,
         },
         meta : [],
         buttonPage : [],
@@ -279,6 +280,8 @@ const App = {
     },
   
     mounted() {
+      const store_id = document.getElementById("store_id").value
+      this.table.store_id = store_id
       this.getData(this.table)
     }
   };

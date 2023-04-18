@@ -11,7 +11,7 @@
         <div class="box box-info">
             <div class="print-area">
                 <div class="store-info">
-                    <img src="https://pondo.co.id/pondopos/assets/itsolution24/img/logo-favicons/{{$data['order']->store_logo}}" alt="Logo Pondo" class="logo">
+                    <img src="https://pondo.co.id/pondopos/assets/itsolution24/img/logo-favicons/{{$data['order']['store_logo']}}" alt="Logo Pondo" class="logo">
                     <p>Jalan Pasar Induk Cureh</p>
                     <p>Mobile: 082117736760, Email: marketpondo@gmail.com</p>
                 </div>
@@ -19,27 +19,27 @@
                     <table class='w-100'>
                         <tr>
                             <td>InvoiceID</td>
-                            <td>: {{$data['order']->invoice_id}}</td>
+                            <td>: {{$data['order']['invoice_id']}}</td>
                         </tr>
                         <tr>
                             <td>Tanggal</td>
-                            <td>: {{date_format(date_create($data['order']->tanggal), "d-M-Y h:i A")}}</td>
+                            <td>: {{date_format(date_create($data['order']['tanggal']), "d-M-Y h:i A")}}</td>
                         </tr>
                         <tr>
                             <td>Nama</td>
-                            <td>: {{$data['order']->member}}</td>
+                            <td>: {{$data['order']['member']}}</td>
                         </tr>
-                        {{-- <tr>
+                        <!-- <tr>
                             <td>Alamat</td>
-                            <td>: {{$data['order']->alamat}}</td>
-                        </tr> --}}
+                            <td>: {{$data['order']['alamat']}}</td>
+                        </tr> -->
                         <tr>
                             <td class='w-50'>Point TX</td>
-                            <td>: {{$data['order']->poin}}</td>
+                            <td>: {{$data['order']['poin']}}</td>
                         </tr>
                         <tr>
                             <td class='w-50'>Jml. Point</td>
-                            <td>: {{$data['order']->jumlah_poin}}</td>
+                            <td>: {{$data['order']['jumlah_poin']}}</td>
                         </tr>
                     </table>
                     <table class="table-order">
@@ -100,14 +100,14 @@
                 </div>
 
                 <div class="warning">
-                    <p class="w-50">Type Pembayaran : {{$data['order']->p_method}}</p>
-                    <p class="w-50">Nama Kasir : {{$data['order']->kasir}}</p>
+                    <p class="w-50">Type Pembayaran : {{$data['order']['p_method']}}</p>
+                    <p class="w-50">Nama Kasir : {{$data['order']['kasir']}}</p>
                     <span class="notes">Terimakasih telah berbelanja.</span>
                 </div>
 
                 <div class="button-invoice noprint">
-                    <button class="btn btn-info btn-block text-center noprint" onclick="printStruk('{{$data['order']->invoice_id}}')" target="_blank"> <i class="fa fa-print"></i> Print </button>
-                    <button class="btn btn-default btn-block text-center noprint" onclick="history.go(-1)"> <i class="fa fa-long-arrow-left" aria-hidden="true"></i> Back to  print </button>
+                    <button class="btn btn-info btn-block text-center noprint" onclick="printStruk('{{$data['order']['invoice_id']}}')" target="_blank"> <i class="fa fa-print"></i> Print </button>
+                    <a class="btn btn-default btn-block text-center noprint" href="{{route('pos')}}"> <i class="fa fa-long-arrow-left" aria-hidden="true"></i> Back to POS </a>
                 </div>
 
             </div>

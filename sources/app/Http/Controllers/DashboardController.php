@@ -221,19 +221,15 @@ class DashboardController extends Controller
 
     public function tes()
     {   
-        $query =    DB::table('bank_transaction_info')
-                    ->join('bank_transaction_price', 'bank_transaction_info.info_id', 'bank_transaction_price.info_id')
-                    ->join('bank_accounts', 'bank_transaction_info.account_id', 'bank_accounts.id')
-                    ->where('bank_transaction_info.store_id', 5)
-                    ->select(DB::raw('FLOOR(sum(bank_transaction_price.amount)) as amount,
-                                    bank_transaction_info.transaction_type, bank_accounts.account_name,
-                                    bank_transaction_info.invoice_id
-                                    '))
-                    ->orderBy('bank_transaction_info.created_at', 'desc')
-                    ->groupBY('bank_transaction_info.transaction_type', 
-                                'bank_accounts.account_name',
-                                'bank_transaction_info.invoice_id');
+        $id = 46;
+        $count_sum  =   DB::table('customers')
+                        ->leftJoin('customers as l_2', 'customers.parent_id', '=', 'l_2.customer_id')
+                        ->select('customers.customer_id AS l_1', 'l_2.customer_id AS l_2')
+                        ->where('l_2.customer_id', '=', $id)
+                        ->get();
 
-        return $query->get();
+
+
+        return DB::table('customers')->where('customer_id', 2)->get();
     }
 }

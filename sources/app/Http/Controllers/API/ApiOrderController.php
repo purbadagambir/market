@@ -12,6 +12,7 @@ use App\Models\SellingInfo as SellingInfoModel;
 use App\Models\SellLog as SellLogModel;
 use App\Models\Payment as PaymentModel;
 use App\Models\Customer as CustomerModel;
+use App\Models\PointLogs as PointLogModel;
 use DB;
 use Auth;
 
@@ -139,11 +140,11 @@ class ApiOrderController extends Controller
                     'customer_mobile'       => $customer->customer_mobile,
                     'ref_invoice_id'        => null,
                     'ref_user_id'           => 0,
-                    'invoice_note'          => null,
-                    'total_items'           => null,
+                    'invoice_note'          => $request->payments['noted'],
+                    'total_items'           => count($request->orders),
                     'is_installment'        => 0,
                     'status'                => 1,
-                    'pmethod_id'            => null,
+                    'pmethod_id'            => $request->payments['p_method'],
                     'payment_status'        => 'paid',
                     'checkout_status'       => 1,
                     'total_points'          => $profit * (20 / 100),
@@ -192,6 +193,11 @@ class ApiOrderController extends Controller
                 ];
 
                 PaymentModel::create($payment);
+
+                //POINT LOGS
+                DB::select('call sp_calc_sharing_point(?,?)', [$invoice_number, 'sell']);
+
+
 
         DB::commit();
 

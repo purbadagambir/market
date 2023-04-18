@@ -132,33 +132,32 @@
                     <th class="text-center">Id</th>
                     <th>Category Name</th>
                     <th class="text-center">Total Item</th>
-                    <th>Order</th>
+                    <!-- <th>Order</th> -->
                     <th>Status</th>
                     <th>Created At</th>
-                    <th class="text-center">Action</th>
+                    <!-- <th class="text-center">Action</th> -->
                   </tr>
-                  <tr class="bg-info">
+                  <!-- <tr class="bg-info">
                     <td class="text-center"><input type="text" id="category_id" v-on:keyup="this.search('category_id')"></td>
                     <td class="text-center"><input type="text" id="category_name" v-on:keyup="this.search('category_name')"></td>
                     <td><input type="text" id="category_slug" v-on:keyup="this.search('category_slug')"></td>
                     <td><input type="text" id="category_details" v-on:keyup="this.search('category_details')"></td>
                     <td></td>
                     <td></td>
-                  </tr>
+                  </tr> -->
                 </thead>
                 <tbody>
-                  <tr v-for="item in items">
-                    <td class="text-center">@{{item.category_id}}</td>
-                    <td class="text-center">@{{item.category_name}}</td>
-                    <td></td>
-                    <td></td>
+                  <tr v-for="(item, index) in items">
+                    <td>@{{index + 1}}</td>
+                    <td>@{{item.category_name}}</td>
+                    <td class="text-center">@{{item.jumlah_product}}</td>
                     <td>
                       <span class="badge btn-success" v-if="item.status == 1">Active</span>
                       <span class="badge btn-warning" v-else>Inactive</span>
                     </td>
                     <td>@{{item.created_at}}</td>
                     <td class="text-center">
-                      <div class="btn-group">
+                      <!-- <div class="btn-group">
                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           . . .
                         </button>
@@ -166,7 +165,7 @@
                           <li @click="this.editData(item.category_id)"><a>Edit</a></li>
                           <li @click="this.deleteData(item.category_id)"><a>Delete</a></li>
                         </div>
-                      </div>
+                      </div> -->
                     </td>
                   </tr>
                 </tbody>
@@ -175,10 +174,10 @@
                     <th class="text-center">Id</th>
                     <th>Category Name</th>
                     <th class="text-center">Total Item</th>
-                    <th>Order</th>
+                    <!-- <th>Order</th> -->
                     <th>Status</th>
                     <th>Created At</th>
-                    <th class="text-center">Action</th>
+                    <!-- <th class="text-center">Action</th> -->
                   </tr>
                 </tfoot>
               </table>
@@ -202,6 +201,7 @@
       </div><!-- /.box-body -->
     </div>
   </div>
+  <input type="hidden" id="store_id" value="{{session('store')->store_id}}">
 </section>
 
 @endsection

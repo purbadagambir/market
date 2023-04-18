@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="assets/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="assets/dist/css/login.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="assets/plugins/iCheck/square/blue.css">
 
@@ -29,9 +30,9 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition login-page">
-<div class="login-box">
+<div class="form-login">
   <div class="login-logo">
-    <img src="{{url('assets\img\logo\5_logo.png')}}" alt="Logo Pondo" style="width : 15rem">
+    <img src="{{url('assets\img\logo\logo_new.png')}}" alt="Logo Pondo" style="width : 20rem">
     <h1 class="text-danger">SELECT STORE</h1>
   </div>
   <!-- /.login-logo -->

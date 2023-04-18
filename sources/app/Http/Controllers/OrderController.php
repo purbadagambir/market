@@ -41,7 +41,7 @@ class OrderController extends Controller
                             ->where('selling_item.invoice_id', $invoice_id)
                             ->get();
                             
-        $data_order = DB::table('selling_info')
+        $orders = DB::table('selling_info')
                             ->join('customers', 'selling_info.customer_id', '=', 'customers.customer_id')
                             ->join('point_logs', 'selling_info.invoice_id', '=', 'point_logs.trans_no')
                             ->join('users', 'selling_info.created_by', '=', 'users.id')
@@ -59,7 +59,25 @@ class OrderController extends Controller
                                     'stores.email AS store_email',
                                     'stores.address AS store_address',
                                     'stores.logo AS store_logo')
-                            ->first();
+                            ->get();
+        
+        foreach($orders as $order){
+            $data_order = [
+                'invoice_id'        => $order->invoice_id,
+                'tanggal'           => $order->tanggal, 
+                'alamat'            => $order->alamat,
+                'member'            => $order->member,
+                'poin'              => $order->poin, 
+                'jumlah_poin'       => $order->jumlah_poin,
+                'kasir'             => $order->kasir,
+                'p_method'          => $order->p_method,
+                'store_email'       => $order->store_email,
+                'store_address'     => $order->store_address,
+                'store_logo'        => $order->store_logo
+            ];
+        }
+
+        
 
         $data_price = SellingPriceModel::where('invoice_id', $invoice_id)->first();
         $data_payment = PaymentModel::where('invoice_id', $invoice_id)->first();
@@ -70,7 +88,7 @@ class OrderController extends Controller
             'invoice'   => $data_invoice,
             'order'     => $data_order,
             'price'     => $data_price,
-            'payment'     => $data_payment,
+            'payment'   => $data_payment,
         ];
 
         return view('orders.print', compact('data'));
