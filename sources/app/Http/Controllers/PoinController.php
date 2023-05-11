@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class MemberController extends Controller
+class PoinController extends Controller
 {
     public function index()
     {
         $data = [
-            'page'  => 'Member',
+            'page'  => 'Poin',
             'toko'  => session('store')->name
         ];
-        return view('member.member', compact('data'));
+
+        return view('poin.poin', compact('data'));
     }
 }

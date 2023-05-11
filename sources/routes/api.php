@@ -36,26 +36,37 @@ Route::post('/show-category', 'API\ApiCategoryController@show');
 Route::post('/update-category', 'API\ApiCategoryController@update');
 Route::post('/delete-category', 'API\ApiCategoryController@delete');
 
-//PRODUCT-CATEGORY
+//PRODUCT-BOX
 Route::post('/get-box', 'API\ApiBoxController@index');
 Route::post('/create-box', 'API\ApiBoxController@store');
 Route::post('/show-box', 'API\ApiBoxController@show');
 Route::post('/update-box', 'API\ApiBoxController@update');
 Route::post('/delete-box', 'API\ApiBoxController@delete');
 
-//PRODUCT-CATEGORY
+//PRODUCT-BRAND
 Route::post('/get-brand', 'API\ApiBrandController@index');
 Route::post('/create-brand', 'API\ApiBrandController@store');
 Route::post('/show-brand', 'API\ApiBrandController@show');
 Route::post('/update-brand', 'API\ApiBrandController@update');
 Route::post('/delete-brand', 'API\ApiBrandController@delete');
 
-//MENU
+//SISTEM-MENU
 Route::post('/get-menu', 'API\ApiMenuController@index');
 Route::post('/create-menu', 'API\ApiMenuController@store');
 Route::post('/show-menu', 'API\ApiMenuController@show');
 Route::post('/update-menu', 'API\ApiMenuController@update');
 Route::post('/delete-menu', 'API\ApiMenuController@delete');
+
+//SISTEM-POIN
+Route::post('/get-poin', 'API\ApiPoinController@index');
+Route::post('/create-poin', 'API\ApiPoinController@store');
+Route::post('/show-poin', 'API\ApiPoinController@show');
+Route::post('/update-poin', 'API\ApiPoinController@update');
+Route::post('/delete-poin', 'API\ApiPoinController@delete');
+
+//SISTEM-POIN
+Route::post('/get-store', 'API\ApiStoreController@index');
+Route::post('/delete-store', 'API\ApiStoreController@delete');
 
 //MENU
 Route::post('/get-curency', 'API\ApiCurencyController@index');

@@ -18,7 +18,7 @@ class ApiMemberController extends Controller
                     ->select(
                         'customers.customer_name', 'customers.customer_mobile', 
                         'customers.customer_address', 'customers.customer_city', 
-                        'parent.customer_name AS sponsor', 
+                        'customers.customer_district', 'parent.customer_name AS customer_sponsor', 
                         'customers.customer_email', 'customers.created_at')
                     ->orderBy('customers.created_at', 'desc');
 

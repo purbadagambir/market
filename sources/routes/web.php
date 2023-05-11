@@ -50,7 +50,13 @@ Route::middleware(['auth', 'store'])->group(function() {
 
     //SISTEM
     Route::get('/sistem-menu', 'MenuController@index')->name('menu');
+    Route::get('/group-setting-menu', 'MenuController@group_menu')->name('group_menu');
+
     Route::get('/sistem-curency', 'CurencyController@index')->name('curency');
+
+    Route::get('/sistem-persentase-poin', 'PoinController@index')->name('persentese-poin');
+
+    Route::get('/sistem-store', 'StoreController@index')->name('store');
 
     //PEMBELIAN
     Route::get('/purchase-list', 'PurchaseController@index')->name('purchase');

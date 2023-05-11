@@ -108,27 +108,28 @@
               <table id="datatable" class="table table-bordered table-striped">
                 <thead>
                   <tr role="row" class="bg-gray">
-                    <th class="text-center">No</th>
-                    <th>Nama</th>
-                    <th>Alamat</th>
-                    <th>Created_at</th>
+                    <th class="text-center">Level</th>
+                    <th class="text-center">Persentasi</th>
+                    <th class="text-center">Status</th>
                     <th class="text-center">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in items">
-                    <td class="text-center">@{{index + 1}}</td>
-                    <td>@{{item.name}}</td>
-                    <td>@{{item.address}}</td>
-                    <td>@{{item.created_at}}</td>
+                  <tr v-for="item in items">
+                    <td class="text-center">@{{item.level_no}}</td>
+                    <td class="text-center">@{{item.percentase}}</td>
+                    <td class="text-center">
+                      <span class="badge btn-success" v-if="item.active == 'Y'">Active</span>
+                      <span class="badge btn-warning" v-else>Inactive</span>
+                    </td>
                     <td class="text-center">
                       <div class="btn-group">
                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           . . .
                         </button>
                         <div class="dropdown-menu pull-right">
-                          <li @click="this.editData(item.store_id)"><a>Edit</a></li>
-                          <li @click="this.deleteData(item.store_id)"><a>Delete</a></li>
+                          <li @click="this.editData(item.id)"><a>Edit</a></li>
+                          <li @click="this.deleteData(item.id)"><a>Delete</a></li>
                         </div>
                       </div>
                     </td>
@@ -136,10 +137,9 @@
                 </tbody>
                 <tfoot>
                   <tr role="row" class="bg-gray">
-                    <th class="text-center">No</th>
-                    <th>Nama</th>
-                    <th>Alamat</th>
-                    <th>Created_at</th>
+                    <th class="text-center">Level</th>
+                    <th class="text-center">Persentasi</th>
+                    <th class="text-center">Status</th>
                     <th class="text-center">Action</th>
                   </tr>
                 </tfoot>
@@ -177,6 +177,6 @@
 <script src="assets/toastr/toastr.min.js"></script>
 <script src="assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="assets/js/page/store.js"></script>
+<script src="assets/js/page/poin.js"></script>
 <script src="assets/js/notif.js"></script>
 @endpush
