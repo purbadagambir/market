@@ -66,6 +66,9 @@ Route::post('/delete-poin', 'API\ApiPoinController@delete');
 
 //SISTEM-POIN
 Route::post('/get-store', 'API\ApiStoreController@index');
+Route::post('/create-store', 'API\ApiStoreController@store');
+Route::post('/show-store', 'API\ApiStoreController@show');
+Route::post('/update-store', 'API\ApiStoreController@update');
 Route::post('/delete-store', 'API\ApiStoreController@delete');
 
 //MENU

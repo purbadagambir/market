@@ -40,30 +40,86 @@
       <div class="box-body">
         <form class="form-horizontal">
           <div class="box-body">
-            <div class="form-group" v-bind:class="{ 'has-error': hasError.level }">
-              <label for="categoryname" class="col-sm-3 control-label">Level*</label>
+            <div class="form-group" v-bind:class="{ 'has-error': hasError.name }">
+              <label for="categoryname" class="col-sm-3 control-label">Name *</label>
               <div class="col-sm-7">
-                <input v-model="form.level" type="number" name="label" class="form-control" id="form_label">
-                <span v-if="error.level" class="help-block">@{{ error.level }}</span>
+                <input v-model="form.name" type="text" name="label" class="form-control" id="form_label">
+                <span v-if="error.name" class="help-block">@{{ error.name }}</span>
               </div>
             </div>
-            <div class="form-group" v-bind:class="{ 'has-error': hasError.percentase }">
-              <label for="categoryname" class="col-sm-3 control-label">Percentase Poin (%)</label>
+
+            <div class="form-group" v-bind:class="{ 'has-error': hasError.code_name }">
+              <label for="categoryname" class="col-sm-3 control-label">Code Name *</label>
               <div class="col-sm-7">
-                <input v-model="form.percentase" type="number" name="link" class="form-control" id="form_link">
-                <span v-if="error.percentase" class="help-block">@{{ error.percentase }}</span>
+                <input v-model="form.code_name" type="text" name="code_name" class="form-control" id="form_code_name">
+                <span v-if="error.code_name" class="help-block">@{{ error.code_name }}</span>
               </div>
             </div>
-            <div class="form-group" v-bind:class="{ 'has-error': hasError.active }">
-              <label for="categoryname" class="col-sm-3 control-label">active</label>
+
+            <div class="form-group" v-bind:class="{ 'has-error': hasError.store_type }">
+              <label for="categoryname" class="col-sm-3 control-label">Store Type</label>
               <div class="col-sm-7">
-              <select class="form-control select2" style="width: 100%;" name="active" v-model="form.active">
-                  <option selected="selected" value="Y">Active</option>
-                  <option value="N">Inactive</option>
+              <select class="form-control select2" style="width: 100%;" name="store_type" v-model="form.store_type">
+                  <option selected="selected" value="Pondo Bangunan">Pondo Bangunan</option>
+                  <option selected="selected" value="Pondo Market">Pondo Market</option>
+                  <option selected="selected" value="Pondo Kupi">Pondo Kupi</option>
+                  <option selected="selected" value="Pondo PPOB">Pondo PPOB</option>
               </select>
-              <span v-if="error.active" class="help-block">@{{ error.active }}</span>
+              <span v-if="error.store_type" class="help-block">@{{ error.store_type }}</span>
               </div>
             </div>
+
+            <div class="form-group" v-bind:class="{ 'has-error': hasError.mobile }">
+              <label for="categoryname" class="col-sm-3 control-label">Mobile</label>
+              <div class="col-sm-7">
+                <input v-model="form.mobile" type="number" name="mobile" class="form-control" id="form_mobile">
+                <span v-if="error.mobile" class="help-block">@{{ error.mobile }}</span>
+              </div>
+            </div>
+
+            <div class="form-group" v-bind:class="{ 'has-error': hasError.email }">
+              <label for="categoryname" class="col-sm-3 control-label">email</label>
+              <div class="col-sm-7">
+                <input v-model="form.email" type="email" name="email" class="form-control" id="form_email">
+                <span v-if="error.email" class="help-block">@{{ error.email }}</span>
+              </div>
+            </div>
+
+            <div class="form-group" v-bind:class="{ 'has-error': hasError.zip_code }">
+              <label for="categoryname" class="col-sm-3 control-label">ZIP Code *</label>
+              <div class="col-sm-7">
+                <input v-model="form.zip_code" type="text" name="zip_code" class="form-control" id="form_zip_code">
+                <span v-if="error.zip_code" class="help-block">@{{ error.zip_code }}</span>
+              </div>
+            </div>
+
+            <div class="form-group" v-bind:class="{ 'has-error': hasError.address }">
+              <label for="categoryname" class="col-sm-3 control-label">Address</label>
+              <div class="col-sm-7">
+                <input v-model="form.address" type="text" name="address" class="form-control" id="form_address">
+                <span v-if="error.address" class="help-block">@{{ error.address }}</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="categoryname" class="col-sm-3 control-label">Map Koordinat</label>
+              <div class="col-sm-7">
+                <input v-model="form.koordinat" type="text" name="koordinat" class="form-control" id="form_koordinat">
+              </div>
+            </div>
+
+            <div class="form-group" v-bind:class="{ 'has-error': hasError.cashier }">
+              <label for="categoryname" class="col-sm-3 control-label">Kasir</label>
+              <div class="col-sm-7">
+              <select class="form-control select2" style="width: 100%;" name="cashier" v-model="form.cashier">
+                @foreach($data['kasir'] as $opstion)
+                  <option selected="selected" value="{{$opstion->group_id}}">{{$opstion->username}}</option>
+                @endforeach
+              </select>
+              <span v-if="error.cashier" class="help-block">@{{ error.cashier }}</span>
+              </div>
+            </div>
+
             <div class="form-group">
               <div class="col-sm-offset-3 col-sm-7">
                 <div class="button">

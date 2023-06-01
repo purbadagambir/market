@@ -17,19 +17,33 @@ const App = {
       buttonPage : [],
       form:{
         id : null,
-        level : null,
-        percentase : null,
-        active : null,
+        name : null,
+        code_name : null,
+        store_type : null,
+        mobile : null,
+        email : null,
+        zip_code : null,
+        address : null,
+        koordinat : null,
+        cashier : null
       },
       hasError : {
-        level : false,
-        percentase : false,
-        active : false
+        name : false,
+        code_name : false,
+        store_type : false,
+        mobile : false,
+        email : false,
+        zip_code : false,
+        cashier : false,
       },
       error: {
-        level : false,
-        percentase : false,
-        active : false
+        name : false,
+        code_name : false,
+        store_type : false,
+        mobile : false,
+        email : false,
+        zip_code : false,
+        cashier : false,
       },
     }
   },
@@ -105,9 +119,15 @@ const App = {
 
     //FORM FUNCTION
     resetForm: function () { 
-      this.form.level = null,
-      this.form.percentase = null,
-      this.form.active = null
+        this.form.name = null,
+        this.form.name.code_name = null,
+        this.form.name.store_type = null,
+        this.form.name.mobile = null,
+        this.form.name.email = null,
+        this.form.name.zip_code = null,
+        this.form.name.address = null,
+        this.form.name.koordinat = null,
+        this.form.name.cashier = null
     },
 
     cancelForm: function(){
@@ -140,6 +160,103 @@ const App = {
          .catch(error => {
             notifError('Error')
          })
+    },
+
+    createData:function(e) {
+      this.error = [];
+      this.hasError = [];
+      e.preventDefault();
+      if(!this.form.name) {
+        this.error.name = "Name is required";
+        this.hasError.name = true;
+        
+      }
+      else if(!this.form.code_name) {
+        this.error.code_name = "Code name is required";
+        this.hasError.code_name = true;
+      }
+      else if(!this.form.store_type) {
+        this.error.store_type= "Store type is required";
+        this.hasError.store_type = true;
+      }
+      else if(!this.form.mobile) {
+        this.error.mobile= "Mobile is required";
+        this.hasError.mobile = true;
+      } 
+      else if(!this.form.email) {
+        this.error.email= "Email is required";
+        this.hasError.email = true;
+      }
+      else if(!this.form.zip_code) {
+        this.error.zip_code= "Zip code is required";
+        this.hasError.zip_code = true;
+      }
+      else if(!this.form.cashier) {
+        this.error.cashier= "Cashier is required";
+        this.hasError.cashier = true;
+      }else {
+        axios
+        .post('api/create-store', this.form)
+        .then(response => {
+          if(response.status == 200){
+            this.items = response.data.data
+            this.meta = response.data.meta
+            this.buttonPage = this.pageButton(this.meta.last_page)
+            this.resetForm()
+            notifSuccess('Data berhasil disimpan')
+          }else{
+            notifError('Data not found')
+          }
+        })
+        .catch(error => {
+          console.log(error)
+          this.errored = true
+          notifError('Somethingelse')
+        })
+      }
+    },
+
+    editData: function(data){
+      this.show = true
+      this.table.id = data
+      this.submit = false
+      axios.post('api/show-store', this.table).then(response => {
+        if(response.status == 200){
+          
+          this.form.id              = response.data.store_id,
+          this.form.name            = response.data.name,
+          this.form.code_name  = response.data.code_name,
+          this.form.store_type = response.data.store_type,
+          this.form.mobile     = response.data.mobile,
+          this.form.email      = response.data.email,
+          this.form.zip_code   = response.data.zip_code,
+          this.form.address    = response.data.address,
+          this.form.koordinat  = response.data.map_koordinat,
+          this.form.cashier    = response.data.cashier_id
+
+        }else{
+          notifError('Data not found')
+        }
+      })
+      .catch(error => {
+          notifError('Somethink else')
+      })
+    },
+
+    updateData: function(data){
+      axios.post('api/update-store', this.form).then(response => {
+        console.log(response.status)
+        if(response.status == 200){
+          this.items = response.data.data
+          this.meta = response.data.meta
+          this.buttonPage = this.pageButton(this.meta.last_page)
+          this.resetForm()
+          this.show = false
+          notifSuccess('Data berhasil diupdate')
+        }else{
+          notifError('Data gagal diupdate')
+        }
+      })
     },
     
     deleteData: function(data){
