@@ -128,16 +128,12 @@ const App = {
             this.stop()
           }
       })
-      .catch(error => {
-          this.stop()
-          notifError('Error')
-      })
     },
 
     getProductInfo: function(data){
       axios.post('api/get-product-info', data)
       .then(response => {
-          if(response.status == 200){
+          if(response.status == 200 & response.data.data.length > 0){
               this.form_cart.unit_small = response.data.data[0].unit_small_name
               this.form_cart.unit_small_id = response.data.data[0].unit_small_id
               this.form_cart.unit_medium = response.data.data[0].unit_medium_name
@@ -159,14 +155,14 @@ const App = {
               this.form_cart.vol_unit = response.data.data[0].vol_unit_small
               this.showModal()
           }
+          else if(response.status == 200 & response.data.data.length == 0)
+          {
+            this.getProductSearch(data)
+          }
           else{
             notifError('Product not found')
             this.stop()
           }
-      })
-      .catch(error => {
-          this.stop()
-          notifError('Error')
       })
     },
 
@@ -176,9 +172,15 @@ const App = {
       this.getProductInfo(data)
     },
 
-    getProductSearch: function(){
+    getProductSearch: function(keyword=''){
       const store_id = document.getElementById("store_id").value;
-      const data = {'keyword' : this.keyword, 'store_id' : store_id};
+      if(keyword.length == 0)
+      {
+        data = {'keyword' : this.keyword, 'store_id' : store_id};
+      }
+      else {
+        data = {'keyword' : keyword.code, 'store_id' : keyword.store_id};
+      }
 
       axios.post('api/get-product-search', data)
       .then(response => {
@@ -319,10 +321,6 @@ const App = {
             this.stop()
           }
       })
-      .catch(error => {
-          this.stop()
-          notifError('Error')
-      })
 
     },
 
@@ -396,10 +394,6 @@ const App = {
             notifError('Member not found')
             this.stop()
           }
-      })
-      .catch(error => {
-          this.stop()
-          notifError('Error')
       })
 
     },

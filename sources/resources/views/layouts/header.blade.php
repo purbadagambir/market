@@ -17,10 +17,10 @@
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <li>
-            <a href=""><i class="fa fa-cart-plus"></i> <span class="hidden-xs">POS</span></a>
+            <a href="{{route('pos')}}"><i class="fa fa-cart-plus"></i> <span class="hidden-xs">POS</span></a>
           </li>
           <li>
-            <a href=""><i class="fa fa-book"></i> <span class="hidden-xs">BUKU KAS</span></a>
+            <!-- <a href=""><i class="fa fa-book"></i> <span class="hidden-xs">BUKU KAS</span></a> -->
           </li>
           <li>
             <a href="{{route('sell')}}"><i class="fa fa-list"></i> <span class="hidden-xs">STRUK</span></a>
@@ -31,12 +31,12 @@
           <li>
             <a href="" title="pengaturan"><i class="fa fa-cog"></i></a>
           </li> -->
-          <li>
+          <!-- <li>
             <a href="" title="peringatan stock">
               <i class="fa fa-book"></i>
               <span class="label label-danger">9</span>
             </a>
-          </li>
+          </li> -->
           <!-- <li>
             <a href=""><i class="fa fa-question-circle"></i></a>
           </li> -->

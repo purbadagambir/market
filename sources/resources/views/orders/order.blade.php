@@ -57,14 +57,14 @@
             <div class="box-header">
               <div class="row filter">
                 <div class="col-lg-7 col-xs-7">
-                  <form action="">
+                  <!-- <form action="">
                     <div class="input-group input-group">
                       <input type="text" class="form-control" placeholder="Scan Here" v-model="barcode" @keyup="getProductScan()" ref='focusMe'>
                           <span class="input-group-btn">
                             <button type="button" class="btn btn-info btn-flat"> <i class="fa fa-search"></i> </button>
                           </span>
                     </div>
-                  </form>
+                  </form> -->
                 </div>
                 <div class="col-lg-5 col-xs-5">
                   <div class="input-group input-group pull-right">
@@ -79,7 +79,7 @@
               
               <div class="direct-chat-messages product-list">
                 <div class="col-lg-12 col-xs-12">
-                  <input type="text" class="form-control" placeholder="Cari Produk" v-model="keyword" @keyup="getProductSearch()">
+                  <input type="text" class="form-control" id="product-search" v-model="barcode" @keyup="getProductScan()" ref='focusMe' autofocus>
                 </div>
                 <div class="col-lg-3 col-xs-4 text-center" v-for="item in items">
                   <div @click="getProductClik(item.p_code)">
@@ -279,5 +279,11 @@
   <script src="assets/toastr/toastr.min.js"></script>
   <script src="assets/js/page/order.js"></script>
   <script src="assets/js/notif.js"></script>
+  
+  <script>
+    $(document).ready(function(){
+      document.getElementById('product-search').focus();
+    })
+  </script>
 </body>
 </html>
